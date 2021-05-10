@@ -8,10 +8,16 @@ from django.db import models
 class Division(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class District(models.Model):
     name = models.CharField(max_length=50)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class TaxPayer(models.Model):
@@ -59,6 +65,9 @@ class TaxPayer(models.Model):
     mobile_no = models.CharField(max_length=20, null=True)
     email = models.CharField(max_length=50, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Salary(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
@@ -74,3 +83,6 @@ class Salary(models.Model):
     employers_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
     employees_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
     ait = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Salary'
