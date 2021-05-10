@@ -1,10 +1,63 @@
 from decimal import Decimal
 
+from django.contrib.auth.models import User
+from django.core.validators import MinLengthValidator
 from django.db import models
 
 
+class Division(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class District(models.Model):
+    name = models.CharField(max_length=50)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE)
+
+
 class TaxPayer(models.Model):
-    name = models.CharField(max_length=250)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=250, null=True)
+    e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
+    dob = models.DateField
+    married = models.BooleanField
+    spouse_name = models.CharField(max_length=250, null=True)
+    spouse_e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
+    has_differently_abled_children = models.BooleanField
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('T', 'Transgender')
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
+    resident = models.BooleanField
+    nid = models.CharField(max_length=17, null=True)
+    differently_abled = models.BooleanField
+    fathers_name = models.CharField(max_length=250, null=True)
+    mothers_name = models.CharField(max_length=250, null=True)
+    num_of_dependent_adult = models.IntegerField
+    num_of_dependent_child = models.IntegerField
+    gazetted_war_wounded_freedom_fighter = models.BooleanField
+    government_employee = models.BooleanField
+    RESIDENCE_AREA = (
+        (1, 'Dhaka and Chittagong City Corporation'),
+        (2, 'Other City Corporation'),
+        (3, 'Other Areas')
+    )
+    residence_area = models.IntegerField(choices=RESIDENCE_AREA, null=True)
+    tax_zone = models.IntegerField
+    tax_circle = models.IntegerField
+    employer_name = models.CharField(max_length=250, null=True)
+    employer_address = models.CharField(max_length=250, null=True)
+    employer_bin = models.CharField(max_length=20, null=True)
+    present_address_line_one = models.CharField(max_length=250, null=True)
+    present_address_line_two = models.CharField(max_length=250, null=True)
+    present_address_postcode = models.IntegerField
+    present_address_division = models.ForeignKey(Division, on_delete=models.SET_NULL, null=True)
+    present_address_district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
+    same_address = models.BooleanField
+    permanent_address = models.CharField(max_length=250, null=True)
+    mobile_no = models.CharField(max_length=20, null=True)
+    email = models.CharField(max_length=50, null=True)
 
 
 class Salary(models.Model):
