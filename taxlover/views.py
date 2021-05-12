@@ -16,28 +16,67 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
 
-
-posts = [
-    {
-        'author': 'CoreyMS',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'August 27, 2018'
-    },
-    {
-        'author': 'Jane Doe',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'August 28, 2018'
-    }
-]
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 
 
 def home(request):
     context = {
-        'posts': posts
+        'salaries': Salary.objects.all()
     }
     return render(request, 'taxlover/home.html', context)
+
+
+class SalaryListView(ListView):
+    model = Salary
+    template_name = 'taxlover/home.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'salaries'
+    ordering = ['-id']
+
+
+class SalaryDetailView(DetailView):
+    model = Salary
+
+
+class SalaryCreateView(LoginRequiredMixin, CreateView):
+    model = Salary
+    fields = ['financial_year_beg', 'financial_year_end']
+
+    def form_valid(self, form):
+        # form.instance.tax_payer = self.request.user
+        return super().form_valid(form)
+
+
+class SalaryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Salary
+    fields = ['financial_year_beg', 'financial_year_end']
+
+    def form_valid(self, form):
+        # form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        salary = self.get_object()
+        if self.request.user.id == salary.tax_payer_id:
+            return True
+        return False
+
+
+class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Salary
+    success_url = '/'
+
+    def test_func(self):
+        salary = self.get_object()
+        if self.request.user.id == salary.tax_payer_id:
+            return True
+        return False
 
 
 def about(request):
