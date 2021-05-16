@@ -128,5 +128,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'tax-lover-home'
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
