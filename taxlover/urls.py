@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import path
 from .views import (
     SalaryListView,
@@ -10,8 +11,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # path('', views.home, name='tax-lover-home'),
-    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='tax-lover-home'),
+    # path('', views.home, name='login'),
+    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('dashboard', SalaryListView.as_view(), name='dashboard'),
     path('salary/<int:pk>/', SalaryDetailView.as_view(), name='salary-detail'),
     path('salary/new/', SalaryCreateView.as_view(), name='salary-create'),
@@ -20,4 +21,3 @@ urlpatterns = [
     path('about/', views.about, name='tax-lover-about'),
     path('generate/', views.generate, name='generate')
 ]
-
