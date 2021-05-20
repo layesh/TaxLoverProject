@@ -8,12 +8,14 @@ from .views import (
     SalaryDeleteView
 )
 from . import views
+from users import views as user_views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # path('', views.home, name='login'),
-    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('dashboard', SalaryListView.as_view(), name='dashboard'),
+    path('', user_views.login_view, name='login'),
+    # path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('dashboard', SalaryListView.as_view(extra_context={'title': 'dashboard'}), name='dashboard'),
     path('salary/<int:pk>/', SalaryDetailView.as_view(), name='salary-detail'),
     path('salary/new/', SalaryCreateView.as_view(), name='salary-create'),
     path('salary/<int:pk>/update/', SalaryUpdateView.as_view(), name='salary-update'),

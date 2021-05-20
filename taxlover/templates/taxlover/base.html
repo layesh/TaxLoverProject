@@ -33,14 +33,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-{#                    <a class="nav-item nav-link" href="{% url 'login' %}">Dashboard</a>#}
-{#                    <a class="nav-item nav-link" href="{% url 'tax-lover-about' %}">About</a>#}
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link {% if title == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+                        <a class="nav-item nav-link {% if title == 'about' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Personal Info</a>
+                    {% endif %}
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
 {#                        <a class="nav-item nav-link" href="{% url 'salary-create' %}">New Salary</a>#}
-                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                        <a class="nav-item nav-link {% if title == 'profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
                         <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
@@ -62,19 +64,6 @@
             {% endif %}
             {% block content %}{% endblock %}
         </div>
-{#        <div class="col-md-4">#}
-{#            <div class="content-section">#}
-{#                <h3>Our Sidebar</h3>#}
-{#                <p class='text-muted'>You can put any information here you'd like.#}
-{#                <ul class="list-group">#}
-{#                    <li class="list-group-item list-group-item-light">Latest Posts</li>#}
-{#                    <li class="list-group-item list-group-item-light">Announcements</li>#}
-{#                    <li class="list-group-item list-group-item-light">Calendars</li>#}
-{#                    <li class="list-group-item list-group-item-light">etc</li>#}
-{#                </ul>#}
-{#                </p>#}
-{#            </div>#}
-{#        </div>#}
     </div>
 </main>
 

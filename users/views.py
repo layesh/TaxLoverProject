@@ -1,6 +1,9 @@
+from logging import CRITICAL
+
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, LoginForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -36,14 +39,32 @@ def profile(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'title': 'profile'
     }
 
     return render(request, 'users/profile.html', context)
 
 
-def login_success(request):
-    if request.user.is_authenticated:
-        return redirect("profile")
+def login_view(request):
+    if not request.user.is_authenticated:
+        form = LoginForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                redirect_url = request.GET.get('next', 'dashboard')
+                return redirect(redirect_url)
+            else:
+                # attempt = request.session.get("attempt") or 0
+                # request.session['attempt'] = attempt + 1
+                # return redirect("/invalid-password")
+                request.session['invalid_user'] = 1  # 1 == True
+                # messages.error(request, f'Your account has been updated!')
+                form.add_error('username', '')
+                form.add_error('password', '')
+        return render(request, "users/login.html", {"form": form})
     else:
-        return redirect("profile")
+        return redirect("dashboard")

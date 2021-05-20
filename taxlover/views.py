@@ -33,7 +33,7 @@ def home(request):
     return render(request, 'taxlover/home.html', context)
 
 
-class SalaryListView(ListView):
+class SalaryListView(LoginRequiredMixin, ListView):
     model = Salary
     template_name = 'taxlover/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'salaries'
@@ -79,8 +79,9 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
+@login_required
 def about(request):
-    return render(request, 'taxlover/about.html')
+    return render(request, 'taxlover/about.html', {'title': 'about'})
 
 
 def index(request):
