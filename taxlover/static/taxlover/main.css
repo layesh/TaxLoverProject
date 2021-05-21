@@ -85,5 +85,13 @@ a.article-title:hover {
 
 .site-logo {
     font-size: 24px;
-    color: yellow !important;
+    /*color: forestgreen !important;*/
+    color: yellowgreen !important;
+}
+
+.custom-article-img {
+    height: 38px;
+    width: 38px;
+    margin-left: 12px;
+    margin-right: 8px;
 }

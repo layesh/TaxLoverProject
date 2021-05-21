@@ -19,44 +19,133 @@
     {% endif %}
 </head>
 <body>
-<header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-            {% if user.is_authenticated %}
-                <a class="navbar-brand mr-4 site-logo" href="{% url 'dashboard' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>
-            {% else %}
-                <a class="navbar-brand mr-4 site-logo" href="{% url 'login' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>
-            {% endif %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+        {% if user.is_authenticated %}#}
+            <a class="navbar-brand mr-4 site-logo" href="{% url 'dashboard' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>
+        {% else %}
+            <a class="navbar-brand mr-4 site-logo" href="{% url 'login' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <div class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {% if title == 'Dashboard' %}active{% endif %}">
+                            <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item {% if title == 'About' %}active{% endif %}">
+                            <a class="nav-item nav-link" href="{% url 'tax-lover-about' %}">Personal Info</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Income & Expenses
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item {% if title == 'income' %}active{% endif %}"
+                                   href="{% url 'tax-lover-about' %}">Income</a>
+                                <a class="dropdown-item {% if title == 'assets' %}active{% endif %}"
+                                   href="{% url 'tax-lover-about' %}">Assets</a>
+                                <a class="dropdown-item {% if title == 'liabilities' %}active{% endif %}"
+                                   href="{% url 'tax-lover-about' %}">Liabilities</a>
+                                <a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"
+                                   href="{% url 'tax-lover-about' %}">Expenses</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {% if title == 'review' %}active{% endif %}"
+                               href="{% url 'tax-lover-about' %}">Review</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {% if title == 'download' %}active{% endif %}"
+                               href="{% url 'tax-lover-about' %}">Download</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="navbar-nav">
+                <ul class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <a class="nav-item nav-link {% if title == 'Dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
-                        <a class="nav-item nav-link {% if title == 'About' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Personal Info</a>
-                        <a class="nav-item nav-link {% if title == 'income' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Income</a>
-                        <a class="nav-item nav-link {% if title == 'assets' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Assets</a>
-                        <a class="nav-item nav-link {% if title == 'liabilities' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Liabilities</a>
-                        <a class="nav-item nav-link {% if title == 'expenses' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Expenses</a>
-                        <a class="nav-item nav-link {% if title == 'review' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Review</a>
-                        <a class="nav-item nav-link {% if title == 'download' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Download</a>
-                    {% endif %}
-                </div>
-                <!-- Navbar Right Side -->
-                <div class="navbar-nav">
-                    {% if user.is_authenticated %}
-{#                        <a class="nav-item nav-link" href="{% url 'salary-create' %}">New Salary</a>#}
-                        <a class="nav-item nav-link {% if title == 'Profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
-                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            {#                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+                        </form>
+                        <li class="nav-item">
+                            <a href="{% url 'profile' %}">
+                                <img class="rounded-circle custom-article-img"
+                                     src="{{ request.user.profile.image.url }}" id="img">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Sign Out</a>
+                        </li>
                     {% else %}
-                        <a class="nav-item nav-link {% if title == 'Register' %}active{% endif %}" href="{% url 'register' %}">Register</a>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {% if title == 'Register' %}active{% endif %}"
+                               href="{% url 'register' %}">Register</a>
+                        </li>
                     {% endif %}
-                </div>
+                </ul>
             </div>
         </div>
-    </nav>
+</nav>
+{#    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">#}
+{#        <div class="container">#}
+{#            {% if user.is_authenticated %}#}
+{#                <a class="navbar-brand mr-4 site-logo" href="{% url 'dashboard' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>#}
+{#            {% else %}#}
+{#                <a class="navbar-brand mr-4 site-logo" href="{% url 'login' %}">𝐓𝐚𝐱𝐋𝐨𝐯𝐞𝐫𝐏𝐫𝐨</a>#}
+{#            {% endif %}#}
+{#            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"#}
+{#                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">#}
+{#                <span class="navbar-toggler-icon"></span>#}
+{#            </button>#}
+{#            <div class="collapse navbar-collapse" id="navbarToggle">#}
+{#                <div class="navbar-nav mr-auto">#}
+{#                    {% if user.is_authenticated %}#}
+{#                        <li class="nav-item dropdown">#}
+{#                        <a class="nav-item nav-link {% if title == 'Dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>#}
+{#                        </li>#}
+{#                        <a class="nav-item nav-link {% if title == 'About' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Personal Info</a>#}
+{#                        <li class="nav-item dropdown">#}
+{#                          <a class="nav-link dropdown-toggle show" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">#}
+{#                            Dropdown#}
+{#                          </a>#}
+{#                          <ul class="dropdown-menu show" aria-labelledby="navbarDropdown" data-bs-popper="none">#}
+{#                            <li><a class="dropdown-item" href="#">Action</a></li>#}
+{#                            <li><a class="dropdown-item" href="#">Another action</a></li>#}
+{#                            <li><hr class="dropdown-divider"></li>#}
+{#                            <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+{#                          </ul>#}
+{#                        </li>#}
+{#                        <a class="nav-item nav-link {% if title == 'income' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Income</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'assets' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Assets</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'liabilities' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Liabilities</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'expenses' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Expenses</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'review' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Review</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'download' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Download</a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#                <!-- Navbar Right Side -->#}
+{#                <div class="navbar-nav">#}
+{#                    {% if user.is_authenticated %}#}
+{#                        <a class="nav-item nav-link" href="{% url 'salary-create' %}">New Salary</a>#}
+{#                        <a class="nav-item nav-link {% if title == 'Profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>#}
+{#                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>#}
+{#                    {% else %}#}
+{#                        <a class="nav-item nav-link {% if title == 'Register' %}active{% endif %}" href="{% url 'register' %}">Register</a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </nav>#}
 </header>
 <main role="main" class="container">
     <div class="row">
