@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 import json
 import pandas as pd
+import datetime
 
 from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
@@ -26,9 +27,18 @@ from django.views.generic import (
 )
 
 
+@login_required
 def home(request):
+    current_month = datetime.date.today().month
+    current_year = datetime.date.today().year
+    tax_year_beg = current_year if current_month > 6 else current_year - 1
+    tax_year_end = tax_year_beg + 1
+
     context = {
-        'salaries': Salary.objects.all()
+        'salaries': Salary.objects.all(),
+        'title': 'Dashboard',
+        'tax_year_beg': tax_year_beg,
+        'tax_year_end': tax_year_end
     }
     return render(request, 'taxlover/home.html', context)
 

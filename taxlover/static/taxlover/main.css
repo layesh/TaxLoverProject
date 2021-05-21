@@ -95,3 +95,15 @@ a.article-title:hover {
     margin-left: 12px;
     margin-right: 8px;
 }
+
+.dashboard-tax-year-header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.dashboard-tax-year-body {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
