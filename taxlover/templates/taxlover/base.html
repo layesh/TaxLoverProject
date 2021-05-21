@@ -13,9 +13,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'taxlover/main.css' %}">
 
     {% if title %}
-        <title>Tax Lover - {{ title }}</title>
+        <title>TaxLoverPro - {{ title }}</title>
     {% else %}
-        <title>Tax Lover</title>
+        <title>TaxLoverPro</title>
     {% endif %}
 </head>
 <body>
@@ -34,8 +34,8 @@
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                     {% if user.is_authenticated %}
-                        <a class="nav-item nav-link {% if title == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
-                        <a class="nav-item nav-link {% if title == 'about' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Personal Info</a>
+                        <a class="nav-item nav-link {% if title == 'Dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+                        <a class="nav-item nav-link {% if title == 'About' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Personal Info</a>
                         <a class="nav-item nav-link {% if title == 'income' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Income</a>
                         <a class="nav-item nav-link {% if title == 'assets' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Assets</a>
                         <a class="nav-item nav-link {% if title == 'liabilities' %}active{% endif %}" href="{% url 'tax-lover-about' %}">Liabilities</a>
@@ -48,10 +48,10 @@
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
 {#                        <a class="nav-item nav-link" href="{% url 'salary-create' %}">New Salary</a>#}
-                        <a class="nav-item nav-link {% if title == 'profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
+                        <a class="nav-item nav-link {% if title == 'Profile' %}active{% endif %}" href="{% url 'profile' %}">Profile</a>
                         <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
-                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-item nav-link {% if title == 'Register' %}active{% endif %}" href="{% url 'register' %}">Register</a>
                     {% endif %}
                 </div>
             </div>

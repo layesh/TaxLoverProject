@@ -15,7 +15,7 @@ urlpatterns = [
     # path('', views.home, name='login'),
     path('', user_views.login_view, name='login'),
     # path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('dashboard', SalaryListView.as_view(extra_context={'title': 'dashboard'}), name='dashboard'),
+    path('dashboard', SalaryListView.as_view(extra_context={'title': 'Dashboard'}), name='dashboard'),
     path('salary/<int:pk>/', SalaryDetailView.as_view(), name='salary-detail'),
     path('salary/new/', SalaryCreateView.as_view(), name='salary-create'),
     path('salary/<int:pk>/update/', SalaryUpdateView.as_view(), name='salary-update'),
