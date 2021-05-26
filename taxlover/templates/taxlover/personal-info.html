@@ -1,0 +1,168 @@
+{% extends "taxlover/base.html" %}
+{% block content %}
+    <div class="content-section form-container">
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="container px-0">
+                <div class="row gx-3">
+                    <div class="col">
+                        <div class="p-3 border bg-light">
+                            <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">DIGITS</div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">E-TIN</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">NID</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Date Of Birth</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Contact No</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Taxes Circle</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Taxes Zone</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 border bg-light">
+                            <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">NAMES & ADDRESSES</div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Full Name</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Spouse Name</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Father's Name</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Mother's Name</label>
+                            </div>
+                            <div class="radio-container">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios"
+                                           id="exampleRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        I'm a resident of Bangladesh
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios"
+                                           id="exampleRadios2" value="option2">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        I'm not a resident of Bangladesh
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                          style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Present Address</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                          style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Permanent Address</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">E-mail Address</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 border bg-light">
+                            <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">
+                                OTHERS
+                            </div>
+                            <div class="radio-container">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios14"
+                                           id="exampleRadios3" value="option3" checked>
+                                    <label class="form-check-label" for="exampleRadios3">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios14"
+                                           id="exampleRadios4" value="option4">
+                                    <label class="form-check-label" for="exampleRadios4">
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="floatingInput"
+                                       placeholder="name@example.com">
+                                <label for="floatingInput">Employer's Name</label>
+                            </div>
+                            <div class="radio-container">
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">I'm a gazetted war-wounded
+                                        freedom fighter</label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">I'm a differently abled person</label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">I'm aged 65 years or more</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">I am a parent/legal guardian of a differently abled person</label>
+                                </div>
+                            </div>
+                            <div class="radio-container" style="padding-top: 0px !important;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios24"
+                                           id="exampleRadios5" value="option5" checked>
+                                    <label class="form-check-label" for="exampleRadios5">
+                                        I'm a government employee
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios24"
+                                           id="exampleRadios6" value="option6">
+                                    <label class="form-check-label" for="exampleRadios6">
+                                        I'm not a government employee
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;padding-top: 20px">
+                    <button type="button" class="btn btn-primary">Save Personal Info</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

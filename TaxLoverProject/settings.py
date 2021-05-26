@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'taxlover.apps.TaxloverConfig',
     'users.apps.UsersConfig',
-    'crispy_forms'
+    'crispy_forms',
+    "crispy_bootstrap5"
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,9 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'

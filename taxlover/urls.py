@@ -21,6 +21,6 @@ urlpatterns = [
     path('salary/new/', SalaryCreateView.as_view(), name='salary-create'),
     path('salary/<int:pk>/update/', SalaryUpdateView.as_view(), name='salary-update'),
     path('salary/<int:pk>/delete/', SalaryDeleteView.as_view(), name='salary-delete'),
-    path('about/', views.about, name='tax-lover-about'),
+    path('personal-info/', views.personal_info, name='personal-info'),
     path('generate/', views.generate, name='generate')
 ]

@@ -41,8 +41,8 @@
                                href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if title == 'About' %}active{% endif %}"
-                               href="{% url 'tax-lover-about' %}">Personal Info</a>
+                            <a class="nav-link {% if title == 'Personal Info' %}active{% endif %}"
+                               href="{% url 'personal-info' %}">Personal Info</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
@@ -62,11 +62,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if title == 'review' %}active{% endif %}"#}
-                               href="{% url 'tax-lover-about' %}">Review</a>
+                               href="{% url 'personal-info' %}">Review</a>
                         </li>
                         <li>
                             <a class="nav-link {% if title == 'download' %}active{% endif %}"#}
-                               href="{% url 'tax-lover-about' %}">Download</a>
+                               href="{% url 'personal-info' %}">Download</a>
                         </li>
                     </ul>
                 {% endif %}

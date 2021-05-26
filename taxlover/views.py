@@ -90,8 +90,8 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 @login_required
-def about(request):
-    return render(request, 'taxlover/about.html', {'title': 'About'})
+def personal_info(request):
+    return render(request, 'taxlover/personal-info.html', {'title': 'Personal Info'})
 
 
 def index(request):
