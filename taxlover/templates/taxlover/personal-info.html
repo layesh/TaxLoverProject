@@ -1,39 +1,40 @@
 {% extends "taxlover/base.html" %}
 {% block content %}
     <div class="content-section form-container">
-        <form class="row g-3 needs-validation" novalidate>
+        <form class="row g-3 needs-validation" method="post">
+            {% csrf_token %}
             <div class="container px-0">
                 <div class="row gx-3">
                     <div class="col">
                         <div class="p-3 border bg-light">
                             <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">DIGITS</div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="e_tin"
+                                       placeholder="name@example.com" value="{{ tax_payer.get_e_tin }}">
                                 <label for="floatingInput">E-TIN</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">NID</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="datepicker" name="dob"
+                                       placeholder="name@example.com" value="{{ tax_payer.get_dob }}">
                                 <label for="floatingInput">Date Of Birth</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Contact No</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Taxes Circle</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Taxes Zone</label>
                             </div>
@@ -43,36 +44,36 @@
                         <div class="p-3 border bg-light">
                             <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">NAMES & ADDRESSES</div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="name" name="full_name"
+                                       placeholder="name@example.com" value="{{ tax_payer.name }}" required>
                                 <label for="floatingInput">Full Name</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Spouse Name</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Father's Name</label>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Mother's Name</label>
                             </div>
                             <div class="radio-container">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios1" value="option1" checked>
+                                    <input class="form-check-input" type="radio" name="exampleRadios1"
+                                           id="exampleRadios1" value="true" checked="checkedqw">
                                     <label class="form-check-label" for="exampleRadios1">
                                         I'm a resident of Bangladesh
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios2" value="option2">
+                                           id="exampleRadios2" value="false">
                                     <label class="form-check-label" for="exampleRadios2">
                                         I'm not a resident of Bangladesh
                                     </label>
@@ -89,7 +90,7 @@
                                 <label for="floatingTextarea2">Permanent Address</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">E-mail Address</label>
                             </div>
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="text" class="form-control" id="floatingInput"
                                        placeholder="name@example.com">
                                 <label for="floatingInput">Employer's Name</label>
                             </div>
@@ -160,7 +161,7 @@
                     </div>
                 </div>
                 <div style="text-align: center;padding-top: 20px">
-                    <button type="button" class="btn btn-primary">Save Personal Info</button>
+                    <button type="submit" class="btn btn-primary">Save Personal Info</button>
                 </div>
             </div>
         </form>

@@ -25,8 +25,8 @@ class TaxPayer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=250, null=True)
     e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
-    dob = models.DateField
-    married = models.BooleanField
+    dob = models.DateField(blank=True, null=True)
+    married = models.BooleanField(null=True)
     spouse_name = models.CharField(max_length=250, null=True)
     spouse_e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
     has_differently_abled_children = models.BooleanField
@@ -36,7 +36,7 @@ class TaxPayer(models.Model):
         ('T', 'Transgender')
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
-    resident = models.BooleanField
+    resident = models.BooleanField(null=True)
     nid = models.CharField(max_length=17, null=True)
     differently_abled = models.BooleanField
     fathers_name = models.CharField(max_length=250, null=True)
@@ -68,6 +68,27 @@ class TaxPayer(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_dob(self):
+        if self.dob:
+            return self.dob.strftime(("%d/%m/%Y"))
+        else:
+            return ""
+
+    @property
+    def get_e_tin(self):
+        if self.e_tin:
+            return self.e_tin
+        else:
+            return ""
+
+    @property
+    def is_resident(self):
+        if self.resident:
+            return self.resident
+        else:
+            return ""
 
 
 class Salary(models.Model):

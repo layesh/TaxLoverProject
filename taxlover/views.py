@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 
 import json
@@ -7,6 +8,7 @@ import datetime
 from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
+from taxlover.forms import TaxPayerForm
 from taxlover.models import TaxPayer, Salary
 from taxlover.utils import parse_data
 
@@ -91,7 +93,31 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 @login_required
 def personal_info(request):
-    return render(request, 'taxlover/personal-info.html', {'title': 'Personal Info'})
+    if request.method == 'POST':
+        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        # form = TaxPayerForm(request.POST, instance=tax_payer)
+
+        # if form.is_valid():
+        #     form.save()
+        #     messages.success(request, f'Your personal info has been updated!')
+
+        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        tax_payer.name = request.POST.get('full_name')
+        tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
+        tax_payer.e_tin = request.POST.get('e_tin')
+        tax_payer.save()
+        messages.success(request, f'Your personal info has been updated!')
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Personal Info'
+        }
+    else:
+        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Personal Info'
+        }
+    return render(request, 'taxlover/personal-info.html', context)
 
 
 def index(request):
