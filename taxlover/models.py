@@ -29,7 +29,7 @@ class TaxPayer(models.Model):
     married = models.BooleanField(null=True)
     spouse_name = models.CharField(max_length=250, null=True)
     spouse_e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
-    has_differently_abled_children = models.BooleanField
+    has_differently_abled_children = models.BooleanField(null=True)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -38,30 +38,30 @@ class TaxPayer(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
     resident = models.BooleanField(null=True)
     nid = models.CharField(max_length=17, null=True)
-    differently_abled = models.BooleanField
+    differently_abled = models.BooleanField(null=True)
     fathers_name = models.CharField(max_length=250, null=True)
     mothers_name = models.CharField(max_length=250, null=True)
-    num_of_dependent_adult = models.IntegerField
-    num_of_dependent_child = models.IntegerField
-    gazetted_war_wounded_freedom_fighter = models.BooleanField
-    government_employee = models.BooleanField
+    num_of_dependent_adult = models.IntegerField(null=True)
+    num_of_dependent_child = models.IntegerField(null=True)
+    gazetted_war_wounded_freedom_fighter = models.BooleanField(null=True)
+    government_employee = models.BooleanField(null=True)
     RESIDENCE_AREA = (
         (1, 'Dhaka and Chittagong City Corporation'),
         (2, 'Other City Corporation'),
         (3, 'Other Areas')
     )
     residence_area = models.IntegerField(choices=RESIDENCE_AREA, null=True)
-    tax_zone = models.IntegerField
-    tax_circle = models.IntegerField
+    tax_zone = models.IntegerField(null=True)
+    tax_circle = models.IntegerField(null=True)
     employer_name = models.CharField(max_length=250, null=True)
     employer_address = models.CharField(max_length=250, null=True)
     employer_bin = models.CharField(max_length=20, null=True)
     present_address_line_one = models.CharField(max_length=250, null=True)
     present_address_line_two = models.CharField(max_length=250, null=True)
-    present_address_postcode = models.IntegerField
+    present_address_postcode = models.IntegerField(null=True)
     present_address_division = models.ForeignKey(Division, on_delete=models.SET_NULL, null=True)
     present_address_district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
-    same_address = models.BooleanField
+    same_address = models.BooleanField(null=True)
     permanent_address = models.CharField(max_length=250, null=True)
     mobile_no = models.CharField(max_length=20, null=True)
     email = models.CharField(max_length=50, null=True)
@@ -85,8 +85,21 @@ class TaxPayer(models.Model):
 
     @property
     def is_resident(self):
-        if self.resident:
-            return self.resident
+        if self.resident is not None:
+            if self.resident:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_non_resident(self):
+        if self.resident is not None:
+            if self.resident:
+                return ""
+            else:
+                return "checked"
         else:
             return ""
 

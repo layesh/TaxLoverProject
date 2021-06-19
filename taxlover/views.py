@@ -105,6 +105,7 @@ def personal_info(request):
         tax_payer.name = request.POST.get('full_name')
         tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
         tax_payer.e_tin = request.POST.get('e_tin')
+        tax_payer.resident = request.POST.get('exampleRadios') == 'True'
         tax_payer.save()
         messages.success(request, f'Your personal info has been updated!')
         context = {

@@ -65,15 +65,15 @@
                             </div>
                             <div class="radio-container">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios1"
-                                           id="exampleRadios1" value="true" checked="checkedqw">
+                                    <input class="form-check-input" type="radio" name="exampleRadios"
+                                           id="exampleRadios1" value="True" {{ tax_payer.is_resident }}>
                                     <label class="form-check-label" for="exampleRadios1">
                                         I'm a resident of Bangladesh
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios"
-                                           id="exampleRadios2" value="false">
+                                           id="exampleRadios2" value="False" {{ tax_payer.is_non_resident }}>
                                     <label class="form-check-label" for="exampleRadios2">
                                         I'm not a resident of Bangladesh
                                     </label>
