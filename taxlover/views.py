@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 
 import json
@@ -95,19 +96,21 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def personal_info(request):
     if request.method == 'POST':
         tax_payer = TaxPayer.objects.get(user_id=request.user.id)
-        # form = TaxPayerForm(request.POST, instance=tax_payer)
 
-        # if form.is_valid():
-        #     form.save()
-        #     messages.success(request, f'Your personal info has been updated!')
-
-        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
-        tax_payer.name = request.POST.get('full_name')
-        tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
         tax_payer.e_tin = request.POST.get('e_tin')
+        tax_payer.nid = request.POST.get('nid')
+        tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
+        tax_payer.mobile_no = request.POST.get('contact_no')
+        tax_payer.tax_circle = request.POST.get('tax_circle')
+        tax_payer.tax_zone = request.POST.get('tax_zone')
+
+        tax_payer.name = request.POST.get('full_name')
+
         tax_payer.resident = request.POST.get('residentRadios') == 'True'
+
         tax_payer.save()
         messages.success(request, f'Your personal info has been updated!')
+
         context = {
             'tax_payer': tax_payer,
             'title': 'Personal Info'

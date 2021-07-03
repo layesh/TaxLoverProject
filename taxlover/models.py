@@ -70,6 +70,20 @@ class TaxPayer(models.Model):
         return self.name
 
     @property
+    def get_e_tin(self):
+        if self.e_tin:
+            return self.e_tin
+        else:
+            return ""
+
+    @property
+    def get_nid(self):
+        if self.nid:
+            return self.nid
+        else:
+            return ""
+
+    @property
     def get_dob(self):
         if self.dob:
             return self.dob.strftime(("%d/%m/%Y"))
@@ -77,9 +91,23 @@ class TaxPayer(models.Model):
             return ""
 
     @property
-    def get_e_tin(self):
-        if self.e_tin:
-            return self.e_tin
+    def get_contact_no(self):
+        if self.mobile_no:
+            return self.mobile_no
+        else:
+            return ""
+
+    @property
+    def get_tax_circle(self):
+        if self.tax_circle:
+            return self.tax_circle
+        else:
+            return ""
+
+    @property
+    def get_tax_zone(self):
+        if self.tax_zone:
+            return self.tax_zone
         else:
             return ""
 

@@ -10,32 +10,32 @@
                             <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">DIGITS</div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="floatingInput" name="e_tin"
-                                       placeholder="name@example.com" value="{{ tax_payer.get_e_tin }}">
+                                       placeholder="123456123456" value="{{ tax_payer.get_e_tin }}" minlength="12" maxlength="12">
                                 <label for="floatingInput">E-TIN</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="nid"
+                                       placeholder="18981925740846585" value="{{ tax_payer.get_nid }}">
                                 <label for="floatingInput">NID</label>
                             </div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="datepicker" name="dob"
-                                       placeholder="name@example.com" value="{{ tax_payer.get_dob }}" required>
+                                       placeholder="01/01/1950" value="{{ tax_payer.get_dob }}" required>
                                 <label for="floatingInput">Date Of Birth</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="contact_no"
+                                       placeholder="01785965689" value="{{ tax_payer.get_contact_no }}">
                                 <label for="floatingInput">Contact No</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="tax_circle"
+                                       placeholder="247" value="{{ tax_payer.get_tax_circle }}" required>
                                 <label for="floatingInput">Taxes Circle</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="tax_zone"
+                                       placeholder="12" value="{{ tax_payer.get_tax_zone }}" required>
                                 <label for="floatingInput">Taxes Zone</label>
                             </div>
                         </div>
