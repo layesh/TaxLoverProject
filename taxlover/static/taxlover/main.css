@@ -120,3 +120,8 @@ a.article-title:hover {
 .radio-container {
     padding: 0.7rem;
 }
+
+.required:after {
+    content: " *";
+    color: red;
+}

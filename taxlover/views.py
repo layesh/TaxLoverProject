@@ -105,6 +105,7 @@ def personal_info(request):
         tax_payer.tax_zone = request.POST.get('tax_zone')
 
         tax_payer.name = request.POST.get('full_name')
+        tax_payer.spouse_name = request.POST.get('spouse_name')
 
         tax_payer.resident = request.POST.get('residentRadios') == 'True'
 

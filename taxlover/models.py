@@ -131,6 +131,20 @@ class TaxPayer(models.Model):
         else:
             return ""
 
+    @property
+    def get_name(self):
+        if self.name:
+            return self.name
+        else:
+            return ""
+
+    @property
+    def get_spouse_name(self):
+        if self.spouse_name:
+            return self.spouse_name
+        else:
+            return ""
+
 
 class Salary(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)

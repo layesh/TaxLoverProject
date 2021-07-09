@@ -21,7 +21,7 @@
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="datepicker" name="dob"
                                        placeholder="01/01/1950" value="{{ tax_payer.get_dob }}" required>
-                                <label for="floatingInput">Date Of Birth</label>
+                                <label for="floatingInput" class="required">Date Of Birth</label>
                             </div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="floatingInput" name="contact_no"
@@ -31,12 +31,12 @@
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="floatingInput" name="tax_circle"
                                        placeholder="247" value="{{ tax_payer.get_tax_circle }}" required>
-                                <label for="floatingInput">Taxes Circle</label>
+                                <label for="floatingInput" class="required">Taxes Circle</label>
                             </div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="floatingInput" name="tax_zone"
                                        placeholder="12" value="{{ tax_payer.get_tax_zone }}" required>
-                                <label for="floatingInput">Taxes Zone</label>
+                                <label for="floatingInput" class="required">Taxes Zone</label>
                             </div>
                         </div>
                     </div>
@@ -45,12 +45,12 @@
                             <div style="font-size: large;padding-bottom: 8px;text-align: center; font-weight: bold; color: dodgerblue">NAMES & ADDRESSES</div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="name" name="full_name"
-                                       placeholder="name@example.com" value="{{ tax_payer.name }}" required>
-                                <label for="floatingInput">Full Name</label>
+                                       placeholder="Mr. ABC" value="{{ tax_payer.get_name }}" required>
+                                <label for="floatingInput" class="required">Full Name</label>
                             </div>
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com">
+                                <input type="text" class="form-control" id="floatingInput" name="spouse_name"
+                                       placeholder="Mrs. XYZ" value="{{ tax_payer.get_spouse_name }}">
                                 <label for="floatingInput">Spouse Name</label>
                             </div>
                             <div class="form-floating mb-2">
