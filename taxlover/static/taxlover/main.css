@@ -125,3 +125,7 @@ a.article-title:hover {
     content: " *";
     color: red;
 }
+
+.address-textarea {
+    height: 100px !important;
+}

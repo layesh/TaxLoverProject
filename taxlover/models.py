@@ -1,4 +1,5 @@
 from decimal import Decimal
+from enum import Enum
 
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
@@ -21,6 +22,12 @@ class District(models.Model):
         return self.name
 
 
+class GenderChoices(Enum):
+    M = 'Male'
+    F = 'Female'
+    T = 'Transgender'
+
+
 class TaxPayer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=250, null=True)
@@ -30,12 +37,12 @@ class TaxPayer(models.Model):
     spouse_name = models.CharField(max_length=250, null=True)
     spouse_e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
     has_differently_abled_children = models.BooleanField(null=True)
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('T', 'Transgender')
-    )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
+    # GENDER_CHOICES = (
+    #     ('M', 'Male'),
+    #     ('F', 'Female'),
+    #     ('T', 'Transgender')
+    # )
+    gender = models.CharField(max_length=1, choices=[(tag, tag.value) for tag in GenderChoices], null=True)
     resident = models.BooleanField(null=True)
     nid = models.CharField(max_length=17, null=True)
     differently_abled = models.BooleanField(null=True)
@@ -73,6 +80,13 @@ class TaxPayer(models.Model):
     def get_e_tin(self):
         if self.e_tin:
             return self.e_tin
+        else:
+            return ""
+
+    @property
+    def get_spouse_e_tin(self):
+        if self.spouse_e_tin:
+            return self.spouse_e_tin
         else:
             return ""
 
@@ -142,6 +156,98 @@ class TaxPayer(models.Model):
     def get_spouse_name(self):
         if self.spouse_name:
             return self.spouse_name
+        else:
+            return ""
+
+    @property
+    def is_single(self):
+        if self.married is not None:
+            if self.married:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def is_married(self):
+        if self.married is not None:
+            if self.married:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def get_fathers_name(self):
+        if self.fathers_name:
+            return self.fathers_name
+        else:
+            return ""
+
+    @property
+    def get_mothers_name(self):
+        if self.mothers_name:
+            return self.mothers_name
+        else:
+            return ""
+
+    @property
+    def get_present_address_line_one(self):
+        if self.present_address_line_one:
+            return self.present_address_line_one
+        else:
+            return ""
+
+    @property
+    def get_permanent_address(self):
+        if self.permanent_address:
+            return self.permanent_address
+        else:
+            return ""
+
+    @property
+    def get_email(self):
+        if self.email:
+            return self.email
+        else:
+            return ""
+
+    @property
+    def is_male(self):
+        if self.gender is not None:
+            if self.gender and self.gender == GenderChoices.M.name:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_female(self):
+        if self.gender is not None:
+            if self.gender and self.gender == GenderChoices.F.name:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def get_employer_name(self):
+        if self.employer_name:
+            return self.employer_name
+        else:
+            return ""
+
+    @property
+    def is_gazetted_war_wounded_freedom_fighter(self):
+        if self.gazetted_war_wounded_freedom_fighter is not None:
+            if self.gazetted_war_wounded_freedom_fighter:
+                return "checked"
+            else:
+                return ""
         else:
             return ""
 

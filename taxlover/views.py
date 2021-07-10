@@ -105,9 +105,25 @@ def personal_info(request):
         tax_payer.tax_zone = request.POST.get('tax_zone')
 
         tax_payer.name = request.POST.get('full_name')
-        tax_payer.spouse_name = request.POST.get('spouse_name')
+        tax_payer.fathers_name = request.POST.get('fathers_name')
+        tax_payer.mothers_name = request.POST.get('mothers_name')
+        tax_payer.present_address_line_one = request.POST.get('present_address_line_one')
+        tax_payer.permanent_address = request.POST.get('permanent_address')
+        tax_payer.email = request.POST.get('email')
+        tax_payer.employer_name = request.POST.get('employer_name')
 
         tax_payer.resident = request.POST.get('residentRadios') == 'True'
+        tax_payer.married = request.POST.get('maritalStatusRadios') == 'True'
+        tax_payer.gender = request.POST.get('genderRadios')
+
+        if tax_payer.is_married:
+            tax_payer.spouse_name = request.POST.get('spouse_name')
+            tax_payer.spouse_e_tin = request.POST.get('spouse_e_tin')
+        else:
+            tax_payer.spouse_name = ''
+            tax_payer.spouse_e_tin = ''
+
+        tax_payer.gazetted_war_wounded_freedom_fighter = "gazetted_war_wounded_freedom_fighter" in request.POST
 
         tax_payer.save()
         messages.success(request, f'Your personal info has been updated!')
