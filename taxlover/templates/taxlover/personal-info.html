@@ -18,7 +18,8 @@
                             </div>
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control" id="floatingInput" name="nid"
-                                       placeholder="18981925740846585" value="{{ tax_payer.get_nid }}">
+                                       placeholder="18981925740846585" value="{{ tax_payer.get_nid }}" minlength="10"
+                                       maxlength="17">
                                 <label for="floatingInput">NID</label>
                             </div>
                             <div class="form-floating mb-2">
