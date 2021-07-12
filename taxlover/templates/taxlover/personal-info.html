@@ -166,33 +166,39 @@
                                         freedom fighter</label>
                                 </div>
                                 <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                           name="differently_abled"
+                                            {{ tax_payer.is_differently_abled }}>
                                     <label class="form-check-label" for="flexSwitchCheckChecked">I'm a differently abled
                                         person</label>
                                 </div>
                                 <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                           name="aged_65_years_or_more"
+                                            {{ tax_payer.is_aged_65_years_or_more }}>
                                     <label class="form-check-label" for="flexSwitchCheckChecked">I'm aged 65 years or
                                         more</label>
                                 </div>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                           name="has_differently_abled_children"
+                                            {{ tax_payer.is_has_differently_abled_children }}>
                                     <label class="form-check-label" for="flexSwitchCheckChecked">I am a parent/legal
                                         guardian of a differently abled person</label>
                                 </div>
                             </div>
-                            <div class="radio-container" style="padding-top: 0px !important;">
+                            <div class="radio-container padding-top-0">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios24"
-                                           id="exampleRadios5" value="option5" checked>
-                                    <label class="form-check-label" for="exampleRadios5">
+                                    <input class="form-check-input" type="radio" name="governmentEmployeeRadios"
+                                           id="governmentEmployeeRadios1" value="True" {{ tax_payer.is_government_employee }} required>
+                                    <label class="form-check-label" for="governmentEmployeeRadios1">
                                         I'm a government employee
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios24"
-                                           id="exampleRadios6" value="option6">
-                                    <label class="form-check-label" for="exampleRadios6">
+                                    <input class="form-check-input" type="radio" name="governmentEmployeeRadios"
+                                           id="governmentEmployeeRadios2" value="False" {{ tax_payer.is_non_government_employee }}>
+                                    <label class="form-check-label" for="governmentEmployeeRadios2">
                                         I'm not a government employee
                                     </label>
                                 </div>

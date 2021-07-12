@@ -115,6 +115,7 @@ def personal_info(request):
         tax_payer.resident = request.POST.get('residentRadios') == 'True'
         tax_payer.married = request.POST.get('maritalStatusRadios') == 'True'
         tax_payer.gender = request.POST.get('genderRadios')
+        tax_payer.government_employee = request.POST.get('governmentEmployeeRadios') == 'True'
 
         if tax_payer.is_married:
             tax_payer.spouse_name = request.POST.get('spouse_name')
@@ -124,6 +125,9 @@ def personal_info(request):
             tax_payer.spouse_e_tin = ''
 
         tax_payer.gazetted_war_wounded_freedom_fighter = "gazetted_war_wounded_freedom_fighter" in request.POST
+        tax_payer.differently_abled = "differently_abled" in request.POST
+        tax_payer.aged_65_years_or_more = "aged_65_years_or_more" in request.POST
+        tax_payer.has_differently_abled_children = "has_differently_abled_children" in request.POST
 
         tax_payer.save()
         messages.success(request, f'Your personal info has been updated!')

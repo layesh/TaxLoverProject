@@ -72,6 +72,7 @@ class TaxPayer(models.Model):
     permanent_address = models.CharField(max_length=250, null=True)
     mobile_no = models.CharField(max_length=20, null=True)
     email = models.CharField(max_length=50, null=True)
+    aged_65_years_or_more = models.BooleanField(null=True)
 
     def __str__(self):
         return self.name
@@ -248,6 +249,56 @@ class TaxPayer(models.Model):
                 return "checked"
             else:
                 return ""
+        else:
+            return ""
+
+    @property
+    def is_differently_abled(self):
+        if self.differently_abled is not None:
+            if self.differently_abled:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_aged_65_years_or_more(self):
+        if self.aged_65_years_or_more is not None:
+            if self.aged_65_years_or_more:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_has_differently_abled_children(self):
+        if self.has_differently_abled_children is not None:
+            if self.has_differently_abled_children:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_government_employee(self):
+        if self.government_employee is not None:
+            if self.government_employee:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def is_non_government_employee(self):
+        if self.government_employee is not None:
+            if self.government_employee:
+                return ""
+            else:
+                return "checked"
         else:
             return ""
 
