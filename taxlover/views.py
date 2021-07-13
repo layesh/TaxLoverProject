@@ -284,3 +284,11 @@ def generate(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+@login_required
+def download_return(request):
+    context = {
+        'title': 'Download Return'
+    }
+    return render(request, 'taxlover/download-return.html', context)
+
