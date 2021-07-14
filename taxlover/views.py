@@ -137,7 +137,10 @@ def personal_info(request):
             'title': 'Personal Info'
         }
     else:
-        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        try:
+            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        except TaxPayer.DoesNotExist:
+            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
         context = {
             'tax_payer': tax_payer,
             'title': 'Personal Info'
