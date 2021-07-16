@@ -38,7 +38,9 @@ python manage.py createsuperuser
 Start the app using 
 
 ```
-py manage.py runserver
+py manage.py runserver 0.0.0.0:8000
+or
+python manage.py runserver 0.0.0.0:8000
 ```
 
 Then navigate to:
