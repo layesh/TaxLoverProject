@@ -9,6 +9,7 @@ import datetime
 from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
+from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import TaxPayerForm
 from taxlover.models import TaxPayer, Salary
 from taxlover.utils import parse_data
@@ -269,6 +270,7 @@ def link_callback(uri, rel):
 @login_required(login_url='/admin/login/')
 def generate(request):
     latest_tax_payer = TaxPayer.objects.get(name='Md Khairul Bashar Chowdhury')
+    tax_payer_dto = TaxPayerDTO(latest_tax_payer)
     context = {
         'latest_tax_payer': latest_tax_payer,
     }
