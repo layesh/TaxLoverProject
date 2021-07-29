@@ -15,6 +15,10 @@
         line-height: 1.1;
     }
 
+    .font-size-12 {
+        font-size: 12px;
+    }
+
     .font-size-13 {
         font-size: 13px;
     }
@@ -167,6 +171,15 @@
     .basic-info-non-resident-td {
         padding: 0;
         vertical-align: top;
+    }
+
+    .padding-top-2 {
+        padding-top: 2px;
+    }
+
+    .basic-info-dob-row {
+        padding-bottom: 4px;
+        padding-right: 8px;
     }
 
 </style>
@@ -401,7 +414,7 @@
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px">
+        <tr class="padding-bottom-10">
             <td class="table-td-vertical-align-top" rowspan="3">
                 10
             </td>
@@ -409,74 +422,108 @@
                 Tick on the box(es) below if you are:
             </td>
         </tr>
-        <tr style="padding-bottom: 4px;padding-right: 8px; padding-top: 4px">
-            <td width="50px" class="table-td-vertical-align-top" style="padding-top: 2px">
+
+        <tr class="basic-info-row1">
+            <td width="50px" class="table-td-vertical-align-top padding-top-2">
                 10A
             </td>
             <td class="table-td-vertical-align-top">
                 <table>
                     <tr>
-                        <td style="padding: 0 0 0 2px; vertical-align: top">A gazetted war-wounded freedom fighter</td>
-                        <td class="assessment-year-inner-td-even"></td>
+                        <td class="basic-info-row1-yes-no-td">A gazetted war-wounded freedom fighter</td>
+                        <td class="assessment-year-inner-td-even">
+                            {% if tax_payer.is_gazetted_war_wounded_freedom_fighter %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
-            <td class="table-td-vertical-align-top" style="padding-top: 2px">
+            <td class="table-td-vertical-align-top padding-top-2">
                 10B
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 <table>
                     <tr>
-                        <td style="padding: 0 0 0 2px; vertical-align: top">A person with disability</td>
-                        <td class="assessment-year-inner-td-even"></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr style="padding-bottom: 4px;padding-right: 8px; padding-top: 4px">
-            <td width="50px" class="table-td-vertical-align-top" style="padding-top: 2px">
-                10C
-            </td>
-            <td class="table-td-vertical-align-top">
-                <table>
-                    <tr>
-                        <td style="padding: 0 0 0 2px; vertical-align: top">Aged 65 years or more</td>
-                        <td class="assessment-year-inner-td-even"></td>
-                    </tr>
-                </table>
-            </td>
-            <td class="table-td-vertical-align-top" style="padding-top: 2px">
-                10D
-            </td>
-            <td colspan="2" class="table-td-vertical-align-top">
-                <table>
-                    <tr>
-                        <td style="padding: 0 0 0 2px; vertical-align: top">A parent/legal guardian of a person with disability</td>
-                        <td class="assessment-year-inner-td-even"></td>
+                        <td class="basic-info-row1-yes-no-td">A person with disability</td>
+                        <td class="assessment-year-inner-td-even">
+                            {% if tax_payer.is_differently_abled %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 4px;padding-right: 8px;">
+        <tr class="basic-info-row1">
+            <td width="50px" class="table-td-vertical-align-top padding-top-2">
+                10C
+            </td>
+            <td class="table-td-vertical-align-top">
+                <table>
+                    <tr>
+                        <td class="basic-info-row1-yes-no-td">Aged 65 years or more</td>
+                        <td class="assessment-year-inner-td-even">
+                            {% if tax_payer.is_aged_65_years_or_more %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td class="table-td-vertical-align-top padding-top-2">
+                10D
+            </td>
+            <td colspan="2" class="table-td-vertical-align-top">
+                <table>
+                    <tr>
+                        <td class="basic-info-row1-yes-no-td">A parent/legal guardian of a person with disability</td>
+                        <td class="assessment-year-inner-td-even">
+                            {% if tax_payer.is_has_differently_abled_children %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="basic-info-dob-row">
             <td width="35px" class="table-td-vertical-align-top">
                 11
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
-                Date of birth <span style="font-size: 12px">(DD-MM-YYYY)</span>
+                Date of birth <span class="font-size-12">(DD-MM-YYYY)</span>
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_day_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_day_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_mon_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_mon_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_year_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_year_digit_2 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_year_digit_3 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.dob_year_digit_4 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -488,9 +535,13 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even-2">2020</td>
+                        <td class="assessment-year-inner-td-even-2">
+                            <span class="filled-text">{{ tax_payer.income_year_beg }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-to">to</td>
-                        <td class="assessment-year-inner-td-even-2">2020</td>
+                        <td class="assessment-year-inner-td-even-2">
+                            <span class="filled-text">{{ tax_payer.income_year_end }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>

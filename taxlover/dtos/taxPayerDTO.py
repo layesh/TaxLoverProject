@@ -36,4 +36,23 @@ class TaxPayerDTO:
         self.is_resident = payer.is_resident
         self.is_non_resident = payer.is_non_resident
 
+        self.is_gazetted_war_wounded_freedom_fighter = payer.is_gazetted_war_wounded_freedom_fighter
+        self.is_differently_abled = payer.is_differently_abled
+        self.is_aged_65_years_or_more = payer.is_aged_65_years_or_more
+        self.is_has_differently_abled_children = payer.is_has_differently_abled_children
+
+        self.dob_day_digit_1 = payer.get_dob[0] if payer.get_dob else ""
+        self.dob_day_digit_2 = payer.get_dob[1] if payer.get_dob else ""
+
+        self.dob_mon_digit_1 = payer.get_dob[3] if payer.get_dob else ""
+        self.dob_mon_digit_2 = payer.get_dob[4] if payer.get_dob else ""
+
+        self.dob_year_digit_1 = payer.get_dob[6] if payer.get_dob else ""
+        self.dob_year_digit_2 = payer.get_dob[7] if payer.get_dob else ""
+        self.dob_year_digit_3 = payer.get_dob[8] if payer.get_dob else ""
+        self.dob_year_digit_4 = payer.get_dob[9] if payer.get_dob else ""
+
+        self.income_year_beg = assessment_year_beg - 1
+        self.income_year_end = assessment_year_beg
+
 
