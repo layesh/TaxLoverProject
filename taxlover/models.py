@@ -302,6 +302,13 @@ class TaxPayer(models.Model):
         else:
             return ""
 
+    @property
+    def get_bin(self):
+        if self.employer_bin:
+            return self.employer_bin
+        else:
+            return ""
+
 
 class Salary(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)

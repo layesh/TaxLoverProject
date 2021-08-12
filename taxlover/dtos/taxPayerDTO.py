@@ -55,4 +55,22 @@ class TaxPayerDTO:
         self.income_year_beg = assessment_year_beg - 1
         self.income_year_end = assessment_year_beg
 
+        self.employer_name = payer.get_employer_name
+
+        self.spouse_name = payer.get_spouse_name
+        self.spouse_tin = payer.get_spouse_e_tin
+
+        self.fathers_name = payer.get_fathers_name
+        self.mothers_name = payer.get_mothers_name
+
+        self.present_address = payer.get_present_address_line_one
+        self.permanent_address = payer.get_permanent_address
+
+        self.contact_no = payer.get_contact_no
+        self.email = payer.get_email
+
+        self.nid = payer.get_nid
+        self.bin = payer.get_bin
+
+
 

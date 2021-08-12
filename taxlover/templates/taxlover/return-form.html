@@ -129,7 +129,7 @@
     }
 
     .filled-text {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: bold;
     }
 
@@ -166,6 +166,10 @@
 
     .padding-bottom-10 {
         padding-bottom: 10px;
+    }
+
+    .padding-bottom-38 {
+        padding-bottom: 38px;
     }
 
     .basic-info-non-resident-td {
@@ -547,87 +551,109 @@
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px;padding-right: 8px;">
+        <tr class="{% if tax_payer.employer_name == '' %} padding-bottom-10 {% endif %}">
             <td width="35px" class="table-td-vertical-align-top">
                 13
             </td>
             <td colspan="5" class="table-td-vertical-align-top">
                 If employed, employer’s name
+                <br/>
+                <span class="filled-text">{{ tax_payer.employer_name }}</span>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px">
+        <tr class="{% if tax_payer.spouse_name == '' and tax_payer.spouse_tin == '' %} padding-bottom-10 {% endif %}">
             <td class="table-td-vertical-align-top">
                 14
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 Spouse Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.spouse_name }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 15
             </td>
-            <td colspan="2">
+            <td colspan="2" class="table-td-vertical-align-top">
                 Spouse TIN (if any)
+                <br/>
+                <span class="filled-text">{{ tax_payer.spouse_tin }}</span>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px">
+        <tr class="{% if tax_payer.fathers_name == '' and tax_payer.mothers_name == '' %} padding-bottom-10 {% endif %}">
             <td class="table-td-vertical-align-top">
                 16
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 Father’s Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.fathers_name }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 17
             </td>
-            <td colspan="2">
+            <td colspan="2" class="table-td-vertical-align-top">
                 Mother’s Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.mothers_name }}</span>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 38px">
+        <tr class="{% if tax_payer.present_address == '' and tax_payer.permanent_address == '' %} padding-bottom-38 {% endif %}">
             <td class="table-td-vertical-align-top">
                 18
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 Present Address
+                <br/>
+                <span class="filled-text">{{ tax_payer.present_address }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 19
             </td>
-            <td colspan="2">
+            <td colspan="2" class="table-td-vertical-align-top">
                 Permanent Address
+                <br/>
+                <span class="filled-text">{{ tax_payer.permanent_address }}</span>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px">
+        <tr class="{% if tax_payer.contact_no == '' and tax_payer.email == '' %} padding-bottom-10 {% endif %}">
             <td class="table-td-vertical-align-top">
                 20
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 Contact Telephone
+                <br/>
+                <span class="filled-text">{{ tax_payer.contact_no }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 21
             </td>
-            <td colspan="2">
+            <td colspan="2" class="table-td-vertical-align-top">
                 E-mail
+                <br/>
+                <span class="filled-text">{{ tax_payer.email }}</span>
             </td>
         </tr>
 
-        <tr style="padding-bottom: 10px">
+        <tr class="{% if tax_payer.nid == '' and tax_payer.bin == '' %} padding-bottom-10 {% endif %}">
             <td class="table-td-vertical-align-top">
                 22
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 National Identification Number
+                <br/>
+                <span class="filled-text">{{ tax_payer.nid }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 23
             </td>
-            <td colspan="2">
+            <td colspan="2" class="table-td-vertical-align-top">
                 Business Identification Number(s)
+                <br/>
+                <span class="filled-text">{{ tax_payer.bin }}</span>
             </td>
         </tr>
 
