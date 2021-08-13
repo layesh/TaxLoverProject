@@ -133,3 +133,7 @@ a.article-title:hover {
 .padding-top-0 {
     padding-top: 0 !important;
 }
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
