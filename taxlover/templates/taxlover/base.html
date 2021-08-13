@@ -47,15 +47,15 @@
                                href="{% url 'personal-info'  %}">Personal Info</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                            <a class="nav-link dropdown-toggle {% if title in 'Income, Assets' %}active{% endif %}" href="#" id="navbarScrollingDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Income & Expenses
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"
-                                       href="#">Income</a></li>
-                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"
-                                       href="#">Assets</a></li>
+                                <li><a class="dropdown-item {% if title == 'Income' %}active{% endif %}"
+                                       href="{% url 'income'  %}">Income</a></li>
+                                <li><a class="dropdown-item {% if title == 'Assets' %}active{% endif %}"
+                                       href="{% url 'assets'  %}">Assets</a></li>
                                 <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}" href="#">Liabilities</a>
                                 </li>
                                 <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"

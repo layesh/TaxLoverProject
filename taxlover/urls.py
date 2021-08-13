@@ -22,6 +22,8 @@ urlpatterns = [
     path('salary/<int:pk>/update/', SalaryUpdateView.as_view(), name='salary-update'),
     path('salary/<int:pk>/delete/', SalaryDeleteView.as_view(), name='salary-delete'),
     path('personal-info/', views.personal_info, name='personal-info'),
+    path('income/', views.income, name='income'),
+    path('assets/', views.assets, name='assets'),
     path('generate/', views.generate, name='generate'),
     path('download-return/', views.download_return, name='download-return')
 ]

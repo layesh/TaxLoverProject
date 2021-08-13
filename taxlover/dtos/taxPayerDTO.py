@@ -72,5 +72,18 @@ class TaxPayerDTO:
         self.nid = payer.get_nid
         self.bin = payer.get_bin
 
+        self.tin_digit_1 = self.tin[0]
+        self.tin_digit_2 = self.tin[1]
+        self.tin_digit_3 = self.tin[2]
+        self.tin_digit_4 = self.tin[3]
+        self.tin_digit_5 = self.tin[4]
+        self.tin_digit_6 = self.tin[5]
+        self.tin_digit_7 = self.tin[6]
+        self.tin_digit_8 = self.tin[7]
+        self.tin_digit_9 = self.tin[8]
+        self.tin_digit_10 = self.tin[9]
+        self.tin_digit_11 = self.tin[10]
+        self.tin_digit_12 = self.tin[11]
+
 
 

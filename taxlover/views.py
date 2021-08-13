@@ -149,6 +149,48 @@ def personal_info(request):
     return render(request, 'taxlover/personal-info.html', context)
 
 
+@login_required
+def income(request):
+    if request.method == 'POST':
+        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Income'
+        }
+    else:
+        try:
+            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        except TaxPayer.DoesNotExist:
+            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Income'
+        }
+    return render(request, 'taxlover/personal-info.html', context)
+
+
+@login_required
+def assets(request):
+    if request.method == 'POST':
+        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Assets'
+        }
+    else:
+        try:
+            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        except TaxPayer.DoesNotExist:
+            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
+        context = {
+            'tax_payer': tax_payer,
+            'title': 'Assets'
+        }
+    return render(request, 'taxlover/personal-info.html', context)
+
+
 def index(request):
     et_sess = ExtractTable(api_key='qAm4mcOR3p5qZsMk2IM9m3hXk0BF7IbR5WheMLIK')  # Replace your VALID API Key here
     print(et_sess.check_usage())  # Checks the API Key validity as well as shows associated plan usage

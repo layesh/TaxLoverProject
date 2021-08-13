@@ -186,6 +186,17 @@
         padding-right: 8px;
     }
 
+    .padding-5-2-2-3 {
+        padding: 5px 2px 2px 3px;
+    }
+
+    .tin-label {
+        width: 170px;
+        text-align: right;
+        padding-right: 12px;
+        vertical-align: middle;
+    }
+
 </style>
 <body>
     {#    Page 01 #}
@@ -667,43 +678,67 @@
 
     <table>
         <tr>
-            <td align="center" style="font-size: 17px;">
+            <td align="center" class="font-size-17">
                 <b>PART II</b>
             </td>
         </tr>
         <tr>
-            <td align="center" style="font-size: 17px;">
+            <td align="center" class="font-size-17">
                 <b>Particulars of Income and Tax</b>
             </td>
         </tr>
-        <tr style="padding-bottom: 10px">
-            <td align="center" style="font-size: 17px;">
-                <table style="padding: 5px 2px 2px 3px">
+        <tr class="padding-bottom-10">
+            <td align="center" class="font-size-17">
+                <table class="padding-5-2-2-3">
                     <tr>
-                        <td style="width: 170px; text-align: right;padding-right: 12px;vertical-align: middle">TIN:</td>
-                        <td class="assessment-year-inner-td-even-3"><b>2</b></td>
+                        <td class="tin-label">TIN:</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_4 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_5 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_6 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_7 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_8 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_9 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_10 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_11 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_12 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
