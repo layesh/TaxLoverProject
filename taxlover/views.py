@@ -167,7 +167,7 @@ def income(request):
             'tax_payer': tax_payer,
             'title': 'Income'
         }
-    return render(request, 'taxlover/personal-info.html', context)
+    return render(request, 'taxlover/income.html', context)
 
 
 @login_required

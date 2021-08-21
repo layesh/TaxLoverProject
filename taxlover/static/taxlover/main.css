@@ -134,6 +134,14 @@ a.article-title:hover {
     padding-top: 0 !important;
 }
 
+.padding-top-8 {
+    padding-top: 8px;
+}
+
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+.hor-align-center {
+    text-align: center;
 }
