@@ -339,3 +339,11 @@ def download_return(request):
     }
     return render(request, 'taxlover/download-return.html', context)
 
+
+@login_required
+def save_income_data(request, source, answer):
+    context = {
+        'title': 'Download Return'
+    }
+    return render(request, 'taxlover/download-return.html', context)
+

@@ -18,7 +18,8 @@
                                 <strong>Do you have any salary income?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off">
+                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "salary" "yes" %}'">
                                     <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
                                     <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
                                     <label class="btn btn-outline-success" for="btncheckno">No</label>
@@ -85,10 +86,10 @@
                                 <strong>Do you have any income from capital gain?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckyes" autocomplete="off">
+                                    <label class="btn btn-outline-success" for="capitalgainbtncheckyes">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckno" autocomplete="off">
+                                    <label class="btn btn-outline-success" for="capitalgainbtncheckno">No</label>
                                 </div>
                             </div>
                         </div>

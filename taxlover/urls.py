@@ -25,5 +25,6 @@ urlpatterns = [
     path('income/', views.income, name='income'),
     path('assets/', views.assets, name='assets'),
     path('generate/', views.generate, name='generate'),
-    path('download-return/', views.download_return, name='download-return')
+    path('download-return/', views.download_return, name='download-return'),
+    path('save-income-data/<str:source>/<str:answer>/', views.save_income_data, name='save-income-data')
 ]
