@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.core.exceptions import ValidationError
 from django.shortcuts import render
 
 import json
@@ -10,9 +9,9 @@ from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import TaxPayerForm
 from taxlover.models import TaxPayer, Salary
-from taxlover.utils import parse_data
+from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
+    get_assessment_years
 
 import os
 from django.conf import settings
@@ -33,10 +32,7 @@ from django.views.generic import (
 
 @login_required
 def home(request):
-    current_month = datetime.date.today().month
-    current_year = datetime.date.today().year
-    tax_year_beg = current_year if current_month > 6 else current_year - 1
-    tax_year_end = tax_year_beg + 1
+    tax_year_beg, tax_year_end = get_assessment_years()
 
     context = {
         'salaries': Salary.objects.all(),
@@ -96,7 +92,7 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def personal_info(request):
     if request.method == 'POST':
-        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+        tax_payer = create_or_get_tax_payer_obj(request.user.id)
 
         tax_payer.e_tin = request.POST.get('e_tin')
         tax_payer.nid = request.POST.get('nid')
@@ -138,10 +134,8 @@ def personal_info(request):
             'title': 'Personal Info'
         }
     else:
-        try:
-            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
-        except TaxPayer.DoesNotExist:
-            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
+        tax_payer = create_or_get_tax_payer_obj(request.user.id)
+
         context = {
             'tax_payer': tax_payer,
             'title': 'Personal Info'
@@ -151,22 +145,36 @@ def personal_info(request):
 
 @login_required
 def income(request):
-    if request.method == 'POST':
-        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+    tax_payer = create_or_get_tax_payer_obj(request.user.id)
+    latest_income = create_or_get_latest_income_obj(request.user.id)
 
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Income'
-        }
-    else:
-        try:
-            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
-        except TaxPayer.DoesNotExist:
-            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Income'
-        }
+    context = {
+        'tax_payer': tax_payer,
+        'latest_income': latest_income,
+        'title': 'Income'
+    }
+
+    return render(request, 'taxlover/income.html', context)
+
+
+@login_required
+def save_income_data(request, source, answer):
+    latest_income = create_or_get_latest_income_obj(request.user.id)
+
+    if source == 'salary':
+        if answer == 'yes':
+            latest_income.salary = True
+        elif answer == 'no':
+            latest_income.salary = False
+
+    latest_income.save()
+    messages.success(request, f'Data updated successfully!')
+
+    context = {
+        'latest_income': latest_income,
+        'title': 'Income'
+    }
+
     return render(request, 'taxlover/income.html', context)
 
 
@@ -334,14 +342,6 @@ def generate(request):
 
 @login_required
 def download_return(request):
-    context = {
-        'title': 'Download Return'
-    }
-    return render(request, 'taxlover/download-return.html', context)
-
-
-@login_required
-def save_income_data(request, source, answer):
     context = {
         'title': 'Download Return'
     }

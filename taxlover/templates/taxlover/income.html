@@ -18,11 +18,12 @@
                                 <strong>Do you have any salary income?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off"
-                                           onclick="location.href='{% url "save-income-data" "salary" "yes" %}'">
-                                    <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="salaryyesbtn" autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "salary" "yes" %}'" {{ latest_income.has_salary_income }}>
+                                    <label class="btn btn-outline-success" for="salaryyesbtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="salarynobtn" autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "salary" "no" %}'" {{ latest_income.has_no_salary_income }}>
+                                    <label class="btn btn-outline-success" for="salarynobtn">No</label>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +74,7 @@
             </div>
             <div class="col">
                 <div class="accordion" id="accordionRightIncome">
-                <div class="accordion-item">
+                    <div class="accordion-item">
                         <h2 class="accordion-header" id="headingEight">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
@@ -86,9 +87,11 @@
                                 <strong>Do you have any income from capital gain?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckyes" autocomplete="off">
+                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckyes"
+                                           autocomplete="off">
                                     <label class="btn btn-outline-success" for="capitalgainbtncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckno" autocomplete="off">
+                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckno"
+                                           autocomplete="off">
                                     <label class="btn btn-outline-success" for="capitalgainbtncheckno">No</label>
                                 </div>
                             </div>

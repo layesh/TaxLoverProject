@@ -1,16 +1,15 @@
 import datetime
 
+from taxlover.utils import get_assessment_years
+
 
 class TaxPayerDTO:
 
     def __init__(self, payer):
-        current_month = datetime.date.today().month
-        current_year = datetime.date.today().year
-
-        assessment_year_beg = current_year if current_month > 6 else current_year - 1
+        assessment_year_beg, assessment_year_end = get_assessment_years()
 
         assessment_year_beg_str = str(assessment_year_beg)
-        assessment_year_end_str = str(assessment_year_beg + 1)
+        assessment_year_end_str = str(assessment_year_end)
 
         self.assessment_year_beg_digit_0 = assessment_year_beg_str[0]
         self.assessment_year_beg_digit_1 = assessment_year_beg_str[1]

@@ -330,3 +330,33 @@ class Salary(models.Model):
 
     def get_absolute_url(self):
         return reverse('salary-detail', kwargs={'pk': self.pk})
+
+
+class Income(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    salary = models.BooleanField(null=True)
+    income_year_beg = models.IntegerField(default=0)
+    income_year_end = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Income'
+
+    @property
+    def has_salary_income(self):
+        if self.salary is not None:
+            if self.salary:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_salary_income(self):
+        if self.salary is not None:
+            if self.salary:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
