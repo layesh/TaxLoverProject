@@ -1,4 +1,4 @@
-# Tax Lover Pro
+# Tax Buddy Pro
 
 #### Open windows command line in project directory
 #### Run the following commands:
