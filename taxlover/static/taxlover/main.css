@@ -148,4 +148,5 @@ a.article-title:hover {
 
 .selection-card:focus {
     outline: 3px solid #2ca01c;
+    background-color: #EDF9F2;
 }
