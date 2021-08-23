@@ -168,14 +168,18 @@ def save_income_data(request, source, answer):
             latest_income.salary = False
 
     latest_income.save()
-    messages.success(request, f'Data updated successfully!')
+    if answer == 'no':
+        messages.success(request, f'Data updated successfully!')
 
     context = {
         'latest_income': latest_income,
         'title': 'Income'
     }
 
-    return render(request, 'taxlover/income.html', context)
+    if latest_income.salary:
+        return render(request, 'taxlover/choose-salary-input.html', context)
+    else:
+        return render(request, 'taxlover/income.html', context)
 
 
 @login_required

@@ -145,3 +145,7 @@ a.article-title:hover {
 .hor-align-center {
     text-align: center;
 }
+
+.selection-card:focus {
+    outline: 3px solid #2ca01c;
+}

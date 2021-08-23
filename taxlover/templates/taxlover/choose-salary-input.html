@@ -1,0 +1,47 @@
+{% extends "taxlover/base.html" %}
+{% block content %}
+    <h2 style="padding-top: 20px; text-align: center; padding-bottom: 20px">
+        Uploading your Salary Statement makes taxes easier
+    </h2>
+    <div style="text-align: center;padding-bottom: 15px">
+        We’ll add your info right to your return and give you a chance to review.
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-3">
+            <div class="card shadow text-center selection-card" tabindex="-1">
+                <div class="card-body">
+                    <div style="text-align: center">
+                        <i class="bi bi-keyboard-fill" style="font-size: 2rem; color: cornflowerblue;"></i>
+                    </div>
+                    <div>
+                        <b>Type it in myself</b>
+                    </div>
+                    <div>
+                        We'll walk you through manually entering your info.
+                    </div>
+                </div>
+                <div class="card-footer" style="background: white;border-top: 0">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card shadow text-center selection-card" tabindex="-1">
+                <div class="card-body">
+                    <div>
+                        <i class="bi bi-upload" style="font-size: 2rem; color: cornflowerblue;"></i>
+                    </div>
+                    <div>
+                        <b>Upload it from my computer</b>
+                    </div>
+                    <div>
+                        Use a PDF or even a picture of your form.
+                    </div>
+                </div>
+                <div class="card-footer text-muted" style="background: #f2fbfc;border-top: 0">
+                    Recommended
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
