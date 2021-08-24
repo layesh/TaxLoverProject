@@ -6,9 +6,13 @@
     <div style="text-align: center;padding-bottom: 15px">
         We’ll add your info right to your return and give you a chance to review.
     </div>
+    <div id="selection-error" style="text-align: center;padding-bottom: 20px;color: red;display: none">
+        <i class="bi bi-exclamation-circle-fill" style="color: red;padding-right: 5px"></i>
+        Please make a selection
+    </div>
     <div class="row justify-content-center">
         <div class="col-sm-3">
-            <div class="card shadow text-center selection-card" tabindex="-1">
+            <div id="keyboard-card" class="card shadow text-center selection-card" tabindex="-1">
                 <div class="card-body">
                     <div style="text-align: center">
                         <i class="bi bi-keyboard-fill" style="font-size: 2rem; color: cornflowerblue;"></i>
@@ -20,13 +24,13 @@
                         We'll walk you through manually entering your info.
                     </div>
                 </div>
-                <div class="card-footer" style="background: white;border-top: 0">
+                <div id="keyboard-footer" class="card-footer" style="background: white;border-top: 0">
                     &nbsp;
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="card shadow text-center selection-card" tabindex="-1">
+            <div id="upload-card" class="card shadow text-center selection-card" tabindex="-1">
                 <div class="card-body">
                     <div>
                         <i class="bi bi-upload" style="font-size: 2rem; color: cornflowerblue;"></i>
@@ -38,10 +42,29 @@
                         Use a PDF or even a picture of your salary statement.
                     </div>
                 </div>
-                <div class="card-footer text-muted" style="background: #f2fbfc;border-top: 0">
+                <div id="upload-footer" class="card-footer" style="background: #f2fbfc;border-top: 0">
                     Recommended
                 </div>
             </div>
         </div>
     </div>
+    <div style="text-align: center;padding-top: 40px">
+        <button id="choose-salary-input-submit-btn" type="submit" class="btn btn-primary" onclick="checkSelection()">
+            &nbsp;&nbsp;&nbsp;Continue&nbsp;&nbsp;&nbsp;
+        </button>
+    </div>
+
+    <script>
+        function checkSelection() {
+            if (!keyboardSelectedOnBtnFocus && !uploadSelectedOnBtnFocus) {
+                document.getElementById('selection-error').style.display="";
+            } else {
+                if (keyboardSelectedOnBtnFocus) {
+                    location.href='{% url "salary-info" %}';
+                } else {
+                    location.href='{% url "upload-salary-statement" %}';
+                }
+            }
+        }
+    </script>
 {% endblock content %}

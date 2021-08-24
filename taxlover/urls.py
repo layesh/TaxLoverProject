@@ -26,5 +26,7 @@ urlpatterns = [
     path('assets/', views.assets, name='assets'),
     path('generate/', views.generate, name='generate'),
     path('download-return/', views.download_return, name='download-return'),
-    path('save-income-data/<str:source>/<str:answer>/', views.save_income_data, name='save-income-data')
+    path('save-income-data/<str:source>/<str:answer>/', views.save_income_data, name='save-income-data'),
+    path('salary-info/', views.salary_info, name='salary-info'),
+    path('upload-salary-statement/', views.upload_salary_statement, name='upload-salary-statement')
 ]

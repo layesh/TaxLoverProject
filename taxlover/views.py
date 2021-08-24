@@ -183,6 +183,30 @@ def save_income_data(request, source, answer):
 
 
 @login_required
+def salary_info(request):
+    latest_income = create_or_get_latest_income_obj(request.user.id)
+
+    context = {
+        'latest_income': latest_income,
+        'title': 'Income'
+    }
+
+    return render(request, 'taxlover/salary-info.html', context)
+
+
+@login_required
+def upload_salary_statement(request):
+    latest_income = create_or_get_latest_income_obj(request.user.id)
+
+    context = {
+        'latest_income': latest_income,
+        'title': 'Income'
+    }
+
+    return render(request, 'taxlover/upload-salary-statement.html', context)
+
+
+@login_required
 def assets(request):
     if request.method == 'POST':
         tax_payer = TaxPayer.objects.get(user_id=request.user.id)
