@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm
-from taxlover.models import TaxPayer, Salary
+from taxlover.models import TaxPayer, Salary, Document
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
     get_assessment_years
 
@@ -202,9 +202,9 @@ def upload_salary_statement(request):
         form = UploadSalaryStatementForm(request.POST, request.FILES)
         if form.is_valid():
             # handle_uploaded_file(request.FILES['file'])
-            salary_statement_document = UploadSalaryStatementForm(document=request.FILES['document'])
-            salary_statement_document.tax_payer = tax_payer
-            form.save()
+            salary_statement_document = Document(document=request.FILES['document'])
+            salary_statement_document.tax_payer_id = tax_payer.id
+            salary_statement_document.save()
             return HttpResponseRedirect('/download-return/')
     else:
         latest_income = create_or_get_latest_income_obj(request.user.id)

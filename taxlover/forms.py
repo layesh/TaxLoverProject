@@ -12,4 +12,4 @@ class TaxPayerForm(forms.ModelForm):
 class UploadSalaryStatementForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ['document', 'tax_payer']
+        fields = ['document']
