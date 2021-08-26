@@ -373,3 +373,13 @@ class Income(models.Model):
                 return "checked"
         else:
             return ""
+
+
+class Document(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    income_year_beg = models.IntegerField(default=0)
+    income_year_end = models.IntegerField(default=0)
+    document_name = models.CharField(max_length=100, null=True)
+    document = models.FileField(upload_to='uploaded_documents')
+    description = models.CharField(max_length=250, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)

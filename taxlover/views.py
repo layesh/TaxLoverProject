@@ -9,13 +9,14 @@ from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
+from taxlover.forms import UploadSalaryStatementForm
 from taxlover.models import TaxPayer, Salary
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
     get_assessment_years
 
 import os
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
@@ -196,15 +197,31 @@ def salary_info(request):
 
 @login_required
 def upload_salary_statement(request):
-    latest_income = create_or_get_latest_income_obj(request.user.id)
+    if request.method == 'POST':
+        tax_payer = create_or_get_tax_payer_obj(request.user.id)
+        form = UploadSalaryStatementForm(request.POST, request.FILES)
+        if form.is_valid():
+            # handle_uploaded_file(request.FILES['file'])
+            salary_statement_document = UploadSalaryStatementForm(document=request.FILES['document'])
+            salary_statement_document.tax_payer = tax_payer
+            form.save()
+            return HttpResponseRedirect('/download-return/')
+    else:
+        latest_income = create_or_get_latest_income_obj(request.user.id)
+        form = UploadSalaryStatementForm()
 
     context = {
-        'latest_income': latest_income,
-        'title': 'Income'
+        'title': 'Income',
+        'form': form
     }
 
     return render(request, 'taxlover/upload-salary-statement.html', context)
 
+
+def handle_uploaded_file(f):
+    with open('some/file/name.txt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 @login_required
 def assets(request):
