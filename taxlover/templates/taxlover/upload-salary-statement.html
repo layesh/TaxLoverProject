@@ -3,12 +3,20 @@
     <h2 style="padding-top: 20px; text-align: center; padding-bottom: 20px">
         Upload your salary statement and we'll add your info to your return
     </h2>
-    <div style="text-align: center;padding-bottom: 20px">
+    <div style="text-align: center;padding-bottom: 30px">
         This works best if your file is formatted as a PDF, JPG, or PNG.
     </div>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.document }}
-        <button type="submit">Upload</button>
-    </form>
+    <div align="center">
+        <form method="post" action="{% url 'upload-salary-statement' %}" enctype="multipart/form-data"
+              class="dropzone needsclick dz-clickable" id="salary-statement-upload"
+              style="border: 2px dashed #0087F7;border-radius: 5px;background: white;max-width: 450px;min-height: 200px">
+            {% csrf_token %}
+            <div class="dz-message needsclick">
+                <button type="button" class="dz-button">Drop files here or click to upload.</button>
+                <br/>
+                <br/>
+                <span class="note needsclick">(Maximum file size is <strong>2MB</strong>.)</span>
+            </div>
+        </form>
+    </div>
 {% endblock content %}

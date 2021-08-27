@@ -202,7 +202,7 @@ def upload_salary_statement(request):
         form = UploadSalaryStatementForm(request.POST, request.FILES)
         if form.is_valid():
             # handle_uploaded_file(request.FILES['file'])
-            salary_statement_document = Document(document=request.FILES['document'])
+            salary_statement_document = Document(file=request.FILES['file'])
             salary_statement_document.tax_payer_id = tax_payer.id
             salary_statement_document.save()
             return HttpResponseRedirect('/download-return/')

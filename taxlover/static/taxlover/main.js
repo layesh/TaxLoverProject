@@ -60,3 +60,15 @@ $("#choose-salary-input-submit-btn").mouseleave(function () {
     uploadSelectedOnBtnFocus = 0;
 });
 
+$(function () {
+    Dropzone.options.salaryStatementUpload = {
+        paramName: "file",
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        accept: function (file, done) {
+            done();
+        }
+    };
+});
+
