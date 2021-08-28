@@ -65,7 +65,7 @@ $(function () {
         paramName: "file",
         maxFilesize: 2, // MB
         maxFiles: 1,
-        addRemoveLinks: true,
+        acceptedFiles: "application/pdf,image/jpeg,image/jpg,image/png",
         accept: function (file, done) {
             done();
         }
