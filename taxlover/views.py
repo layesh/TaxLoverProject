@@ -12,7 +12,7 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
-    get_assessment_years
+    get_assessment_years, get_income_years
 
 import os
 from django.conf import settings
@@ -201,13 +201,21 @@ def upload_salary_statement(request):
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
         form = UploadSalaryStatementForm(request.POST, request.FILES)
         if form.is_valid():
-            # handle_uploaded_file(request.FILES['file'])
-            salary_statement_document = Document(file=request.FILES['file'])
-            salary_statement_document.tax_payer_id = tax_payer.id
-            salary_statement_document.save()
-            return HttpResponseRedirect('/download-return/')
+            income_year_beg, income_year_end = get_income_years()
+            try:
+                Document.objects.get(tax_payer_id=request.user.id,
+                                     income_year_beg=income_year_beg,
+                                     income_year_end=income_year_end)
+            except Document.DoesNotExist:
+                salary_statement_document = Document(file=request.FILES['file'])
+                salary_statement_document.tax_payer_id = tax_payer.id
+                salary_statement_document.income_year_beg = income_year_beg
+                salary_statement_document.income_year_end = income_year_end
+                salary_statement_document.document_name = "Salary Statement"
+                salary_statement_document.description = "Evaluated for {} - {} salary income.".format(income_year_beg,
+                                                                                                      income_year_end)
+                salary_statement_document.save()
     else:
-        latest_income = create_or_get_latest_income_obj(request.user.id)
         form = UploadSalaryStatementForm()
 
     context = {
@@ -217,11 +225,6 @@ def upload_salary_statement(request):
 
     return render(request, 'taxlover/upload-salary-statement.html', context)
 
-
-def handle_uploaded_file(f):
-    with open('some/file/name.txt', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
 
 @login_required
 def assets(request):

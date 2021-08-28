@@ -6,6 +6,10 @@
     <div style="text-align: center;padding-bottom: 30px">
         This works best if your file is formatted as a PDF, JPEG, JPG, or PNG.
     </div>
+    <div id="upload-error" style="text-align: center;padding-bottom: 20px;color: red;display: none">
+        <i class="bi bi-exclamation-circle-fill" style="color: red;padding-right: 5px"></i>
+        <span id="error-text"></span>
+    </div>
     <div align="center">
         <form method="post" action="{% url 'upload-salary-statement' %}" enctype="multipart/form-data"
               class="dropzone needsclick dz-clickable" id="salary-statement-upload"
@@ -18,5 +22,18 @@
                 <span class="note needsclick">(Maximum file size is <strong>2MB</strong>.)</span>
             </div>
         </form>
+        <div style="text-align: center;">
+            <button id="upload-again-btn" type="submit" class="btn btn-primary"
+                    onclick="resetUploader()" style="display: none">
+                &nbsp;&nbsp;&nbsp;Upload Again&nbsp;&nbsp;&nbsp;
+            </button>
+        </div>
     </div>
+    <script>
+        function resetUploader() {
+            document.getElementById('upload-again-btn').style.display="none";
+            document.getElementById('upload-error').style.display="none";
+            document.getElementById('salary-statement-upload').style.display="";
+        }
+    </script>
 {% endblock content %}

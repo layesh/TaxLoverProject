@@ -68,6 +68,18 @@ $(function () {
         acceptedFiles: "application/pdf,image/jpeg,image/jpg,image/png",
         accept: function (file, done) {
             done();
+        },
+        init: function () {
+            this.on("success", function (file, response) {
+                window.location.href = '/salary-info'
+            });
+            this.on("error", function (file, error) {
+                document.getElementById('error-text').innerHTML = error;
+                document.getElementById('upload-error').style.display = "";
+                document.getElementById('upload-again-btn').style.display = "";
+                document.getElementById('salary-statement-upload').style.display = "none";
+                this.removeAllFiles();
+            });
         }
     };
 });
