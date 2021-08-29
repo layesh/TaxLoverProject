@@ -37,11 +37,6 @@ class TaxPayer(models.Model):
     spouse_name = models.CharField(max_length=250, null=True)
     spouse_e_tin = models.CharField(max_length=12, validators=[MinLengthValidator(12)], null=True)
     has_differently_abled_children = models.BooleanField(null=True)
-    # GENDER_CHOICES = (
-    #     ('M', 'Male'),
-    #     ('F', 'Female'),
-    #     ('T', 'Transgender')
-    # )
     gender = models.CharField(max_length=1, choices=[(tag, tag.value) for tag in GenderChoices], null=True)
     resident = models.BooleanField(null=True)
     nid = models.CharField(max_length=17, null=True)
@@ -101,7 +96,7 @@ class TaxPayer(models.Model):
     @property
     def get_dob(self):
         if self.dob:
-            return self.dob.strftime(("%d/%m/%Y"))
+            return self.dob.strftime("%d/%m/%Y")
         else:
             return ""
 
@@ -314,16 +309,33 @@ class Salary(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    basic = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    house_rent = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    medical = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    conveyance = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    lfa = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    festival_bonus = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    other_bonus = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    employers_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    employees_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
-    ait = models.DecimalField(max_digits=20, decimal_places=4, default=Decimal('0.0000'))
+    basic = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    house_rent = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    medical = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    conveyance = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    lfa = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    festival_bonus = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    other_bonus = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    total_bonus = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    employers_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    employees_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    ait = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    special_pay = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    dearness_allowance = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    support_staff_allowance = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    leave_encashment = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    honorarium_or_reward = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    overtime_allowance = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    other_allowances = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    interest_accrued_from_pf = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    deemed_income_transport = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    deemed_free_accommodation = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    bengali_new_year_bonus = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    festival_allowance = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    pension = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    income_from_pf_and_saf = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    others = models.DecimalField(max_digits=20, decimal_places=4, null=True)
+    arrear_pay = models.DecimalField(max_digits=20, decimal_places=4, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} Salary'
