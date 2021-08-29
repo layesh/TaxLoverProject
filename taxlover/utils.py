@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from taxlover.models import TaxPayer, Income
+from taxlover.models import TaxPayer, Income, Salary
 import datetime
 
 
@@ -59,4 +59,9 @@ def get_assessment_years():
     return assessment_year_beg, assessment_year_end
 
 
+def has_salary_data(user_id):
+    financial_year_beg, financial_year_end = get_income_years()
 
+    return Salary.objects.filter(tax_payer_id=user_id,
+                                 financial_year_beg=financial_year_beg,
+                                 financial_year_end=financial_year_end).exists()

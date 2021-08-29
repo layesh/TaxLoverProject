@@ -8,11 +8,13 @@ import datetime
 from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
+from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm
 from taxlover.models import TaxPayer, Salary, Document
+from taxlover.services.salary_service import process_and_save_salary
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
-    get_assessment_years, get_income_years
+    get_assessment_years, get_income_years, has_salary_data
 
 import os
 from django.conf import settings
@@ -178,7 +180,10 @@ def save_income_data(request, source, answer):
     }
 
     if latest_income.salary:
-        return render(request, 'taxlover/choose-salary-input.html', context)
+        if has_salary_data(request.user.id):
+            return render(request, 'taxlover/income.html', context)
+        else:
+            return render(request, 'taxlover/choose-salary-input.html', context)
     else:
         return render(request, 'taxlover/income.html', context)
 
@@ -215,6 +220,13 @@ def upload_salary_statement(request):
                 salary_statement_document.description = "Evaluated for {} - {} salary income.".format(income_year_beg,
                                                                                                       income_year_end)
                 salary_statement_document.save()
+
+                try:
+                    Salary.objects.get(tax_payer_id=request.user.id,
+                                       financial_year_beg=income_year_beg,
+                                       financial_year_end=income_year_end)
+                except Salary.DoesNotExist:
+                    process_and_save_salary(salary_statement_document.file.name, request.user.id)
     else:
         form = UploadSalaryStatementForm()
 
@@ -277,29 +289,29 @@ def index(request):
             salary = Salary()
             salary.tax_payer_id = tax_payer_row.id
 
-            for row_index, row in salary_table_data.iterrows():
-                print(row[0])
-                salary_category = str(row[0]).lower()
-                if 'basic' in salary_category:
-                    salary.basic = parse_data(row, table_column_length)
-                elif 'house rent' in salary_category:
-                    salary.house_rent = parse_data(row, table_column_length)
-                elif 'medical' in salary_category:
-                    salary.medical = parse_data(row, table_column_length)
-                elif 'conveyance' in salary_category:
-                    salary.conveyance = parse_data(row, table_column_length)
-                elif 'leave fare assistance' in salary_category:
-                    salary.lfa = parse_data(row, table_column_length)
-                elif 'festival bonus' in salary_category:
-                    salary.festival_bonus = parse_data(row, table_column_length)
-                elif 'other bonus' in salary_category:
-                    salary.other_bonus = parse_data(row, table_column_length)
-                elif 'employer\'s contribution to pf' in salary_category:
-                    salary.employers_contribution_to_pf = parse_data(row, table_column_length)
-                elif 'employee\'s contribution to pf' in salary_category:
-                    salary.employees_contribution_to_pf = parse_data(row, table_column_length)
-                elif 'advance income tax' in salary_category:
-                    salary.ait = parse_data(row, table_column_length)
+            # for row_index, row in salary_table_data.iterrows():
+            #     print(row[0])
+            #     salary_category = str(row[0]).lower()
+            #     if 'basic' in salary_category:
+            #         salary.basic = parse_data(row, table_column_length)
+            #     elif 'house rent' in salary_category:
+            #         salary.house_rent = parse_data(row, table_column_length)
+            #     elif 'medical' in salary_category:
+            #         salary.medical = parse_data(row, table_column_length)
+            #     elif 'conveyance' in salary_category:
+            #         salary.conveyance = parse_data(row, table_column_length)
+            #     elif 'leave fare assistance' in salary_category:
+            #         salary.lfa = parse_data(row, table_column_length)
+            #     elif 'festival bonus' in salary_category:
+            #         salary.festival_bonus = parse_data(row, table_column_length)
+            #     elif 'other bonus' in salary_category:
+            #         salary.other_bonus = parse_data(row, table_column_length)
+            #     elif 'employer\'s contribution to pf' in salary_category:
+            #         salary.employers_contribution_to_pf = parse_data(row, table_column_length)
+            #     elif 'employee\'s contribution to pf' in salary_category:
+            #         salary.employees_contribution_to_pf = parse_data(row, table_column_length)
+            #     elif 'advance income tax' in salary_category:
+            #         salary.ait = parse_data(row, table_column_length)
 
             salary.financial_year_beg = 2019
             salary.financial_year_end = 2020
