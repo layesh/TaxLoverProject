@@ -181,7 +181,7 @@ def save_income_data(request, source, answer):
 
     if latest_income.salary:
         if has_salary_data(request.user.id):
-            return render(request, 'taxlover/income.html', context)
+            return render(request, 'taxlover/salary-info.html', context)
         else:
             return render(request, 'taxlover/choose-salary-input.html', context)
     else:
