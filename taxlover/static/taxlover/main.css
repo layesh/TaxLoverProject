@@ -150,3 +150,11 @@ a.article-title:hover {
     outline: 3px solid #2ca01c;
     background-color: #EDF9F2;
 }
+
+.test {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-radius: .25rem;
+    border: 1px solid #5f788a;
+}

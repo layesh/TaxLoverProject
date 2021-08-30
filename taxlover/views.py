@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 import json
 import pandas as pd
@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import UploadSalaryStatementForm
+from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
@@ -181,7 +181,7 @@ def save_income_data(request, source, answer):
 
     if latest_income.salary:
         if has_salary_data(request.user.id):
-            return render(request, 'taxlover/salary-info.html', context)
+            return redirect('salary-info')
         else:
             return render(request, 'taxlover/choose-salary-input.html', context)
     else:
@@ -190,11 +190,18 @@ def save_income_data(request, source, answer):
 
 @login_required
 def salary_info(request):
-    latest_income = create_or_get_latest_income_obj(request.user.id)
+    financial_year_beg, financial_year_end = get_income_years()
+    salary = Salary.objects.get(tax_payer_id=request.user.id,
+                                financial_year_beg=financial_year_beg,
+                                financial_year_end=financial_year_end)
+    if request.method == 'POST':
+        form = SalaryForm()
+    else:
+        form = SalaryForm(instance=salary)
 
     context = {
-        'latest_income': latest_income,
-        'title': 'Income'
+        'title': 'Salary',
+        'form': form
     }
 
     return render(request, 'taxlover/salary-info.html', context)
