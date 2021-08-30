@@ -1,3 +1,4 @@
+import os
 from decimal import Decimal
 from enum import Enum
 
@@ -5,6 +6,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.urls import reverse
+
+from TaxLoverProject import settings
 
 
 class Division(models.Model):
@@ -343,6 +346,55 @@ class Salary(models.Model):
     def get_absolute_url(self):
         return reverse('salary-detail', kwargs={'pk': self.pk})
 
+    @property
+    def get_basic(self):
+        if self.basic:
+            return self.basic
+        else:
+            return 0
+
+    @property
+    def get_house_rent(self):
+        if self.house_rent:
+            return self.house_rent
+        else:
+            return 0
+
+    @property
+    def get_medical(self):
+        if self.medical:
+            return self.medical
+        else:
+            return 0
+
+    @property
+    def get_conveyance(self):
+        if self.conveyance:
+            return self.conveyance
+        else:
+            return 0
+
+    @property
+    def get_lfa(self):
+        if self.lfa:
+            return self.lfa
+        else:
+            return 0
+
+    @property
+    def get_total_bonus(self):
+        if self.total_bonus:
+            return self.total_bonus
+        else:
+            return 0
+
+    @property
+    def get_employers_contribution_to_pf(self):
+        if self.employers_contribution_to_pf:
+            return self.employers_contribution_to_pf
+        else:
+            return 0
+
 
 class Income(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
@@ -395,3 +447,10 @@ class Document(models.Model):
     file = models.FileField(upload_to='uploaded_documents')
     description = models.CharField(max_length=250, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Document'
+
+    def delete(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.file.name))
+        super(Document, self).delete(*args, **kwargs)

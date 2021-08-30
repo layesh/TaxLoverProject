@@ -10,6 +10,10 @@
         <i class="bi bi-exclamation-circle-fill" style="color: red;padding-right: 5px"></i>
         <span id="error-text"></span>
     </div>
+    <div id="upload-progress" style="text-align: center;padding-bottom: 20px;color: #0d6efd;display: none">
+        <i class="bi bi-info-circle-fill" style="color: #0d6efd;padding-right: 5px"></i>
+        <span id="progress-text">Please wait while we're processing the uploaded file.</span>
+    </div>
     <div align="center">
         <form method="post" action="{% url 'upload-salary-statement' %}" enctype="multipart/form-data"
               class="dropzone needsclick dz-clickable" id="salary-statement-upload"
@@ -27,6 +31,9 @@
                     onclick="resetUploader()" style="display: none">
                 &nbsp;&nbsp;&nbsp;Upload Again&nbsp;&nbsp;&nbsp;
             </button>
+            <div id="spinner" class="spinner-grow text-primary" role="status" style="display: none">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
     <script>

@@ -1,3 +1,4 @@
+import re
 from decimal import Decimal
 
 from taxlover.models import TaxPayer, Income, Salary
@@ -5,15 +6,25 @@ import datetime
 
 
 def parse_data(row, total_columns):
-    for i in range(1, total_columns):
-        try:
-            d = 0.0
-            parsed_data = Decimal(remove_comma(row[i]))
-            if parsed_data > 0.0:
-                return parsed_data
-        except Exception:
-            d = 0.0
-    return 0
+    parsed_data = 0.0
+
+    for i in range(0, total_columns):
+        if i == 0:
+            regex_matches = re.findall("(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$",
+                                       row[i])  # simpler: [0-9]{1,3}(,[0-9]{3})*\.[0-9]+$
+            if len(regex_matches) > 0:
+                parsed_data = Decimal(remove_comma(regex_matches[0][0]))
+                if parsed_data > 0.0:
+                    return parsed_data
+        else:
+            try:
+                parsed_data = Decimal(remove_comma(row[i]))
+                if parsed_data > 0.0:
+                    return parsed_data
+            except Exception:
+                parsed_data = 0.0
+
+    return parsed_data
 
 
 def remove_comma(val):

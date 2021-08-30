@@ -6,11 +6,11 @@ from taxlover.models import Salary
 from taxlover.utils import parse_data, get_income_years
 
 
-def process_and_save_salary(file, payer_id):
+def process_and_save_salary(file_name, payer_id):
     extract_table_session = ExtractTable(api_key=EXTRACT_TABLE_API_KEY)
     print(extract_table_session.check_usage())
 
-    file_path = 'media/' + file
+    file_path = 'media/' + file_name
 
     salary_table_data = extract_table_session.process_file(filepath=file_path,
                                                            output_format="df")
@@ -46,4 +46,10 @@ def process_and_save_salary(file, payer_id):
         elif 'advance income tax' in salary_category:
             salary.ait = parse_data(row, table_column_length)
 
-    salary.save()
+    total_annual_payment = salary.get_basic + salary.get_house_rent + salary.get_medical + salary.get_conveyance + \
+        salary.get_lfa + salary.get_total_bonus + salary.get_employers_contribution_to_pf
+
+    if total_annual_payment > 0:
+        salary.save()
+
+    return total_annual_payment

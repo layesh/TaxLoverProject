@@ -71,7 +71,16 @@ $(function () {
         },
         init: function () {
             this.on("success", function (file, response) {
-                window.location.href = '/salary-info'
+                if (response['has_total_annual_payment'] === true) {
+                    window.location.href = '/salary-info'
+                } else {
+                    document.getElementById('error-text').innerHTML = "Sorry, we can't extract a single information from your document.";
+                    document.getElementById('upload-error').style.display = "";
+                    document.getElementById('upload-again-btn').style.display = "";
+                    document.getElementById('upload-progress').style.display = "none";
+                    document.getElementById('spinner').style.display = "none";
+                    this.removeAllFiles();
+                }
             });
             this.on("error", function (file, error) {
                 document.getElementById('error-text').innerHTML = error;
@@ -79,6 +88,11 @@ $(function () {
                 document.getElementById('upload-again-btn').style.display = "";
                 document.getElementById('salary-statement-upload').style.display = "none";
                 this.removeAllFiles();
+            });
+            this.on("processing", function (file) {
+                document.getElementById('salary-statement-upload').style.display = "none";
+                document.getElementById('upload-progress').style.display = "";
+                document.getElementById('spinner').style.display = "";
             });
         }
     };

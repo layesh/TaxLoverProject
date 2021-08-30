@@ -226,7 +226,14 @@ def upload_salary_statement(request):
                                        financial_year_beg=income_year_beg,
                                        financial_year_end=income_year_end)
                 except Salary.DoesNotExist:
-                    process_and_save_salary(salary_statement_document.file.name, request.user.id)
+                    total_annual_payment = process_and_save_salary(salary_statement_document.file.name, request.user.id)
+                    has_total_annual_payment = True
+                    if total_annual_payment <= 0:
+                        Document.delete(salary_statement_document)
+                        has_total_annual_payment = False
+
+                    response_data = {'has_total_annual_payment': has_total_annual_payment}
+                    return HttpResponse(json.dumps(response_data), content_type="application/json")
     else:
         form = UploadSalaryStatementForm()
 
