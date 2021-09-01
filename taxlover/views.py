@@ -197,11 +197,15 @@ def salary_info(request):
     if request.method == 'POST':
         form = SalaryForm()
     else:
-        form = SalaryForm(instance=salary)
+        form = SalaryForm()
+        # form.initial['basic'] = f'{salary.basic:,.2f}'
+        form.initial['house_rent'] = f'{salary.house_rent:,.2f}'
+        form.initial['medical'] = f'{salary.medical:,.2f}'
 
     context = {
         'title': 'Salary',
-        'form': form
+        'form': form,
+        'total_income': f'{salary.get_total:,.2f}'
     }
 
     return render(request, 'taxlover/salary-info.html', context)

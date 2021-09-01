@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'taxlover.apps.TaxloverConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
-    "crispy_bootstrap5"
+    "crispy_bootstrap5",
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
