@@ -24,7 +24,7 @@ class SalaryForm(forms.ModelForm):
         model = Salary
         fields = ['basic', 'house_rent', 'medical', 'conveyance', 'lfa']
         widgets = {
-            'basic': TextInput(attrs={'class': 'form-control', 'onblur': 'inputBlur(this)'}),
-            'house_rent': TextInput(attrs={'class': 'form-control', 'onblur': 'inputBlur(this)'}),
-            'medical': TextInput(attrs={'class': 'form-control', 'onblur': 'inputBlur(this)'}),
+            'basic': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
+            'house_rent': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
+            'medical': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
         }

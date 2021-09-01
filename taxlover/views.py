@@ -198,7 +198,7 @@ def salary_info(request):
         form = SalaryForm()
     else:
         form = SalaryForm()
-        # form.initial['basic'] = f'{salary.basic:,.2f}'
+        form.initial['basic'] = f'{salary.basic:,.2f}'
         form.initial['house_rent'] = f'{salary.house_rent:,.2f}'
         form.initial['medical'] = f'{salary.medical:,.2f}'
 

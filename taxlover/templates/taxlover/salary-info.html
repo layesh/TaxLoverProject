@@ -41,11 +41,11 @@
                             {{ form.house_rent }}
                         </td>
                         <td>
-                            <input class="form-control" type="text" placeholder=""
+                            <input id="id_house_rent_exempted" class="form-control" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input class="form-control" type="text" placeholder=""
+                            <input id="id_house_rent_taxable" class="form-control" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -58,11 +58,11 @@
                             {{ form.medical }}
                         </td>
                         <td>
-                            <input class="form-control" type="text" placeholder=""
+                            <input id="id_medical_exempted" class="form-control" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input class="form-control" type="text" placeholder=""
+                            <input id="id_medical_taxable" class="form-control" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -70,8 +70,8 @@
                 <tfoot>
                     <th scope="col" class="col-6">Total</th>
                         <th scope="col" style="padding-left: 20px" id="total_income"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" style="padding-left: 20px" id="total_exempted"></th>
+                        <th scope="col" style="padding-left: 20px" id="total_taxable"></th>
                 </tfoot>
             </table>
             <div style="text-align: center;padding-top: 20px">
@@ -82,6 +82,7 @@
     <script type="application/javascript">
         $(function () {
             setExemptedColumn();
+            setTaxableColumn();
             setTotalRow();
         });
 
@@ -90,23 +91,44 @@
             let houseRent = parseDecimalInputValue('id_house_rent');
             let medical = parseDecimalInputValue('id_medical');
 
-            let total = basic + houseRent + medical;
+            let basicE = parseDecimalInputValue('id_basic_exempted');
+            let houseRentE = parseDecimalInputValue('id_house_rent_exempted');
+            let medicalE = parseDecimalInputValue('id_medical_exempted');
 
-            document.getElementById('total_income').innerHTML = addCommas(formatToTwoDecimalPlaces(total.toString()));
+            let basicT = parseDecimalInputValue('id_basic_taxable');
+            let houseRentT = parseDecimalInputValue('id_house_rent_taxable');
+            let medicalT = parseDecimalInputValue('id_medical_taxable');
+
+            let totalIncome = basic + houseRent + medical;
+            let totalExempted = basicE + houseRentE + medicalE;
+            let totalTaxable = basicT + houseRentT + medicalT;
+
+            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
+            setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
+            setLabelValue('total_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
         }
 
         function setExemptedColumn() {
             if (hasInputValue('id_basic')) {
-                document.getElementById('id_basic_exempted').value = "0";
+                setTextBoxValue('id_basic_exempted', 0);
             } else {
-                document.getElementById('id_basic_exempted').value = "";
+                setTextBoxValue('id_basic_exempted', '');
             }
         }
 
-        function inputBlur(textBoxObject) {
+        function setTaxableColumn() {
+            if (hasInputValue('id_basic')) {
+                setTextBoxValue('id_basic_taxable', addCommas(formatToTwoDecimalPlaces(parseDecimalInputValue('id_basic').toString())));
+            } else {
+                setTextBoxValue('id_basic_taxable', '');
+            }
+        }
+
+        function onInputBlurred(textBoxObject) {
             textBoxObject.value = removeCommas(textBoxObject.value);
             textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
             setExemptedColumn();
+            setTaxableColumn();
             setTotalRow();
         }
     </script>
