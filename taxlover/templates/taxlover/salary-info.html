@@ -114,6 +114,9 @@
             } else {
                 setTextBoxValue('id_basic_exempted', '');
             }
+            if (hasInputValue('id_basic') || hasInputValue('id_house_rent')) {
+                setHouseRentExempted();
+            }
         }
 
         function setTaxableColumn() {
@@ -130,6 +133,21 @@
             setExemptedColumn();
             setTaxableColumn();
             setTotalRow();
+        }
+
+        function setHouseRentExempted() {
+            $.ajax({
+                type: 'GET',
+                url: '{% url "get_house_rent_exempted_value" %}',
+                data: {
+                    'basic': parseDecimalInputValue('id_basic'),
+                    'house_rent': parseDecimalInputValue('id_house_rent')
+                },
+                success: function (data) {
+                    setTextBoxValue('id_house_rent_exempted', addCommas(formatToTwoDecimalPlaces(data['house_rent_exempted'])));
+                    setTotalRow();
+                }
+            });
         }
     </script>
 {% endblock content %}

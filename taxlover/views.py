@@ -12,13 +12,13 @@ from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
-from taxlover.services.salary_service import process_and_save_salary
+from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
     get_assessment_years, get_income_years, has_salary_data
 
 import os
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib.staticfiles import finders
@@ -424,4 +424,17 @@ def download_return(request):
         'title': 'Download Return'
     }
     return render(request, 'taxlover/download-return.html', context)
+
+
+@login_required
+def get_house_rent_exempted_value(request):
+    if request.is_ajax() and request.method == 'GET':
+        basic = request.GET['basic']
+        house_rent = request.GET['house_rent']
+
+        data = {
+            'house_rent_exempted': get_house_rent_exempted(basic, house_rent)
+        }
+
+        return JsonResponse(data)
 

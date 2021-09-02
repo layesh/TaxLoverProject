@@ -1,7 +1,7 @@
 import pandas as pd
 from ExtractTable import ExtractTable
 
-from taxlover.constants import EXTRACT_TABLE_API_KEY
+from taxlover.constants import EXTRACT_TABLE_API_KEY, HOUSE_RENT_MONTHLY_EXEMPTED_RATE
 from taxlover.models import Salary
 from taxlover.utils import parse_data, get_income_years
 
@@ -53,3 +53,7 @@ def process_and_save_salary(file_name, payer_id):
         salary.save()
 
     return total_annual_payment
+
+
+def get_house_rent_exempted(basic, house_rent):
+    return min(12 * HOUSE_RENT_MONTHLY_EXEMPTED_RATE, int(basic) * 0.5, int(house_rent))
