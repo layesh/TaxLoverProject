@@ -438,3 +438,16 @@ def get_house_rent_exempted_value(request):
 
         return JsonResponse(data)
 
+
+@login_required
+def get_medical_exempted_value(request):
+    if request.is_ajax() and request.method == 'GET':
+        basic = request.GET['basic']
+        medical = request.GET['medical']
+
+        data = {
+            'medical_exempted': get_house_rent_exempted(basic, medical)
+        }
+
+        return JsonResponse(data)
+

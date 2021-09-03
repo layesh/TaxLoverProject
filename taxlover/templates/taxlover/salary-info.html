@@ -75,67 +75,83 @@
                 </tfoot>
             </table>
             <div style="text-align: center;padding-top: 20px">
-                <button type="submit" class="btn btn-primary">Save Salary Income</button>
+                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
+                <button type="submit" class="btn btn-secondary" style="width: 100px">Cancel</button>
             </div>
         </form>
     </div>
     <script type="application/javascript">
         $(function () {
-            setExemptedColumn();
-            setTaxableColumn();
-            setTotalRow();
+            setExemptedAndTaxableColumns();
+            setAllTotalRow();
         });
 
-        function setTotalRow() {
+        function setAllTotalRow() {
+            setYearlyIncomeTotalRow();
+            setExemptedTotalRow();
+            setTaxableTotalRow();
+        }
+
+        function setYearlyIncomeTotalRow() {
             let basic = parseDecimalInputValue('id_basic');
             let houseRent = parseDecimalInputValue('id_house_rent');
             let medical = parseDecimalInputValue('id_medical');
+            let totalIncome = basic + houseRent + medical;
 
+            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
+        }
+
+        function setExemptedTotalRow() {
             let basicE = parseDecimalInputValue('id_basic_exempted');
             let houseRentE = parseDecimalInputValue('id_house_rent_exempted');
             let medicalE = parseDecimalInputValue('id_medical_exempted');
+            let totalExempted = basicE + houseRentE + medicalE;
 
+            setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
+        }
+
+        function setTaxableTotalRow() {
             let basicT = parseDecimalInputValue('id_basic_taxable');
             let houseRentT = parseDecimalInputValue('id_house_rent_taxable');
             let medicalT = parseDecimalInputValue('id_medical_taxable');
-
-            let totalIncome = basic + houseRent + medical;
-            let totalExempted = basicE + houseRentE + medicalE;
             let totalTaxable = basicT + houseRentT + medicalT;
 
-            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
-            setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
             setLabelValue('total_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
         }
 
-        function setExemptedColumn() {
-            if (hasInputValue('id_basic')) {
-                setTextBoxValue('id_basic_exempted', 0);
-            } else {
-                setTextBoxValue('id_basic_exempted', '');
+        function setExemptedAndTaxableColumns() {
+            let hasBasicInputValue = hasInputValue('id_basic');
+            let hasHouseRentInputValue = hasInputValue('id_house_rent');
+            let hasMedicalInputValue = hasInputValue('id_medical');
+
+            let basic = parseDecimalInputValue('id_basic');
+
+            checkAndSet(hasBasicInputValue, 'id_basic_exempted', 0);
+            checkAndSet(hasBasicInputValue, 'id_basic_taxable', basic);
+            if (hasBasicInputValue || hasHouseRentInputValue) {
+                setHouseRentExemptedAndTaxable();
             }
-            if (hasInputValue('id_basic') || hasInputValue('id_house_rent')) {
-                setHouseRentExempted();
+            if (hasBasicInputValue || hasMedicalInputValue) {
+                setMedicalExemptedAndTaxable();
             }
         }
 
-        function setTaxableColumn() {
-            if (hasInputValue('id_basic')) {
-                setTextBoxValue('id_basic_taxable', addCommas(formatToTwoDecimalPlaces(parseDecimalInputValue('id_basic').toString())));
+        function checkAndSet(shouldSet, inputId, inputValue) {
+            if (shouldSet) {
+                setTextBoxValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
             } else {
-                setTextBoxValue('id_basic_taxable', '');
+                setTextBoxValue(inputId, '');
             }
         }
 
         function onInputBlurred(textBoxObject) {
             textBoxObject.value = removeCommas(textBoxObject.value);
             textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
-            setExemptedColumn();
-            setTaxableColumn();
-            setTotalRow();
+            setExemptedAndTaxableColumns();
+            setAllTotalRow();
         }
 
-        function setHouseRentExempted() {
+        function setHouseRentExemptedAndTaxable() {
             $.ajax({
                 type: 'GET',
                 url: '{% url "get_house_rent_exempted_value" %}',
@@ -145,7 +161,28 @@
                 },
                 success: function (data) {
                     setTextBoxValue('id_house_rent_exempted', addCommas(formatToTwoDecimalPlaces(data['house_rent_exempted'])));
-                    setTotalRow();
+                    let houseRentTaxable = parseDecimalInputValue('id_house_rent') - parseFloat(data['house_rent_exempted']);
+                    setTextBoxValue('id_house_rent_taxable', addCommas(formatToTwoDecimalPlaces(houseRentTaxable)));
+                    setExemptedTotalRow();
+                    setTaxableTotalRow();
+                }
+            });
+        }
+
+        function setMedicalExemptedAndTaxable() {
+            $.ajax({
+                type: 'GET',
+                url: '{% url "get_medical_exempted_value" %}',
+                data: {
+                    'basic': parseDecimalInputValue('id_basic'),
+                    'medical': parseDecimalInputValue('id_medical')
+                },
+                success: function (data) {
+                    setTextBoxValue('id_medical_exempted', addCommas(formatToTwoDecimalPlaces(data['medical_exempted'])));
+                    let medicalTaxable = parseDecimalInputValue('id_medical') - parseFloat(data['medical_exempted']);
+                    setTextBoxValue('id_medical_taxable', addCommas(formatToTwoDecimalPlaces(medicalTaxable)));
+                    setExemptedTotalRow();
+                    setTaxableTotalRow();
                 }
             });
         }
