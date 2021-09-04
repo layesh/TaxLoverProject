@@ -6,6 +6,14 @@ from taxlover.models import Salary
 from taxlover.utils import parse_data, get_income_years
 
 
+def get_current_financial_year_salary_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return Salary.objects.filter(tax_payer_id=payer_id,
+                                 financial_year_beg=financial_year_beg,
+                                 financial_year_end=financial_year_end).first()
+
+
 def process_and_save_salary(file_name, payer_id):
     extract_table_session = ExtractTable(api_key=EXTRACT_TABLE_API_KEY)
     print(extract_table_session.check_usage())

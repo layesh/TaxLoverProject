@@ -12,7 +12,8 @@ from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
-from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted
+from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
+    get_current_financial_year_salary_by_payer
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
     get_assessment_years, get_income_years, has_salary_data
 
@@ -191,21 +192,20 @@ def save_income_data(request, source, answer):
 @login_required
 def salary_info(request):
     financial_year_beg, financial_year_end = get_income_years()
-    salary = Salary.objects.get(tax_payer_id=request.user.id,
-                                financial_year_beg=financial_year_beg,
-                                financial_year_end=financial_year_end)
+    salary = get_current_financial_year_salary_by_payer(request.user.id)
+
     if request.method == 'POST':
         form = SalaryForm()
     else:
         form = SalaryForm()
-        form.initial['basic'] = f'{salary.basic:,.2f}'
-        form.initial['house_rent'] = f'{salary.house_rent:,.2f}'
-        form.initial['medical'] = f'{salary.medical:,.2f}'
+        if salary:
+            form.initial['basic'] = f'{salary.basic:,.2f}'
+            form.initial['house_rent'] = f'{salary.house_rent:,.2f}'
+            form.initial['medical'] = f'{salary.medical:,.2f}'
 
     context = {
         'title': 'Salary',
-        'form': form,
-        'total_income': f'{salary.get_total:,.2f}'
+        'form': form
     }
 
     return render(request, 'taxlover/salary-info.html', context)
