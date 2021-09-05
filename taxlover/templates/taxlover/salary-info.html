@@ -75,11 +75,15 @@
             </table>
             <div style="text-align: center;padding-top: 20px">
                 <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
-                <button type="submit" class="btn btn-secondary" style="width: 100px">Cancel</button>
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel</button>
             </div>
         </form>
     </div>
     <script type="application/javascript">
+        function goToIncomeHome() {
+            location.href='{% url "income" %}';
+        }
+
         $(function () {
             setExemptedAndTaxableColumns();
             setAllTotalRow();
@@ -182,41 +186,5 @@
                 setTextBoxValue('id_' + category + '_taxable', '');
             }
         }
-
-        {#function setHouseRentExemptedAndTaxable() {#}
-        {#    $.ajax({#}
-        {#        type: 'GET',#}
-        {#        url: '{% url "get_house_rent_exempted_value" %}',#}
-        {#        data: {#}
-        {#            'basic': parseDecimalInputValue('id_basic'),#}
-        {#            'house_rent': parseDecimalInputValue('id_house_rent')#}
-        {#        },#}
-        {#        success: function (data) {#}
-        {#            setTextBoxValue('id_house_rent_exempted', addCommas(formatToTwoDecimalPlaces(data['house_rent_exempted'])));#}
-        {#            let houseRentTaxable = parseDecimalInputValue('id_house_rent') - parseFloat(data['house_rent_exempted']);#}
-        {#            setTextBoxValue('id_house_rent_taxable', addCommas(formatToTwoDecimalPlaces(houseRentTaxable)));#}
-        {#            setExemptedTotalRow();#}
-        {#            setTaxableTotalRow();#}
-        {#        }#}
-        {#    });#}
-        {#}#}
-        {##}
-        {#function setMedicalExemptedAndTaxable() {#}
-        {#    $.ajax({#}
-        {#        type: 'GET',#}
-        {#        url: '{% url "get_medical_exempted_value" %}',#}
-        {#        data: {#}
-        {#            'basic': parseDecimalInputValue('id_basic'),#}
-        {#            'medical': parseDecimalInputValue('id_medical')#}
-        {#        },#}
-        {#        success: function (data) {#}
-        {#            setTextBoxValue('id_medical_exempted', addCommas(formatToTwoDecimalPlaces(data['medical_exempted'])));#}
-        {#            let medicalTaxable = parseDecimalInputValue('id_medical') - parseFloat(data['medical_exempted']);#}
-        {#            setTextBoxValue('id_medical_taxable', addCommas(formatToTwoDecimalPlaces(medicalTaxable)));#}
-        {#            setExemptedTotalRow();#}
-        {#            setTaxableTotalRow();#}
-        {#        }#}
-        {#    });#}
-        {#}#}
     </script>
 {% endblock content %}

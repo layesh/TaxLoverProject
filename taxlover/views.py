@@ -195,6 +195,8 @@ def salary_info(request):
 
     if request.method == 'POST':
         form = SalaryForm()
+
+        return redirect('income')
     else:
         form = SalaryForm()
         if salary:
