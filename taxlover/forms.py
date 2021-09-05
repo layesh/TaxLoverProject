@@ -1,5 +1,3 @@
-from importlib._common import _
-
 from django import forms
 from django.forms import TextInput
 

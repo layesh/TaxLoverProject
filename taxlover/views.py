@@ -191,7 +191,6 @@ def save_income_data(request, source, answer):
 
 @login_required
 def salary_info(request):
-    financial_year_beg, financial_year_end = get_income_years()
     salary = get_current_financial_year_salary_by_payer(request.user.id)
 
     if request.method == 'POST':

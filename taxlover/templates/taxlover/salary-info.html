@@ -1,6 +1,5 @@
 {% extends "taxlover/base.html" %}
 {% load crispy_forms_tags %}
-{% load humanize %}
 {% block content %}
     <div class="salary-main">
         <form method="post">
@@ -128,12 +127,8 @@
 
             checkAndSet(hasBasicInputValue, 'id_basic_exempted', 0);
             checkAndSet(hasBasicInputValue, 'id_basic_taxable', basic);
-            if (hasBasicInputValue || hasHouseRentInputValue) {
-                setHouseRentExemptedAndTaxable();
-            }
-            if (hasBasicInputValue || hasMedicalInputValue) {
-                setMedicalExemptedAndTaxable();
-            }
+            setExemptedAndTaxableAjax(hasHouseRentInputValue, 'house_rent');
+            setExemptedAndTaxableAjax(hasMedicalInputValue, 'medical');
         }
 
         function checkAndSet(shouldSet, inputId, inputValue) {
@@ -151,40 +146,77 @@
             setAllTotalRow();
         }
 
-        function setHouseRentExemptedAndTaxable() {
-            $.ajax({
-                type: 'GET',
-                url: '{% url "get_house_rent_exempted_value" %}',
-                data: {
-                    'basic': parseDecimalInputValue('id_basic'),
-                    'house_rent': parseDecimalInputValue('id_house_rent')
-                },
-                success: function (data) {
-                    setTextBoxValue('id_house_rent_exempted', addCommas(formatToTwoDecimalPlaces(data['house_rent_exempted'])));
-                    let houseRentTaxable = parseDecimalInputValue('id_house_rent') - parseFloat(data['house_rent_exempted']);
-                    setTextBoxValue('id_house_rent_taxable', addCommas(formatToTwoDecimalPlaces(houseRentTaxable)));
-                    setExemptedTotalRow();
-                    setTaxableTotalRow();
+        function setExemptedAndTaxableAjax(shouldSet, category) {
+            if (shouldSet) {
+                let url = '';
+                let data = {};
+
+                if (category === 'house_rent') {
+                    url = '{% url "get_house_rent_exempted_value" %}';
+                    data = {
+                        'basic': parseDecimalInputValue('id_basic'),
+                        'house_rent': parseDecimalInputValue('id_house_rent')
+                    };
+                } else if (category === 'medical') {
+                    url = '{% url "get_medical_exempted_value" %}';
+                    data = {
+                        'basic': parseDecimalInputValue('id_basic'),
+                        'medical': parseDecimalInputValue('id_medical')
+                    };
                 }
-            });
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        setTextBoxValue('id_' + category + '_exempted', addCommas(formatToTwoDecimalPlaces(data[category + '_exempted'])));
+                        let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
+                        setTextBoxValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
+                        setExemptedTotalRow();
+                        setTaxableTotalRow();
+                    }
+                });
+            } else {
+                setTextBoxValue('id_' + category + '_exempted', '');
+                setTextBoxValue('id_' + category + '_taxable', '');
+            }
         }
 
-        function setMedicalExemptedAndTaxable() {
-            $.ajax({
-                type: 'GET',
-                url: '{% url "get_medical_exempted_value" %}',
-                data: {
-                    'basic': parseDecimalInputValue('id_basic'),
-                    'medical': parseDecimalInputValue('id_medical')
-                },
-                success: function (data) {
-                    setTextBoxValue('id_medical_exempted', addCommas(formatToTwoDecimalPlaces(data['medical_exempted'])));
-                    let medicalTaxable = parseDecimalInputValue('id_medical') - parseFloat(data['medical_exempted']);
-                    setTextBoxValue('id_medical_taxable', addCommas(formatToTwoDecimalPlaces(medicalTaxable)));
-                    setExemptedTotalRow();
-                    setTaxableTotalRow();
-                }
-            });
-        }
+        {#function setHouseRentExemptedAndTaxable() {#}
+        {#    $.ajax({#}
+        {#        type: 'GET',#}
+        {#        url: '{% url "get_house_rent_exempted_value" %}',#}
+        {#        data: {#}
+        {#            'basic': parseDecimalInputValue('id_basic'),#}
+        {#            'house_rent': parseDecimalInputValue('id_house_rent')#}
+        {#        },#}
+        {#        success: function (data) {#}
+        {#            setTextBoxValue('id_house_rent_exempted', addCommas(formatToTwoDecimalPlaces(data['house_rent_exempted'])));#}
+        {#            let houseRentTaxable = parseDecimalInputValue('id_house_rent') - parseFloat(data['house_rent_exempted']);#}
+        {#            setTextBoxValue('id_house_rent_taxable', addCommas(formatToTwoDecimalPlaces(houseRentTaxable)));#}
+        {#            setExemptedTotalRow();#}
+        {#            setTaxableTotalRow();#}
+        {#        }#}
+        {#    });#}
+        {#}#}
+        {##}
+        {#function setMedicalExemptedAndTaxable() {#}
+        {#    $.ajax({#}
+        {#        type: 'GET',#}
+        {#        url: '{% url "get_medical_exempted_value" %}',#}
+        {#        data: {#}
+        {#            'basic': parseDecimalInputValue('id_basic'),#}
+        {#            'medical': parseDecimalInputValue('id_medical')#}
+        {#        },#}
+        {#        success: function (data) {#}
+        {#            setTextBoxValue('id_medical_exempted', addCommas(formatToTwoDecimalPlaces(data['medical_exempted'])));#}
+        {#            let medicalTaxable = parseDecimalInputValue('id_medical') - parseFloat(data['medical_exempted']);#}
+        {#            setTextBoxValue('id_medical_taxable', addCommas(formatToTwoDecimalPlaces(medicalTaxable)));#}
+        {#            setExemptedTotalRow();#}
+        {#            setTaxableTotalRow();#}
+        {#        }#}
+        {#    });#}
+        {#}#}
     </script>
 {% endblock content %}
