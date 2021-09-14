@@ -15,7 +15,7 @@ from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
-    get_assessment_years, get_income_years, has_salary_data
+    get_assessment_years, get_income_years, has_salary_data, remove_comma
 
 import os
 from django.conf import settings
@@ -194,9 +194,24 @@ def salary_info(request):
     salary = get_current_financial_year_salary_by_payer(request.user.id)
 
     if request.method == 'POST':
-        form = SalaryForm()
+        # form = SalaryForm(request.POST, instance=salary)
 
-        return redirect('income')
+        updated_request = request.POST.copy()
+
+        for key in updated_request:
+            if key != 'csrfmiddlewaretoken':
+                val = remove_comma(updated_request[key])
+                updated_request[key] = val
+
+        # updated_request.update({'price': NEW_PRICE})
+        form = SalaryForm(updated_request, instance=salary)
+        # if search_packages_form.is_valid():
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your salary income has been updated!')
+
+        # return redirect('income')
     else:
         form = SalaryForm()
         if salary:

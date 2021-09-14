@@ -76,3 +76,7 @@ def has_salary_data(user_id):
     return Salary.objects.filter(tax_payer_id=user_id,
                                  financial_year_beg=financial_year_beg,
                                  financial_year_end=financial_year_end).exists()
+
+
+def remove_comma(value):
+    return value.replace(",", "")

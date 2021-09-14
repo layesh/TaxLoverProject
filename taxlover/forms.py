@@ -20,7 +20,7 @@ class UploadSalaryStatementForm(forms.ModelForm):
 class SalaryForm(forms.ModelForm):
     class Meta:
         model = Salary
-        fields = ['basic', 'house_rent', 'medical', 'conveyance', 'lfa']
+        fields = ['basic', 'house_rent', 'medical']
         widgets = {
             'basic': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
             'house_rent': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
