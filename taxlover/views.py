@@ -13,7 +13,7 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
-    get_current_financial_year_salary_by_payer, set_salary_form_initial_value
+    get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma
 
@@ -212,7 +212,13 @@ def salary_info(request):
             messages.success(request, f'Your salary income has been updated!')
             return redirect('income')
         else:
+            error_dictionary = form.errors
             form = SalaryForm(request.POST)
+            set_salary_form_validation_errors(error_dictionary, form.fields)
+            # test = 'a'
+            # form.fields['house_rent'].widget.attrs.update({'class': 'form-control is-invalid',
+            #                                                'title': test})
+            messages.error(request, f'Please correct the errors below, and try again.')
 
     else:
         form = SalaryForm(instance=salary)
