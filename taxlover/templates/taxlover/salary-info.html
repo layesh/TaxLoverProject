@@ -144,10 +144,12 @@
         }
 
         function onInputBlurred(textBoxObject) {
-            textBoxObject.value = removeCommas(textBoxObject.value);
-            textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
-            setExemptedAndTaxableColumns();
-            setAllTotalRow();
+            if (!isNaN(textBoxObject.value)) {
+                textBoxObject.value = removeCommas(textBoxObject.value);
+                textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
+                setExemptedAndTaxableColumns();
+                setAllTotalRow();
+            }
         }
 
         function setExemptedAndTaxableAjax(shouldSet, category) {

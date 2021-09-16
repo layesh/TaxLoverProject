@@ -13,9 +13,9 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
-    get_current_financial_year_salary_by_payer
+    get_current_financial_year_salary_by_payer, set_salary_form_initial_value
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
-    get_assessment_years, get_income_years, has_salary_data, remove_comma
+    get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma
 
 import os
 from django.conf import settings
@@ -192,32 +192,32 @@ def save_income_data(request, source, answer):
 @login_required
 def salary_info(request):
     salary = get_current_financial_year_salary_by_payer(request.user.id)
+    if not salary:
+        financial_year_beg, financial_year_end = get_income_years()
+        salary = Salary(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                        financial_year_end=financial_year_end)
 
     if request.method == 'POST':
-        # form = SalaryForm(request.POST, instance=salary)
+        request_copy = request.POST.copy()
 
-        updated_request = request.POST.copy()
-
-        for key in updated_request:
+        for key in request_copy:
             if key != 'csrfmiddlewaretoken':
-                val = remove_comma(updated_request[key])
-                updated_request[key] = val
+                val = remove_comma(request_copy[key])
+                request_copy[key] = val
 
-        # updated_request.update({'price': NEW_PRICE})
-        form = SalaryForm(updated_request, instance=salary)
-        # if search_packages_form.is_valid():
+        form = SalaryForm(request_copy, instance=salary)
 
         if form.is_valid():
             form.save()
             messages.success(request, f'Your salary income has been updated!')
+            return redirect('income')
+        else:
+            form = SalaryForm(request.POST)
 
-        # return redirect('income')
     else:
-        form = SalaryForm()
-        if salary:
-            form.initial['basic'] = f'{salary.basic:,.2f}'
-            form.initial['house_rent'] = f'{salary.house_rent:,.2f}'
-            form.initial['medical'] = f'{salary.medical:,.2f}'
+        form = SalaryForm(instance=salary)
+
+    set_salary_form_initial_value(form.initial)
 
     context = {
         'title': 'Salary',

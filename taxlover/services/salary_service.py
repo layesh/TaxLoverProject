@@ -3,7 +3,7 @@ from ExtractTable import ExtractTable
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY, HOUSE_RENT_MONTHLY_EXEMPTED_RATE, MEDICAL_YEARLY_EXEMPTED_RATE
 from taxlover.models import Salary
-from taxlover.utils import parse_data, get_income_years
+from taxlover.utils import parse_data, get_income_years, add_comma
 
 
 def get_current_financial_year_salary_by_payer(payer_id):
@@ -69,3 +69,9 @@ def get_house_rent_exempted(basic, house_rent):
 
 def get_medical_exempted(basic, medical):
     return min(MEDICAL_YEARLY_EXEMPTED_RATE, int(basic) * 0.1, int(medical))
+
+
+def set_salary_form_initial_value(initial_dictionary):
+    for key in initial_dictionary:
+        if initial_dictionary[key]:
+            initial_dictionary[key] = add_comma(initial_dictionary[key])

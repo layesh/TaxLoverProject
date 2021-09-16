@@ -111,6 +111,10 @@ function addCommas(nStr) {
 }
 
 function formatToTwoDecimalPlaces(nStr) {
+    if (isNaN(nStr)) {
+        return nStr;
+    }
+
     nStr += '';
     x = nStr.split('.');
     x1 = x[0];

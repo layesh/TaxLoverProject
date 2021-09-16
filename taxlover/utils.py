@@ -27,10 +27,6 @@ def parse_data(row, total_columns):
     return parsed_data
 
 
-def remove_comma(val):
-    return val.replace(',', '')
-
-
 def create_or_get_tax_payer_obj(user_id):
     try:
         tax_payer = TaxPayer.objects.get(user_id=user_id)
@@ -80,3 +76,7 @@ def has_salary_data(user_id):
 
 def remove_comma(value):
     return value.replace(",", "")
+
+
+def add_comma(value):
+    return f'{value:,.2f}'
