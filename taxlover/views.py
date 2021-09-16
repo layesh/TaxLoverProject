@@ -215,9 +215,6 @@ def salary_info(request):
             error_dictionary = form.errors
             form = SalaryForm(request.POST)
             set_salary_form_validation_errors(error_dictionary, form.fields)
-            # test = 'a'
-            # form.fields['house_rent'].widget.attrs.update({'class': 'form-control is-invalid',
-            #                                                'title': test})
             messages.error(request, f'Please correct the errors below, and try again.')
 
     else:
