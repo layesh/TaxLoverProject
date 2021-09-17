@@ -191,6 +191,7 @@ def save_income_data(request, source, answer):
 
 @login_required
 def salary_info(request):
+    info = request.GET.get('info', '')
     salary = get_current_financial_year_salary_by_payer(request.user.id)
     if not salary:
         financial_year_beg, financial_year_end = get_income_years()
@@ -224,7 +225,8 @@ def salary_info(request):
 
     context = {
         'title': 'Salary',
-        'form': form
+        'form': form,
+        'info': True if info == 'True' else False
     }
 
     return render(request, 'taxlover/salary-info.html', context)

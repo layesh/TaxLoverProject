@@ -72,7 +72,7 @@ $(function () {
         init: function () {
             this.on("success", function (file, response) {
                 if (response['has_total_annual_payment'] === true) {
-                    window.location.href = '/salary-info'
+                    window.location.href = '/salary-info?info=True'
                 } else {
                     document.getElementById('error-text').innerHTML = "Sorry, we can't extract a single information from your document.";
                     document.getElementById('upload-error').style.display = "";

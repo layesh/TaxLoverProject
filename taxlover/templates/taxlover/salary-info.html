@@ -1,6 +1,15 @@
 {% extends "taxlover/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+    {% if info %}
+        <div style="text-align: center; font-size: 3rem; padding-bottom: 10px">
+            <i class="bi bi-bag-check-fill" style="color: #2ca01c"></i>
+        </div>
+        <h2 style="text-align: center">
+            Congratulations! We got your salary info and it's ready for review.
+        </h2>
+    {% endif %}
+
     <div class="salary-main">
         <form method="post">
             {% csrf_token %}
