@@ -99,7 +99,10 @@ class TaxPayer(models.Model):
     @property
     def get_dob(self):
         if self.dob:
-            return self.dob.strftime("%d/%m/%Y")
+            try:
+                return self.dob.strftime("%d/%m/%Y")
+            except AttributeError:
+                return self.dob
         else:
             return ""
 

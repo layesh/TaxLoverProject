@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 
 import json
@@ -95,15 +96,35 @@ class SalaryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 @login_required
 def personal_info(request):
+    has_dob_error = False
+    has_circle_error = False
+    has_zone_error = False
+
     if request.method == 'POST':
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
 
         tax_payer.e_tin = request.POST.get('e_tin')
         tax_payer.nid = request.POST.get('nid')
-        tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
+        try:
+            tax_payer.dob = datetime.datetime.strptime(request.POST.get('dob'), "%d/%m/%Y").date()
+        except ValueError:
+            tax_payer.dob = request.POST.get('dob')
+            has_dob_error = True
+            pass
         tax_payer.mobile_no = request.POST.get('contact_no')
-        tax_payer.tax_circle = request.POST.get('tax_circle')
-        tax_payer.tax_zone = request.POST.get('tax_zone')
+
+        try:
+            tax_payer.tax_circle = int(request.POST.get('tax_circle'))
+        except ValueError:
+            tax_payer.tax_circle = request.POST.get('tax_circle')
+            has_circle_error = True
+            pass
+        try:
+            tax_payer.tax_zone = int(request.POST.get('tax_zone'))
+        except ValueError:
+            tax_payer.tax_zone = request.POST.get('tax_zone')
+            has_zone_error = True
+            pass
 
         tax_payer.name = request.POST.get('full_name')
         tax_payer.fathers_name = request.POST.get('fathers_name')
@@ -130,20 +151,22 @@ def personal_info(request):
         tax_payer.aged_65_years_or_more = "aged_65_years_or_more" in request.POST
         tax_payer.has_differently_abled_children = "has_differently_abled_children" in request.POST
 
-        tax_payer.save()
-        messages.success(request, f'Your personal info has been updated!')
-
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Personal Info'
-        }
+        if has_dob_error or has_circle_error or has_zone_error:
+            messages.error(request, f'Please correct the errors below, and try again.')
+        else:
+            tax_payer.save()
+            messages.success(request, f'Your personal info has been updated!')
     else:
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
 
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Personal Info'
-        }
+    context = {
+        'tax_payer': tax_payer,
+        'title': 'Personal Info',
+        'has_dob_error': has_dob_error,
+        'has_circle_error': has_circle_error,
+        'has_zone_error': has_zone_error
+
+    }
     return render(request, 'taxlover/personal-info.html', context)
 
 

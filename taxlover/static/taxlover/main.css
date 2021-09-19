@@ -158,3 +158,9 @@ a.article-title:hover {
     border-radius: .25rem;
     border: 1px solid #dddddd;
 }
+
+.personal-info-validation-text {
+    padding-left: 2px;
+    color: red;
+    font-size: .875em;
+}
