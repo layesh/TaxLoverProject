@@ -36,7 +36,7 @@ def create_or_get_tax_payer_obj(user_id):
     return tax_payer
 
 
-def create_or_get_latest_income_obj(user_id):
+def create_or_get_current_income_obj(user_id):
     income_year_beg, income_year_end = get_income_years()
 
     try:

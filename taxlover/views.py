@@ -10,12 +10,14 @@ from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY
+from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
-    get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors
-from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_latest_income_obj, \
+    get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors, \
+    get_medical_exempted
+from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma
 
 import os
@@ -173,11 +175,15 @@ def personal_info(request):
 @login_required
 def income(request):
     tax_payer = create_or_get_tax_payer_obj(request.user.id)
-    latest_income = create_or_get_latest_income_obj(request.user.id)
+    current_income = create_or_get_current_income_obj(request.user.id)
+    current_salary = get_current_financial_year_salary_by_payer(request.user.id)
+    income_dto = IncomeDTO(current_salary)
 
     context = {
         'tax_payer': tax_payer,
-        'latest_income': latest_income,
+        'current_income': current_income,
+        'current_salary': current_salary,
+        'income_dto': income_dto,
         'title': 'Income'
     }
 
@@ -186,7 +192,7 @@ def income(request):
 
 @login_required
 def save_income_data(request, source, answer):
-    latest_income = create_or_get_latest_income_obj(request.user.id)
+    latest_income = create_or_get_current_income_obj(request.user.id)
 
     if source == 'salary':
         if answer == 'yes':
@@ -455,10 +461,10 @@ def generate(request):
 
     # create a pdf
     pisa_status = pisa.CreatePDF(
-       html, dest=response, link_callback=link_callback)
+        html, dest=response, link_callback=link_callback)
     # if error then show some funy view
     if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
 
@@ -490,8 +496,7 @@ def get_medical_exempted_value(request):
         medical = request.GET['medical']
 
         data = {
-            'medical_exempted': get_house_rent_exempted(basic, medical)
+            'medical_exempted': get_medical_exempted(basic, medical)
         }
 
         return JsonResponse(data)
-

@@ -72,6 +72,11 @@ def get_medical_exempted(basic, medical):
     return min(MEDICAL_YEARLY_EXEMPTED_RATE, int(basic) * 0.1, int(medical))
 
 
+def get_total_taxable(basic, house_rent, medical):
+    return basic + house_rent - get_house_rent_exempted(basic, house_rent) + medical - \
+           get_medical_exempted(basic, medical)
+
+
 def set_salary_form_initial_value(initial_dictionary):
     for key in initial_dictionary:
         if initial_dictionary[key]:

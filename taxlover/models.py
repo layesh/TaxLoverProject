@@ -1,5 +1,4 @@
 import os
-from decimal import Decimal
 from enum import Enum
 
 from django.contrib.auth.models import User

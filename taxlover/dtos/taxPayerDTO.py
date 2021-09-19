@@ -1,5 +1,3 @@
-import datetime
-
 from taxlover.utils import get_assessment_years
 
 
