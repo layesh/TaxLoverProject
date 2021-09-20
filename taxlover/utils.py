@@ -79,4 +79,5 @@ def remove_comma(value):
 
 
 def add_comma(value):
-    return f'{value:,.2f}'
+    if value:
+        return f'{value:,.2f}'

@@ -10,7 +10,11 @@
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                <span><i class="bi bi-check-circle-fill"></i>&nbsp;</span>Salary
+                                <span>
+                                    {% if income_dto.has_salary_income or income_dto.has_no_salary_income %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Salary
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -20,13 +24,13 @@
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="salaryyesbtn" autocomplete="off"
-                                           onclick="location.href='{% url "save-income-data" "salary" "yes" %}'" {{ current_income.has_salary_income }}>
+                                           onclick="location.href='{% url "save-income-data" "salary" "yes" %}'" {{ income_dto.has_salary_income }}>
                                     <label class="btn btn-outline-success" for="salaryyesbtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="salarynobtn" autocomplete="off"
-                                           onclick="location.href='{% url "save-income-data" "salary" "no" %}'" {{ current_income.has_no_salary_income }}>
+                                           onclick="location.href='{% url "save-income-data" "salary" "no" %}'" {{ income_dto.has_no_salary_income }}>
                                     <label class="btn btn-outline-success" for="salarynobtn">No</label>
                                 </div>
-                                {% if current_salary %}
+                                {% if income_dto.salaryId and income_dto.has_salary_income %}
                                 <div style="padding-top: 20px">
                                     <table class="table table-striped table-bordered">
                                         <thead>
@@ -41,14 +45,45 @@
                                         <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>{{ current_salary.financial_year_beg }}-{{ current_salary.financial_year_end }}</td>
-                                            <td>{{ current_salary.get_basic|format_decimal }}</td>
-                                            <td>{{ current_salary.get_total|format_decimal }}</td>
+                                            <td>{{ income_dto.income_year_beg }}-{{ income_dto.income_year_end }}</td>
+                                            <td>{{ income_dto.basic|format_decimal }}</td>
+                                            <td>{{ income_dto.total|format_decimal }}</td>
                                             <td>
-                                                <a href="{% url "salary-info" %}"><i class="bi bi-pencil-square"
-                                                               style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                <a href="#"><i class="bi bi-trash"
-                                                               style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
+                                                <a href="{% url "salary-info" %}">
+                                                    <i class="bi bi-pencil-square" style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <i class="bi bi-trash" style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                                     data-bs-keyboard="false" tabindex="-1"
+                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Delete
+                                                                    Salary Income</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="{% url 'salary-delete' income_dto.salaryId %}"
+                                                                  method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="modal-body" style="text-align: left">
+                                                                    Are you sure you want to delete the salary income?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Cancel
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        Delete
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>

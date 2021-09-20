@@ -174,15 +174,11 @@ def personal_info(request):
 
 @login_required
 def income(request):
-    tax_payer = create_or_get_tax_payer_obj(request.user.id)
     current_income = create_or_get_current_income_obj(request.user.id)
     current_salary = get_current_financial_year_salary_by_payer(request.user.id)
-    income_dto = IncomeDTO(current_salary)
+    income_dto = IncomeDTO(current_income, current_salary)
 
     context = {
-        'tax_payer': tax_payer,
-        'current_income': current_income,
-        'current_salary': current_salary,
         'income_dto': income_dto,
         'title': 'Income'
     }
@@ -199,6 +195,9 @@ def save_income_data(request, source, answer):
             latest_income.salary = True
         elif answer == 'no':
             latest_income.salary = False
+            salary = get_current_financial_year_salary_by_payer(request.user.id)
+            if salary:
+                salary.delete()
 
     latest_income.save()
     if answer == 'no':
@@ -215,7 +214,7 @@ def save_income_data(request, source, answer):
         else:
             return render(request, 'taxlover/choose-salary-input.html', context)
     else:
-        return render(request, 'taxlover/income.html', context)
+        return redirect('income')
 
 
 @login_required
@@ -259,6 +258,17 @@ def salary_info(request):
     }
 
     return render(request, 'taxlover/salary-info.html', context)
+
+
+@login_required
+def salary_delete(request, pk):
+    if request.method == 'POST':
+        Salary.objects.filter(id=pk).delete()
+        latest_income = create_or_get_current_income_obj(request.user.id)
+        latest_income.salary = None
+        latest_income.save()
+
+    return redirect('income')
 
 
 @login_required
