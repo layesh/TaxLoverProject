@@ -282,26 +282,31 @@ def upload_salary_statement(request):
                 Document.objects.get(tax_payer_id=request.user.id,
                                      income_year_beg=income_year_beg,
                                      income_year_end=income_year_end)
+                response_data = {'has_salary_document': True}
+                return HttpResponse(json.dumps(response_data), content_type="application/json")
             except Document.DoesNotExist:
-                salary_statement_document = Document(file=request.FILES['file'])
-                salary_statement_document.tax_payer_id = tax_payer.id
-                salary_statement_document.income_year_beg = income_year_beg
-                salary_statement_document.income_year_end = income_year_end
-                salary_statement_document.document_name = "Salary Statement"
-                salary_statement_document.description = "Evaluated for {} - {} salary income.".format(income_year_beg,
-                                                                                                      income_year_end)
-                salary_statement_document.save()
-
                 try:
                     Salary.objects.get(tax_payer_id=request.user.id,
                                        financial_year_beg=income_year_beg,
                                        financial_year_end=income_year_end)
                 except Salary.DoesNotExist:
-                    total_annual_payment = process_and_save_salary(salary_statement_document.file.name, request.user.id)
-                    has_total_annual_payment = True
-                    if total_annual_payment <= 0:
+                    salary_statement_document = Document(file=request.FILES['file'])
+                    salary_statement_document.tax_payer_id = tax_payer.id
+                    salary_statement_document.income_year_beg = income_year_beg
+                    salary_statement_document.income_year_end = income_year_end
+                    salary_statement_document.document_name = "Salary Statement"
+                    salary_statement_document.description = "Evaluated for {} - {} salary income.".format(
+                        income_year_beg,
+                        income_year_end)
+                    salary_statement_document.save()
+
+                    total_annual_payment = process_and_save_salary(salary_statement_document, request.user.id)
+                    has_total_annual_payment = False
+                    if total_annual_payment > 0:
+                        salary_statement_document.save()
+                        has_total_annual_payment = True
+                    else:
                         Document.delete(salary_statement_document)
-                        has_total_annual_payment = False
 
                     response_data = {'has_total_annual_payment': has_total_annual_payment}
                     return HttpResponse(json.dumps(response_data), content_type="application/json")

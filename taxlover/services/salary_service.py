@@ -17,11 +17,11 @@ def get_current_financial_year_salary_by_payer(payer_id):
                                  financial_year_end=financial_year_end).first()
 
 
-def process_and_save_salary(file_name, payer_id):
+def process_and_save_salary(salary_statement_document, payer_id):
     extract_table_session = ExtractTable(api_key=EXTRACT_TABLE_API_KEY)
     print(extract_table_session.check_usage())
 
-    file_path = 'media/' + file_name
+    file_path = 'media/' + salary_statement_document.file.name
 
     salary_table_data = extract_table_session.process_file(filepath=file_path,
                                                            output_format="df")
@@ -62,6 +62,7 @@ def process_and_save_salary(file_name, payer_id):
 
     if total_annual_payment > 0:
         salary.save()
+        salary_statement_document.salary = salary
 
     return total_annual_payment
 
