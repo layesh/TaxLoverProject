@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import pandas as pd
 from ExtractTable import ExtractTable
 
@@ -65,11 +67,11 @@ def process_and_save_salary(file_name, payer_id):
 
 
 def get_house_rent_exempted(basic, house_rent):
-    return min(12 * HOUSE_RENT_MONTHLY_EXEMPTED_RATE, int(basic) * 0.5, int(house_rent))
+    return Decimal(min(12 * HOUSE_RENT_MONTHLY_EXEMPTED_RATE, float(basic) * 0.5, Decimal(house_rent)))
 
 
 def get_medical_exempted(basic, medical):
-    return min(MEDICAL_YEARLY_EXEMPTED_RATE, int(basic) * 0.1, int(medical))
+    return Decimal(min(MEDICAL_YEARLY_EXEMPTED_RATE, float(basic) * 0.1, Decimal(medical)))
 
 
 def get_total_taxable(basic, house_rent, medical):

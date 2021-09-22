@@ -116,12 +116,12 @@ function formatToTwoDecimalPlaces(nStr) {
     }
 
     nStr += '';
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
+    let x = nStr.split('.');
+    let x1 = x[0];
+    let x2 = x.length > 1 ? '.' + x[1] : '';
 
-    if (x2 === '' && x1 !== '') {
-        return x1 + '.00'; // Format to two decimal places (default).
+    if (x1 !== '') {
+        return parseFloat(nStr).toFixed(2);
     } else {
         return nStr;
     }
