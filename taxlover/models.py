@@ -447,6 +447,7 @@ class Income(models.Model):
 
 class Document(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    salary = models.ForeignKey(Salary, on_delete=models.CASCADE, null=True)
     income_year_beg = models.IntegerField(default=0)
     income_year_end = models.IntegerField(default=0)
     document_name = models.CharField(max_length=100, null=True)
