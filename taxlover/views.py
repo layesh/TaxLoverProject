@@ -16,7 +16,7 @@ from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors, \
-    get_medical_exempted
+    get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma
 
@@ -492,26 +492,30 @@ def download_return(request):
 
 
 @login_required
-def get_house_rent_exempted_value(request):
+def get_category_wise_exempted_value(request):
     if request.is_ajax() and request.method == 'GET':
-        basic = request.GET['basic']
-        house_rent = request.GET['house_rent']
+        category = request.GET['category']
+        data = {}
 
-        data = {
-            'house_rent_exempted': get_house_rent_exempted(basic, house_rent)
-        }
+        if category == 'house_rent':
+            basic = request.GET['basic']
+            house_rent = request.GET['house_rent']
 
-        return JsonResponse(data)
+            data = {
+                'house_rent_exempted': get_house_rent_exempted(basic, house_rent)
+            }
+        elif category == 'medical':
+            basic = request.GET['basic']
+            medical = request.GET['medical']
 
+            data = {
+                'medical_exempted': get_medical_exempted(basic, medical)
+            }
+        elif category == 'conveyance':
+            conveyance = request.GET['conveyance']
 
-@login_required
-def get_medical_exempted_value(request):
-    if request.is_ajax() and request.method == 'GET':
-        basic = request.GET['basic']
-        medical = request.GET['medical']
-
-        data = {
-            'medical_exempted': get_medical_exempted(basic, medical)
-        }
+            data = {
+                'conveyance_exempted': get_conveyance_exempted(conveyance)
+            }
 
         return JsonResponse(data)

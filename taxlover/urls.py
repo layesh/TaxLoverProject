@@ -30,6 +30,7 @@ urlpatterns = [
     path('salary-info/', views.salary_info, name='salary-info'),
     path('salary-delete/<int:pk>/', views.salary_delete, name='salary-delete'),
     path('upload-salary-statement/', views.upload_salary_statement, name='upload-salary-statement'),
-    path('get_house_rent_exempted_value/', views.get_house_rent_exempted_value, name='get_house_rent_exempted_value'),
-    path('get_medical_exempted_value/', views.get_medical_exempted_value, name='get_medical_exempted_value')
+    path('get_category_wise_exempted_value/', views.get_category_wise_exempted_value,
+         name='get_category_wise_exempted_value')
+
 ]

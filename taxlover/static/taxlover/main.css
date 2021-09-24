@@ -164,3 +164,7 @@ a.article-title:hover {
     color: red;
     font-size: .875em;
 }
+
+.tooltip-inner {
+    max-width: 450px;
+}

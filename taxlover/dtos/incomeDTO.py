@@ -10,6 +10,6 @@ class IncomeDTO:
         if salary:
             self.income_year_beg, self.income_year_end = get_income_years()
             self.salaryId = salary.id
-            self.taxable = get_total_taxable(salary.get_basic, salary.get_house_rent, salary.get_medical)
+            self.taxable = get_total_taxable(salary)
             self.total = salary.get_total
             self.basic = salary.get_basic
