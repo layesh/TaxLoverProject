@@ -399,8 +399,8 @@ class Salary(models.Model):
 
     @property
     def get_total(self):
-        return self.get_basic + self.get_house_rent + self.get_medical + self.get_conveyance + self.lfa + \
-               self.total_bonus + self.employers_contribution_to_pf
+        return self.get_basic + self.get_house_rent + self.get_medical + self.get_conveyance + self.get_lfa + \
+               self.get_total_bonus + self.get_employers_contribution_to_pf
 
 
 class Income(models.Model):
@@ -439,6 +439,26 @@ class Income(models.Model):
     def has_no_salary_income(self):
         if self.salary is not None:
             if self.salary:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_interest_on_securities(self):
+        if self.interest_on_security is not None:
+            if self.interest_on_security:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_interest_on_securities(self):
+        if self.interest_on_security is not None:
+            if self.interest_on_security:
                 return ""
             else:
                 return "checked"

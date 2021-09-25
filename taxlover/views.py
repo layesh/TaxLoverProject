@@ -189,18 +189,26 @@ def income(request):
 @login_required
 def save_income_data(request, source, answer):
     latest_income = create_or_get_current_income_obj(request.user.id)
+    show_success_message = False
 
     if source == 'salary':
         if answer == 'yes':
             latest_income.salary = True
         elif answer == 'no':
+            show_success_message = True
             latest_income.salary = False
             salary = get_current_financial_year_salary_by_payer(request.user.id)
             if salary:
                 salary.delete()
+    elif source == 'interest_on_security':
+        show_success_message = True
+        if answer == 'yes':
+            latest_income.interest_on_security = True
+        elif answer == 'no':
+            latest_income.interest_on_security = False
 
     latest_income.save()
-    if answer == 'no':
+    if show_success_message:
         messages.success(request, f'Data updated successfully!')
 
     context = {
@@ -208,12 +216,15 @@ def save_income_data(request, source, answer):
         'title': 'Income'
     }
 
-    if latest_income.salary:
-        if has_salary_data(request.user.id):
-            return redirect('salary-info')
+    if source == 'salary':
+        if latest_income.salary:
+            if has_salary_data(request.user.id):
+                return redirect('salary-info')
+            else:
+                return render(request, 'taxlover/choose-salary-input.html', context)
         else:
-            return render(request, 'taxlover/choose-salary-input.html', context)
-    else:
+            return redirect('income')
+    elif source == 'interest_on_security':
         return redirect('income')
 
 

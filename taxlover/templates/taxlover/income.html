@@ -102,7 +102,11 @@
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <i class="bi bi-check-square-fill"></i>&nbsp;Interest on Securities
+                                <span>
+                                    {% if income_dto.has_interest_on_securities or income_dto.has_no_interest_on_securities %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Interest on Securities
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -111,10 +115,14 @@
                                 <strong>Do you have any interest on securities?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="interestonsecurityyesbtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "interest_on_security" "yes" %}'" {{ income_dto.has_interest_on_securities }}>
+                                    <label class="btn btn-outline-success" for="interestonsecurityyesbtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="interestonsecuritynobtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "interest_on_security" "no" %}'" {{ income_dto.has_no_interest_on_securities }}>
+                                    <label class="btn btn-outline-success" for="interestonsecuritynobtn">No</label>
                                 </div>
                             </div>
                         </div>

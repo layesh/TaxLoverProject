@@ -81,12 +81,12 @@ def get_conveyance_exempted(conveyance):
 
 
 def get_total_taxable(salary):
-    return salary.basic + \
-           salary.house_rent - get_house_rent_exempted(salary.basic, salary.house_rent) + \
-           salary.medical - get_medical_exempted(salary.basic, salary.medical) + \
-           salary.conveyance - get_conveyance_exempted(salary.conveyance) + \
-           salary.total_bonus + \
-           salary.employers_contribution_to_pf
+    return salary.get_basic + \
+           salary.get_house_rent - get_house_rent_exempted(salary.get_basic, salary.get_house_rent) + \
+           salary.get_medical - get_medical_exempted(salary.get_basic, salary.get_medical) + \
+           salary.get_conveyance - get_conveyance_exempted(salary.get_conveyance) + \
+           salary.get_total_bonus + \
+           salary.get_employers_contribution_to_pf
 
 
 def set_salary_form_initial_value(initial_dictionary):
