@@ -17,9 +17,9 @@
                 <thead>
                     <tr>
                         <th scope="col" class="col-6"></th>
-                        <th scope="col">Yearly Income</th>
-                        <th scope="col">Exempted Income</th>
-                        <th scope="col">Taxable Income</th>
+                        <th scope="col" class="text-align-right">Yearly Income</th>
+                        <th scope="col" class="text-align-right">Exempted Income</th>
+                        <th scope="col" class="text-align-right">Taxable Income</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,11 +37,11 @@
                             {{ form.basic }}
                         </td>
                         <td>
-                            <input id="id_basic_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_basic_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_basic_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_basic_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -59,11 +59,11 @@
                             {{ form.house_rent }}
                         </td>
                         <td>
-                            <input id="id_house_rent_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_house_rent_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_house_rent_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_house_rent_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -81,11 +81,11 @@
                             {{ form.medical }}
                         </td>
                         <td>
-                            <input id="id_medical_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_medical_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_medical_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_medical_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -103,11 +103,11 @@
                             {{ form.conveyance }}
                         </td>
                         <td>
-                            <input id="id_conveyance_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_conveyance_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_conveyance_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_conveyance_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -125,11 +125,11 @@
                             {{ form.lfa }}
                         </td>
                         <td>
-                            <input id="id_lfa_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_lfa_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_lfa_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_lfa_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -147,11 +147,11 @@
                             {{ form.total_bonus }}
                         </td>
                         <td>
-                            <input id="id_total_bonus_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_total_bonus_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_total_bonus_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_total_bonus_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -169,20 +169,20 @@
                             {{ form.employers_contribution_to_pf }}
                         </td>
                         <td>
-                            <input id="id_employers_contribution_to_pf_exempted" class="form-control" type="text" placeholder=""
+                            <input id="id_employers_contribution_to_pf_exempted" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                         <td>
-                            <input id="id_employers_contribution_to_pf_taxable" class="form-control" type="text" placeholder=""
+                            <input id="id_employers_contribution_to_pf_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <th scope="col" class="col-6">Total</th>
-                        <th scope="col" style="padding-left: 20px" id="total_income"></th>
-                        <th scope="col" style="padding-left: 20px" id="total_exempted"></th>
-                        <th scope="col" style="padding-left: 20px" id="total_taxable"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_income"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_exempted"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_taxable"></th>
                 </tfoot>
             </table>
             <div style="text-align: center;padding-top: 20px">

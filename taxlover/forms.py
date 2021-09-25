@@ -22,11 +22,11 @@ class SalaryForm(forms.ModelForm):
         model = Salary
         fields = ['basic', 'house_rent', 'medical', 'conveyance', 'lfa', 'total_bonus', 'employers_contribution_to_pf']
         widgets = {
-            'basic': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'house_rent': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'medical': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'conveyance': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'lfa': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'total_bonus': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
-            'employers_contribution_to_pf': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
+            'basic': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'house_rent': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'medical': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'conveyance': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'lfa': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'total_bonus': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'employers_contribution_to_pf': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
         }
