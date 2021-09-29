@@ -1,6 +1,4 @@
 from decimal import Decimal
-
-import pandas as pd
 from ExtractTable import ExtractTable
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY, HOUSE_RENT_MONTHLY_EXEMPTED_RATE, MEDICAL_YEARLY_EXEMPTED_RATE, \

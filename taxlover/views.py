@@ -14,6 +14,7 @@ from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm
 from taxlover.models import TaxPayer, Salary, Document
+from taxlover.services.income_service import save_income
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors, \
     get_medical_exempted, get_conveyance_exempted
@@ -189,25 +190,8 @@ def income(request):
 @login_required
 def save_income_data(request, source, answer):
     latest_income = create_or_get_current_income_obj(request.user.id)
-    show_success_message = False
+    show_success_message = save_income(latest_income, source, answer, request)
 
-    if source == 'salary':
-        if answer == 'yes':
-            latest_income.salary = True
-        elif answer == 'no':
-            show_success_message = True
-            latest_income.salary = False
-            salary = get_current_financial_year_salary_by_payer(request.user.id)
-            if salary:
-                salary.delete()
-    elif source == 'interest_on_security':
-        show_success_message = True
-        if answer == 'yes':
-            latest_income.interest_on_security = True
-        elif answer == 'no':
-            latest_income.interest_on_security = False
-
-    latest_income.save()
     if show_success_message:
         messages.success(request, f'Data updated successfully!')
 
@@ -224,7 +208,11 @@ def save_income_data(request, source, answer):
                 return render(request, 'taxlover/choose-salary-input.html', context)
         else:
             return redirect('income')
-    elif source == 'interest_on_security':
+    elif source == 'interest_on_security' or source == 'rental_property' or source == 'agriculture' or \
+            source == 'business' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
+            source == 'capital_gains' or source == 'other_sources' or source == 'foreign_income' or \
+            source == 'tax_rebate' or source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
+            source == 'adjustment_of_tax_refund':
         return redirect('income')
 
 

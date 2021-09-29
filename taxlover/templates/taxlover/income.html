@@ -7,17 +7,17 @@
                 <div class="accordion" id="accordionLeftIncome">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne"
                                     aria-expanded="true" aria-controls="collapseOne">
                                 <span>
                                     {% if income_dto.has_salary_income or income_dto.has_no_salary_income %}
                                         <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
                                     {% endif %}
-                                Salary
+                                Salary Income
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                              data-bs-parent="#accordionLeftIncome">
                             <div class="accordion-body hor-align-center">
                                 <strong>Do you have any salary income?</strong>
@@ -131,7 +131,11 @@
                         <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <i class="bi bi-check2-square"></i>&nbsp;Property
+                                <span>
+                                    {% if income_dto.has_rental_property or income_dto.has_no_rental_property %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Rental Property Income
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -140,10 +144,130 @@
                                 <strong>Do you have any rental property income?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="rentalPropertyYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "rental_property" "yes" %}'" {{ income_dto.has_rental_property }}>
+                                    <label class="btn btn-outline-success" for="rentalPropertyYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="rentalPropertyNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "rental_property" "no" %}'" {{ income_dto.has_no_rental_property }}>
+                                    <label class="btn btn-outline-success" for="rentalPropertyNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <span>
+                                    {% if income_dto.has_agriculture or income_dto.has_no_agriculture %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Agricultural Income
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                             data-bs-parent="#accordionLeftIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any agricultural income?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="agricultureYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "agriculture" "yes" %}'" {{ income_dto.has_agriculture }}>
+                                    <label class="btn btn-outline-success" for="agricultureYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="agricultureNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "agriculture" "no" %}'" {{ income_dto.has_no_agriculture }}>
+                                    <label class="btn btn-outline-success" for="agricultureNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <span>
+                                    {% if income_dto.has_business or income_dto.has_no_business %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Business Income
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                             data-bs-parent="#accordionLeftIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any Business or Profession income?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="businessYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "business" "yes" %}'" {{ income_dto.has_business }}>
+                                    <label class="btn btn-outline-success" for="businessYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="businessNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "business" "no" %}'" {{ income_dto.has_no_business }}>
+                                    <label class="btn btn-outline-success" for="businessNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <span>
+                                    {% if income_dto.has_share_of_profit_in_firm or income_dto.has_no_share_of_profit_in_firm %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Share Of Profit In Firm
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                             data-bs-parent="#accordionLeftIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any share of firm profit?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="shareOfProfitInFirmYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "share_of_profit_in_firm" "yes" %}'" {{ income_dto.has_share_of_profit_in_firm }}>
+                                    <label class="btn btn-outline-success" for="shareOfProfitInFirmYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="shareOfProfitInFirmNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "share_of_profit_in_firm" "no" %}'" {{ income_dto.has_no_share_of_profit_in_firm }}>
+                                    <label class="btn btn-outline-success" for="shareOfProfitInFirmNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSeven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                <span>
+                                    {% if income_dto.has_spouse_or_child or income_dto.has_no_spouse_or_child %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Spouse/Child Income
+                            </button>
+                        </h2>
+                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                             data-bs-parent="#accordionLeftIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any spouse or minor child income ?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="spouseOrChildYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "spouse_or_child" "yes" %}'" {{ income_dto.has_spouse_or_child }}>
+                                    <label class="btn btn-outline-success" for="spouseOrChildYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="spouseOrChildNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "spouse_or_child" "no" %}'" {{ income_dto.has_no_spouse_or_child }}>
+                                    <label class="btn btn-outline-success" for="spouseOrChildNoBtn">No</label>
                                 </div>
                             </div>
                         </div>
@@ -156,6 +280,10 @@
                         <h2 class="accordion-header" id="headingEight">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                <span>
+                                    {% if income_dto.has_capital_gains or income_dto.has_no_capital_gains %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
                                 Capital Gains
                             </button>
                         </h2>
@@ -165,12 +293,14 @@
                                 <strong>Do you have any income from capital gain?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckyes"
-                                           autocomplete="off">
-                                    <label class="btn btn-outline-success" for="capitalgainbtncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="capitalgainbtncheckno"
-                                           autocomplete="off">
-                                    <label class="btn btn-outline-success" for="capitalgainbtncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="capitalGainsYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "capital_gains" "yes" %}'" {{ income_dto.has_capital_gains }}>
+                                    <label class="btn btn-outline-success" for="capitalGainsYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="capitalGainsNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "capital_gains" "no" %}'" {{ income_dto.has_no_capital_gains }}>
+                                    <label class="btn btn-outline-success" for="capitalGainsNoBtn">No</label>
                                 </div>
                             </div>
                         </div>
@@ -179,19 +309,175 @@
                         <h2 class="accordion-header" id="headingNine">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                                Other Sources
+                                <span>
+                                    {% if income_dto.has_other_sources or income_dto.has_no_other_sources %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Other Sources Of Income
                             </button>
                         </h2>
                         <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
                              data-bs-parent="#accordionRightIncome">
                             <div class="accordion-body hor-align-center">
-                                <strong>Do you have any Income from Other sources?</strong>
+                                <strong>Do you have any income from other sources?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="btncheckyes" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckyes">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="btncheckno" autocomplete="off">
-                                    <label class="btn btn-outline-success" for="btncheckno">No</label>
+                                    <input type="checkbox" class="btn-check" id="otherSourcesYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "other_sources" "yes" %}'" {{ income_dto.has_other_sources }}>
+                                    <label class="btn btn-outline-success" for="otherSourcesYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="otherSourcesNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "other_sources" "no" %}'" {{ income_dto.has_no_other_sources }}>
+                                    <label class="btn btn-outline-success" for="otherSourcesNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTen">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                <span>
+                                    {% if income_dto.has_foreign_income or income_dto.has_no_foreign_income %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Foreign Income
+                            </button>
+                        </h2>
+                        <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen"
+                             data-bs-parent="#accordionRightIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any foreign income?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="foreignIncomeYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "foreign_income" "yes" %}'" {{ income_dto.has_foreign_income }}>
+                                    <label class="btn btn-outline-success" for="foreignIncomeYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="foreignIncomeNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "foreign_income" "no" %}'" {{ income_dto.has_no_foreign_income }}>
+                                    <label class="btn btn-outline-success" for="foreignIncomeNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingEleven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                                <span>
+                                    {% if income_dto.has_tax_rebate or income_dto.has_no_tax_rebate %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Tax Rebate
+                            </button>
+                        </h2>
+                        <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven"
+                             data-bs-parent="#accordionRightIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Did you invest in any tax deductible investments?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="taxRebateYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "tax_rebate" "yes" %}'" {{ income_dto.has_tax_rebate }}>
+                                    <label class="btn btn-outline-success" for="taxRebateYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="taxRebateNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "tax_rebate" "no" %}'" {{ income_dto.has_no_tax_rebate }}>
+                                    <label class="btn btn-outline-success" for="taxRebateNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwelve">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwelve" aria-expanded="false"
+                                    aria-controls="collapseTwelve">
+                                <span>
+                                    {% if income_dto.has_tax_deducted_at_source or income_dto.has_no_tax_deducted_at_source %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Tax Deducted At Source
+                            </button>
+                        </h2>
+                        <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve"
+                             data-bs-parent="#accordionRightIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Did any tax automatically get deducted from your income?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="taxDeductedAtSourceYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "tax_deducted_at_source" "yes" %}'" {{ income_dto.has_tax_deducted_at_source }}>
+                                    <label class="btn btn-outline-success" for="taxDeductedAtSourceYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="taxDeductedAtSourceNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "tax_deducted_at_source" "no" %}'" {{ income_dto.has_no_tax_deducted_at_source }}>
+                                    <label class="btn btn-outline-success" for="taxDeductedAtSourceNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThirteen">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThirteen" aria-expanded="false"
+                                    aria-controls="collapseThirteen">
+                                <span>
+                                    {% if income_dto.has_advance_paid_tax or income_dto.has_no_advance_paid_tax %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Advance Paid Tax
+                            </button>
+                        </h2>
+                        <div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen"
+                             data-bs-parent="#accordionRightIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Did you pay any tax in advance?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="advancePaidTaxYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "advance_paid_tax" "yes" %}'" {{ income_dto.has_advance_paid_tax }}>
+                                    <label class="btn btn-outline-success" for="advancePaidTaxYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="advancePaidTaxNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "advance_paid_tax" "no" %}'" {{ income_dto.has_no_advance_paid_tax }}>
+                                    <label class="btn btn-outline-success" for="advancePaidTaxNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFourteen">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFourteen" aria-expanded="false"
+                                    aria-controls="collapseFourteen">
+                                <span>
+                                    {% if income_dto.has_adjustment_of_tax_refund or income_dto.has_no_adjustment_of_tax_refund %}
+                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                    {% endif %}
+                                Adjustment Of Tax Refund
+                            </button>
+                        </h2>
+                        <div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen"
+                             data-bs-parent="#accordionRightIncome">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Did you have any adjustments to your tax refund?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="adjustmentOfTaxRefundYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "adjustment_of_tax_refund" "yes" %}'" {{ income_dto.has_adjustment_of_tax_refund }}>
+                                    <label class="btn btn-outline-success" for="adjustmentOfTaxRefundYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="adjustmentOfTaxRefundNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-income-data" "adjustment_of_tax_refund" "no" %}'" {{ income_dto.has_no_adjustment_of_tax_refund }}>
+                                    <label class="btn btn-outline-success" for="adjustmentOfTaxRefundNoBtn">No</label>
                                 </div>
                             </div>
                         </div>
@@ -201,6 +487,38 @@
         </div>
     </div>
     <script>
+        $(document).ready(function () {
+            var last = Cookies.get('activeAccordionGroup');
 
+            if (last != null) {
+                //remove default collapse settings
+                $("#accordionLeftIncome .collapse").removeClass('show');
+                $("#accordionLeftIncome .accordion-button").addClass('collapsed');
+                //show the last visible group
+                $("#" + last).addClass("show");
+                let lastHeading = 'heading' + last.split("collapse")[1];
+                $("#" + lastHeading + ' .accordion-button').removeClass("collapsed");
+            } else {
+                $("#collapseOne").addClass("show");
+                $("#collapseOne" + ' .accordion-button').removeClass("collapsed");
+            }
+        });
+
+        //when a group is shown, save it as the active accordion group
+        $("#accordionLeftIncome").bind('shown.bs.collapse', function () {
+            var active = $("#accordionLeftIncome .show").attr('id');
+            Cookies.set('activeAccordionGroup', active);
+
+            $("#accordionRightIncome .collapse").removeClass('show');
+            $("#accordionRightIncome .accordion-button").addClass('collapsed');
+        });
+
+        $("#accordionRightIncome").bind('shown.bs.collapse', function () {
+            var active = $("#accordionRightIncome .show").attr('id');
+            Cookies.set('activeAccordionGroup', active);
+
+            $("#accordionLeftIncome .collapse").removeClass('show');
+            $("#accordionLeftIncome .accordion-button").addClass('collapsed');
+        });
     </script>
 {% endblock content %}

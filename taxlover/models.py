@@ -465,6 +465,246 @@ class Income(models.Model):
         else:
             return ""
 
+    @property
+    def has_rental_property(self):
+        if self.rental_property is not None:
+            if self.rental_property:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_rental_property(self):
+        if self.rental_property is not None:
+            if self.rental_property:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_agriculture(self):
+        if self.agriculture is not None:
+            if self.agriculture:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_agriculture(self):
+        if self.agriculture is not None:
+            if self.agriculture:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_business(self):
+        if self.business is not None:
+            if self.business:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_business(self):
+        if self.business is not None:
+            if self.business:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_share_of_profit_in_firm(self):
+        if self.share_of_profit_in_firm is not None:
+            if self.share_of_profit_in_firm:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_share_of_profit_in_firm(self):
+        if self.share_of_profit_in_firm is not None:
+            if self.share_of_profit_in_firm:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_spouse_or_child(self):
+        if self.spouse_or_child is not None:
+            if self.spouse_or_child:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_spouse_or_child(self):
+        if self.spouse_or_child is not None:
+            if self.spouse_or_child:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_capital_gains(self):
+        if self.capital_gains is not None:
+            if self.capital_gains:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_capital_gains(self):
+        if self.capital_gains is not None:
+            if self.capital_gains:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_other_sources(self):
+        if self.other_sources is not None:
+            if self.other_sources:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_other_sources(self):
+        if self.other_sources is not None:
+            if self.other_sources:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_foreign_income(self):
+        if self.foreign_income is not None:
+            if self.foreign_income:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_foreign_income(self):
+        if self.foreign_income is not None:
+            if self.foreign_income:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_tax_rebate(self):
+        if self.tax_rebate is not None:
+            if self.tax_rebate:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_tax_rebate(self):
+        if self.tax_rebate is not None:
+            if self.tax_rebate:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_tax_deducted_at_source(self):
+        if self.tax_deducted_at_source is not None:
+            if self.tax_deducted_at_source:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_tax_deducted_at_source(self):
+        if self.tax_deducted_at_source is not None:
+            if self.tax_deducted_at_source:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_advance_paid_tax(self):
+        if self.advance_paid_tax is not None:
+            if self.advance_paid_tax:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_advance_paid_tax(self):
+        if self.advance_paid_tax is not None:
+            if self.advance_paid_tax:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_adjustment_of_tax_refund(self):
+        if self.adjustment_of_tax_refund is not None:
+            if self.adjustment_of_tax_refund:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_adjustment_of_tax_refund(self):
+        if self.adjustment_of_tax_refund is not None:
+            if self.adjustment_of_tax_refund:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
 
 class Document(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
