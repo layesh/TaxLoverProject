@@ -10,11 +10,15 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne"
                                     aria-expanded="true" aria-controls="collapseOne">
-                                <span>
                                     {% if income_dto.has_salary_income or income_dto.has_no_salary_income %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px;"></i></span>
                                     {% endif %}
                                 Salary Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="A salary is a fixed regular payment, typically paid on a weekly or monthly basis but often expressed as an annual sum, made by an employer to an employee."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
@@ -102,11 +106,15 @@
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <span>
                                     {% if income_dto.has_interest_on_securities or income_dto.has_no_interest_on_securities %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Interest on Securities
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Interest on Securities is the annual amount of interest received by the taxpayer for all government or government approved securities."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -131,11 +139,15 @@
                         <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <span>
                                     {% if income_dto.has_rental_property or income_dto.has_no_rental_property %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Rental Property Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Income from house property includes the annual value of rental income you received from all of your commercial or residential properties."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -160,11 +172,15 @@
                         <h2 class="accordion-header" id="headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                <span>
                                     {% if income_dto.has_agriculture or income_dto.has_no_agriculture %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Agricultural Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Agricultural income includes the total annual sales of all productsclock grown and manufactured by the taxpayer."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
@@ -189,11 +205,15 @@
                         <h2 class="accordion-header" id="headingFive">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                <span>
                                     {% if income_dto.has_business or income_dto.has_no_business %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Business Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Income from business and profession includes the annual net income received for any business or profession."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
@@ -218,11 +238,15 @@
                         <h2 class="accordion-header" id="headingSix">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                <span>
                                     {% if income_dto.has_share_of_profit_in_firm or income_dto.has_no_share_of_profit_in_firm %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Share Of Profit In Firm
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Share of profit in a firm includes the annual income you received from a business that you have full or part ownership in. This does not refer to the sale of shares or other securities or dividends."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
@@ -247,11 +271,15 @@
                         <h2 class="accordion-header" id="headingSeven">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                <span>
                                     {% if income_dto.has_spouse_or_child or income_dto.has_no_spouse_or_child %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Spouse/Child Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="If any tax payer's minor child or spouse have no TIN but income occurs from there own asset or capital and its not like joint or family return."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
@@ -280,11 +308,15 @@
                         <h2 class="accordion-header" id="headingEight">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                <span>
                                     {% if income_dto.has_capital_gains or income_dto.has_no_capital_gains %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Capital Gains
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Any profits and gains arising from the transfer of a capital asset and such profits and gains shall be deemed to be the income of the income year."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
@@ -309,11 +341,15 @@
                         <h2 class="accordion-header" id="headingNine">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                                <span>
                                     {% if income_dto.has_other_sources or income_dto.has_no_other_sources %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Other Sources Of Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Income from other sources like: Interest on Bank deposit, Cash Dividend, Royalties, Fees for technical service, Other income."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
@@ -338,11 +374,15 @@
                         <h2 class="accordion-header" id="headingTen">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
-                                <span>
                                     {% if income_dto.has_foreign_income or income_dto.has_no_foreign_income %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Foreign Income
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Income received from foreign source, example: wages if you work abroad, foreign investments and savings interest, rental income on overseas property"></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen"
@@ -367,11 +407,15 @@
                         <h2 class="accordion-header" id="headingEleven">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
-                                <span>
                                     {% if income_dto.has_tax_rebate or income_dto.has_no_tax_rebate %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Tax Rebate
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Exemption of amount of tax payable  for investment some recognized field."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven"
@@ -397,11 +441,15 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwelve" aria-expanded="false"
                                     aria-controls="collapseTwelve">
-                                <span>
                                     {% if income_dto.has_tax_deducted_at_source or income_dto.has_no_tax_deducted_at_source %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Tax Deducted At Source
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Any deduction or collection of tax from income, interest on Bank Deposite."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve"
@@ -427,11 +475,15 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseThirteen" aria-expanded="false"
                                     aria-controls="collapseThirteen">
-                                <span>
                                     {% if income_dto.has_advance_paid_tax or income_dto.has_no_advance_paid_tax %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Advance Paid Tax
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="This is the amount of tax that the taxpayer chooses to pay ahead of time for the next financial year."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen"
@@ -457,11 +509,15 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFourteen" aria-expanded="false"
                                     aria-controls="collapseFourteen">
-                                <span>
                                     {% if income_dto.has_adjustment_of_tax_refund or income_dto.has_no_adjustment_of_tax_refund %}
-                                        <i class="bi bi-check-circle-fill" style="color: #2ca01c"></i>&nbsp;</span>
+                                        <span><i class="bi bi-check-circle-fill" style="color: #2ca01c; padding-right: 7px"></i></span>
                                     {% endif %}
                                 Adjustment Of Tax Refund
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Adjust of tax refund if any tax refund claim on last year."></i>
+                                </sup>
                             </button>
                         </h2>
                         <div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen"
