@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 
-from .models import TaxPayer, Document, Salary
+from .models import TaxPayer, Document, Salary, OtherIncome
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -29,4 +29,14 @@ class SalaryForm(forms.ModelForm):
             'lfa': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
             'total_bonus': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
             'employers_contribution_to_pf': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+        }
+
+
+class OtherIncomeForm(forms.ModelForm):
+    class Meta:
+        model = OtherIncome
+        fields = ['interest_from_mutual_fund_unit_fund', 'others']
+        widgets = {
+            'interest_from_mutual_fund_unit_fund': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'others': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

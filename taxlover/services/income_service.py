@@ -1,4 +1,6 @@
+from taxlover.models import OtherIncome
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
+from taxlover.utils import get_income_years
 
 
 def save_income(latest_income, source, answer, request):
@@ -56,11 +58,14 @@ def save_income(latest_income, source, answer, request):
         elif answer == 'no':
             latest_income.capital_gains = False
     elif source == 'other_sources':
-        show_success_message = True
         if answer == 'yes':
             latest_income.other_sources = True
         elif answer == 'no':
+            show_success_message = True
             latest_income.other_sources = False
+            other_income = get_current_financial_year_other_income_by_payer(request.user.id)
+            if other_income:
+                other_income.delete()
     elif source == 'foreign_income':
         show_success_message = True
         if answer == 'yes':
@@ -95,3 +100,11 @@ def save_income(latest_income, source, answer, request):
     latest_income.save()
 
     return show_success_message
+
+
+def get_current_financial_year_other_income_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return OtherIncome.objects.filter(tax_payer_id=payer_id,
+                                      financial_year_beg=financial_year_beg,
+                                      financial_year_end=financial_year_end).first()

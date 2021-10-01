@@ -12,14 +12,14 @@ from django.contrib.auth.decorators import login_required
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import UploadSalaryStatementForm, SalaryForm
-from taxlover.models import TaxPayer, Salary, Document
-from taxlover.services.income_service import save_income
+from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome
+from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
-    get_current_financial_year_salary_by_payer, set_salary_form_initial_value, set_salary_form_validation_errors, \
-    get_medical_exempted, get_conveyance_exempted
+    get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
-    get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma
+    get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma, has_other_income, \
+    set_form_validation_errors, set_form_initial_value
 
 import os
 from django.conf import settings
@@ -210,10 +210,15 @@ def save_income_data(request, source, answer):
             return redirect('income')
     elif source == 'interest_on_security' or source == 'rental_property' or source == 'agriculture' or \
             source == 'business' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
-            source == 'capital_gains' or source == 'other_sources' or source == 'foreign_income' or \
-            source == 'tax_rebate' or source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
+            source == 'capital_gains' or source == 'foreign_income' or source == 'tax_rebate' or \
+            source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
             source == 'adjustment_of_tax_refund':
         return redirect('income')
+    elif source == 'other_sources':
+        if latest_income.other_sources:
+            return redirect('other-income')
+        else:
+            return redirect('income')
 
 
 @login_required
@@ -242,13 +247,13 @@ def salary_info(request):
         else:
             error_dictionary = form.errors
             form = SalaryForm(request.POST)
-            set_salary_form_validation_errors(error_dictionary, form.fields)
+            set_form_validation_errors(error_dictionary, form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
     else:
         form = SalaryForm(instance=salary)
 
-    set_salary_form_initial_value(form.initial)
+    set_form_initial_value(form.initial)
 
     context = {
         'title': 'Salary',
@@ -318,6 +323,47 @@ def upload_salary_statement(request):
     }
 
     return render(request, 'taxlover/upload-salary-statement.html', context)
+
+
+@login_required
+def other_income(request):
+    other_income_obj = get_current_financial_year_other_income_by_payer(request.user.id)
+    if not other_income_obj:
+        financial_year_beg, financial_year_end = get_income_years()
+        other_income_obj = OtherIncome(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                       financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        request_copy = request.POST.copy()
+
+        for key in request_copy:
+            if key != 'csrfmiddlewaretoken':
+                val = remove_comma(request_copy[key])
+                request_copy[key] = val
+
+        form = OtherIncomeForm(request_copy, instance=other_income_obj)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your other income has been updated!')
+            return redirect('income')
+        else:
+            error_dictionary = form.errors
+            form = SalaryForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+    else:
+        form = OtherIncomeForm(instance=other_income_obj)
+
+    set_form_initial_value(form.initial)
+
+    context = {
+        'title': 'Other Income',
+        'form': form
+    }
+
+    return render(request, 'taxlover/other-income.html', context)
 
 
 @login_required

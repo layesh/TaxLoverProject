@@ -722,3 +722,31 @@ class Document(models.Model):
     def delete(self, *args, **kwargs):
         os.remove(os.path.join(settings.MEDIA_ROOT, self.file.name))
         super(Document, self).delete(*args, **kwargs)
+
+
+class OtherIncome(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    interest_from_mutual_fund_unit_fund = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    cash_dividend_from_company_listed_in_stock_exchange = models.DecimalField(max_digits=20, decimal_places=2,
+                                                                              null=True, blank=True)
+    interest_income_from_wedb = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    conveyance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    us_dollar_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    pound_sterling_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    euro_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    investment_in_pensioners_savings_instrument = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                      blank=True)
+    sanchaypatra_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    others = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} OtherIncome'
+
+    @property
+    def get_others(self):
+        if self.others:
+            return self.others
+        else:
+            return 0

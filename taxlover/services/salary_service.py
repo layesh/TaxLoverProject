@@ -85,15 +85,3 @@ def get_total_taxable(salary):
            salary.get_conveyance - get_conveyance_exempted(salary.get_conveyance) + \
            salary.get_total_bonus + \
            salary.get_employers_contribution_to_pf
-
-
-def set_salary_form_initial_value(initial_dictionary):
-    for key in initial_dictionary:
-        if initial_dictionary[key]:
-            initial_dictionary[key] = add_comma(initial_dictionary[key])
-
-
-def set_salary_form_validation_errors(error_dictionary, fields_dictionary):
-    for key in error_dictionary:
-        error_text = strip_tags(str(error_dictionary[key]))
-        fields_dictionary[key].widget.attrs.update({'class': 'form-control is-invalid', 'title': error_text})

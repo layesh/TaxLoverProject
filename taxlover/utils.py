@@ -1,8 +1,10 @@
 import re
 from decimal import Decimal
 
-from taxlover.models import TaxPayer, Income, Salary
+from taxlover.models import TaxPayer, Income, Salary, OtherIncome
 import datetime
+
+from taxlover.services.html_parser import strip_tags
 
 
 def parse_data(row, total_columns):
@@ -81,3 +83,23 @@ def remove_comma(value):
 def add_comma(value):
     if value:
         return f'{value:,.2f}'
+
+
+def has_other_income(user_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return OtherIncome.objects.filter(tax_payer_id=user_id,
+                                      financial_year_beg=financial_year_beg,
+                                      financial_year_end=financial_year_end).exists()
+
+
+def set_form_validation_errors(error_dictionary, fields_dictionary):
+    for key in error_dictionary:
+        error_text = strip_tags(str(error_dictionary[key]))
+        fields_dictionary[key].widget.attrs.update({'class': 'form-control is-invalid', 'title': error_text})
+
+
+def set_form_initial_value(initial_dictionary):
+    for key in initial_dictionary:
+        if initial_dictionary[key]:
+            initial_dictionary[key] = add_comma(initial_dictionary[key])
