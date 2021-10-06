@@ -33,6 +33,114 @@
                     </tr>
                     <tr>
                         <th scope="row">
+                            <label for="{{ form.cash_dividend_from_company_listed_in_stock_exchange.id_for_label }}"
+                                   class="col-form-label">Cash Dividend From Company Listed In Stock Exchange</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Cash dividend gained from company listed in stock exchange."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.cash_dividend_from_company_listed_in_stock_exchange }}
+                        </td>
+                        <td>
+                            <input id="id_cash_dividend_from_company_listed_in_stock_exchange_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.interest_income_from_wedb.id_for_label }}"
+                                   class="col-form-label">Interest Income From Wage Earners Development Bond (WEDB)</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Interest gained from Wage Earners Development Bond (WEDB)."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.interest_income_from_wedb }}
+                        </td>
+                        <td>
+                            <input id="id_interest_income_from_wedb_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.us_dollar_premium_investment_bond.id_for_label }}"
+                                   class="col-form-label">US Dollar Premium/Investment Bond</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Income gained from US Dollar premium/investment Bond."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.us_dollar_premium_investment_bond }}
+                        </td>
+                        <td>
+                            <input id="id_us_dollar_premium_investment_bond_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.pound_sterling_premium_investment_bond.id_for_label }}"
+                                   class="col-form-label">Pound Sterling Premium/Investment Bond</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Income gained from Pound Sterling premium/investment bond."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.pound_sterling_premium_investment_bond }}
+                        </td>
+                        <td>
+                            <input id="id_pound_sterling_premium_investment_bond_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.euro_premium_investment_bond.id_for_label }}"
+                                   class="col-form-label">Euro Premium/Investment Bond</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Income gained from Euro premium/investment bond."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.euro_premium_investment_bond }}
+                        </td>
+                        <td>
+                            <input id="id_euro_premium_investment_bond_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.sanchaypatra_income.id_for_label }}"
+                                   class="col-form-label">Sanchaypatra Income</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Income gained from sanchaypatra."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.sanchaypatra_income }}
+                        </td>
+                        <td>
+                            <input id="id_sanchaypatra_income_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
                             <label for="{{ form.others.id_for_label }}"
                                    class="col-form-label">Others</label>
                             <sup style="padding-left: 2px;">
@@ -68,80 +176,39 @@
         }
 
         $(function () {
-            {#setExemptedAndTaxableColumns();#}
-            {#setAllTotalRow();#}
+            setTaxableColumns();
+            setAllTotalRow();
         });
 
         function setAllTotalRow() {
             setYearlyIncomeTotalRow();
-            setExemptedTotalRow();
             setTaxableTotalRow();
         }
 
         function setYearlyIncomeTotalRow() {
-            let basic = parseDecimalInputValue('id_basic');
-            let houseRent = parseDecimalInputValue('id_house_rent');
-            let medical = parseDecimalInputValue('id_medical');
-            let conveyance = parseDecimalInputValue('id_conveyance');
-            let lfa = parseDecimalInputValue('id_lfa');
-            let total_bonus = parseDecimalInputValue('id_total_bonus');
-            let employers_contribution_to_pf = parseDecimalInputValue('id_employers_contribution_to_pf');
-            let totalIncome = basic + houseRent + medical + conveyance + lfa + total_bonus + employers_contribution_to_pf;
+            let interestFromMutualFund = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund');
+            let cashDividend = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
 
-            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
-        }
+            let totalIncome = interestFromMutualFund + cashDividend;
 
-        function setExemptedTotalRow() {
-            let basicE = parseDecimalInputValue('id_basic_exempted');
-            let houseRentE = parseDecimalInputValue('id_house_rent_exempted');
-            let medicalE = parseDecimalInputValue('id_medical_exempted');
-            let conveyanceE = parseDecimalInputValue('id_conveyance_exempted');
-            let lfaE = parseDecimalInputValue('id_lfa_exempted');
-            let totalBonusE = parseDecimalInputValue('id_total_bonus_exempted');
-            let employersContributionToPfE = parseDecimalInputValue('id_employers_contribution_to_pf_exempted');
-            let totalExempted = basicE + houseRentE + medicalE + conveyanceE + lfaE + totalBonusE + employersContributionToPfE;
-
-            setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
+            setLabelValue('total_other_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
         }
 
         function setTaxableTotalRow() {
-            let basicT = parseDecimalInputValue('id_basic_taxable');
-            let houseRentT = parseDecimalInputValue('id_house_rent_taxable');
-            let medicalT = parseDecimalInputValue('id_medical_taxable');
-            let conveyanceT = parseDecimalInputValue('id_conveyance_taxable');
-            let lfaT = parseDecimalInputValue('id_lfa_taxable');
-            let totalBonusT = parseDecimalInputValue('id_total_bonus_taxable');
-            let employersContributionToPfET = parseDecimalInputValue('id_employers_contribution_to_pf_taxable');
-            let totalTaxable = basicT + houseRentT + medicalT + conveyanceT + lfaT + totalBonusT + employersContributionToPfET;
+            let interestFromMutualFundT = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund_taxable');
+            let cashDividendT = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange_taxable');
 
-            setLabelValue('total_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
+            let totalTaxable = interestFromMutualFundT + cashDividendT;
+
+            setLabelValue('total_other_income_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
         }
 
-        function setExemptedAndTaxableColumns() {
-            let hasBasicInputValue = hasInputValue('id_basic');
-            let hasHouseRentInputValue = hasInputValue('id_house_rent');
-            let hasMedicalInputValue = hasInputValue('id_medical');
-            let hasConveyanceInputValue = hasInputValue('id_conveyance');
-            let hasLFAInputValue = hasInputValue('id_lfa');
-            let hasBonusInputValue = hasInputValue('id_total_bonus');
-            let hasPFInputValue = hasInputValue('id_employers_contribution_to_pf');
+        function setTaxableColumns() {
+            let hasInterestFromMutualFundInputValue = hasInputValue('id_interest_from_mutual_fund_unit_fund');
+            let hasCashDividendInputValue = hasInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
 
-            let basic = parseDecimalInputValue('id_basic');
-            let lfa = parseDecimalInputValue('id_lfa');
-            let bonus = parseDecimalInputValue('id_total_bonus');
-            let pf = parseDecimalInputValue('id_employers_contribution_to_pf');
-
-            checkAndSet(hasBasicInputValue, 'id_basic_exempted', 0);
-            checkAndSet(hasBasicInputValue, 'id_basic_taxable', basic);
-            setExemptedAndTaxableAjax(hasHouseRentInputValue, 'house_rent');
-            setExemptedAndTaxableAjax(hasMedicalInputValue, 'medical');
-            setExemptedAndTaxableAjax(hasConveyanceInputValue, 'conveyance');
-            checkAndSet(hasLFAInputValue, 'id_lfa_exempted', lfa);
-            checkAndSet(hasLFAInputValue, 'id_lfa_taxable', 0);
-            checkAndSet(hasBonusInputValue, 'id_total_bonus_exempted', 0);
-            checkAndSet(hasBonusInputValue, 'id_total_bonus_taxable', bonus);
-            checkAndSet(hasPFInputValue, 'id_employers_contribution_to_pf_exempted', 0);
-            checkAndSet(hasPFInputValue, 'id_employers_contribution_to_pf_taxable', pf);
+            setTaxableAjax(hasInterestFromMutualFundInputValue, 'interest_from_mutual_fund_unit_fund');
+            setTaxableAjax(hasCashDividendInputValue, 'cash_dividend_from_company_listed_in_stock_exchange');
         }
 
         function checkAndSet(shouldSet, inputId, inputValue) {
@@ -156,32 +223,25 @@
             if (!isNaN(textBoxObject.value)) {
                 textBoxObject.value = removeCommas(textBoxObject.value);
                 textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
-                setExemptedAndTaxableColumns();
+                setTaxableColumns();
                 setAllTotalRow();
             }
         }
 
-        function setExemptedAndTaxableAjax(shouldSet, category) {
+        function setTaxableAjax(shouldSet, category) {
             if (shouldSet) {
                 let url = '{% url "get_category_wise_exempted_value" %}';
                 let data = {};
 
-                if (category === 'house_rent') {
+                if (category === 'interest_from_mutual_fund_unit_fund') {
                     data = {
-                        'basic': parseDecimalInputValue('id_basic'),
-                        'house_rent': parseDecimalInputValue('id_house_rent'),
-                        'category': 'house_rent'
+                        'interest_from_mutual_fund_unit_fund': parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund'),
+                        'category': 'interest_from_mutual_fund_unit_fund'
                     };
-                } else if (category === 'medical') {
+                } else if (category === 'cash_dividend_from_company_listed_in_stock_exchange') {
                     data = {
-                        'basic': parseDecimalInputValue('id_basic'),
-                        'medical': parseDecimalInputValue('id_medical'),
-                        'category': 'medical'
-                    };
-                } else if (category === 'conveyance') {
-                    data = {
-                        'conveyance': parseDecimalInputValue('id_conveyance'),
-                        'category': 'conveyance'
+                        'cash_dividend_from_company_listed_in_stock_exchange': parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange'),
+                        'category': 'cash_dividend_from_company_listed_in_stock_exchange'
                     };
                 }
 
@@ -190,15 +250,12 @@
                     url: url,
                     data: data,
                     success: function (data) {
-                        setTextBoxValue('id_' + category + '_exempted', addCommas(formatToTwoDecimalPlaces(data[category + '_exempted'])));
                         let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
                         setTextBoxValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
-                        setExemptedTotalRow();
                         setTaxableTotalRow();
                     }
                 });
             } else {
-                setTextBoxValue('id_' + category + '_exempted', '');
                 setTextBoxValue('id_' + category + '_taxable', '');
             }
         }

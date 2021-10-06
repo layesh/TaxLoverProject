@@ -1,3 +1,6 @@
+from decimal import Decimal
+
+from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE
 from taxlover.models import OtherIncome
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
@@ -108,3 +111,11 @@ def get_current_financial_year_other_income_by_payer(payer_id):
     return OtherIncome.objects.filter(tax_payer_id=payer_id,
                                       financial_year_beg=financial_year_beg,
                                       financial_year_end=financial_year_end).first()
+
+
+def get_interest_from_mutual_fund_exempted(interest_from_mutual_fund):
+    return Decimal(min(INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, Decimal(interest_from_mutual_fund)))
+
+
+def get_cash_dividend_exempted(cash_dividend):
+    return Decimal(min(CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, Decimal(cash_dividend)))

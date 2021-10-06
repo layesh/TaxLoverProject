@@ -14,7 +14,8 @@ from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome
-from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer
+from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
+    get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
@@ -561,6 +562,20 @@ def get_category_wise_exempted_value(request):
 
             data = {
                 'conveyance_exempted': get_conveyance_exempted(conveyance)
+            }
+        elif category == 'interest_from_mutual_fund_unit_fund':
+            interest_from_mutual_fund = request.GET['interest_from_mutual_fund_unit_fund']
+
+            data = {
+                'interest_from_mutual_fund_unit_fund_exempted': get_interest_from_mutual_fund_exempted(
+                    interest_from_mutual_fund)
+            }
+        elif category == 'cash_dividend_from_company_listed_in_stock_exchange':
+            cash_dividend = request.GET['cash_dividend_from_company_listed_in_stock_exchange']
+
+            data = {
+                'cash_dividend_from_company_listed_in_stock_exchange_exempted': get_cash_dividend_exempted(
+                    cash_dividend)
             }
 
         return JsonResponse(data)
