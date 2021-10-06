@@ -188,8 +188,14 @@
         function setYearlyIncomeTotalRow() {
             let interestFromMutualFund = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund');
             let cashDividend = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
+            let wedb = parseDecimalInputValue('id_interest_income_from_wedb');
+            let dollarPremium = parseDecimalInputValue('id_us_dollar_premium_investment_bond');
+            let poundSterlingPremium = parseDecimalInputValue('id_pound_sterling_premium_investment_bond');
+            let euroPremium = parseDecimalInputValue('id_euro_premium_investment_bond');
+            let sanchaypatraIncome = parseDecimalInputValue('id_sanchaypatra_income');
+            let others = parseDecimalInputValue('id_others');
 
-            let totalIncome = interestFromMutualFund + cashDividend;
+            let totalIncome = interestFromMutualFund + cashDividend + wedb + dollarPremium + poundSterlingPremium + euroPremium + sanchaypatraIncome + others;
 
             setLabelValue('total_other_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
         }
@@ -197,8 +203,14 @@
         function setTaxableTotalRow() {
             let interestFromMutualFundT = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund_taxable');
             let cashDividendT = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange_taxable');
+            let wedbT = parseDecimalInputValue('id_interest_income_from_wedb_taxable');
+            let dollarPremiumT = parseDecimalInputValue('id_us_dollar_premium_investment_bond_taxable');
+            let poundSterlingPremiumT = parseDecimalInputValue('id_pound_sterling_premium_investment_bond_taxable');
+            let euroPremiumT = parseDecimalInputValue('id_euro_premium_investment_bond_taxable');
+            let sanchaypatraIncomeT = parseDecimalInputValue('id_sanchaypatra_income_taxable');
+            let othersT = parseDecimalInputValue('id_others_taxable');
 
-            let totalTaxable = interestFromMutualFundT + cashDividendT;
+            let totalTaxable = interestFromMutualFundT + cashDividendT + wedbT + dollarPremiumT + poundSterlingPremiumT + euroPremiumT + sanchaypatraIncomeT + othersT;
 
             setLabelValue('total_other_income_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
         }
@@ -206,9 +218,25 @@
         function setTaxableColumns() {
             let hasInterestFromMutualFundInputValue = hasInputValue('id_interest_from_mutual_fund_unit_fund');
             let hasCashDividendInputValue = hasInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
+            let hasInterestFromWEDBInputValue = hasInputValue('id_interest_income_from_wedb');
+            let hasUsDollarPremiumInputValue = hasInputValue('id_us_dollar_premium_investment_bond');
+            let hasPoundSterlingPremiumInputValue = hasInputValue('id_pound_sterling_premium_investment_bond');
+            let hasEuroPremiumInputValue = hasInputValue('id_euro_premium_investment_bond');
+            let hasSanchaypatraIncomeInputValue = hasInputValue('id_sanchaypatra_income');
+            let hasOthersInputValue = hasInputValue('id_others');
+
+            let sanchaypatraIncome = parseDecimalInputValue('id_sanchaypatra_income');
+            let others = parseDecimalInputValue('id_others');
 
             setTaxableAjax(hasInterestFromMutualFundInputValue, 'interest_from_mutual_fund_unit_fund');
             setTaxableAjax(hasCashDividendInputValue, 'cash_dividend_from_company_listed_in_stock_exchange');
+
+            checkAndSet(hasInterestFromWEDBInputValue, 'id_interest_income_from_wedb_taxable', 0);
+            checkAndSet(hasUsDollarPremiumInputValue, 'id_us_dollar_premium_investment_bond_taxable', 0);
+            checkAndSet(hasPoundSterlingPremiumInputValue, 'id_pound_sterling_premium_investment_bond_taxable', 0);
+            checkAndSet(hasEuroPremiumInputValue, 'id_euro_premium_investment_bond_taxable', 0);
+            checkAndSet(hasSanchaypatraIncomeInputValue, 'id_sanchaypatra_income_taxable', sanchaypatraIncome);
+            checkAndSet(hasOthersInputValue, 'id_others_taxable', others);
         }
 
         function checkAndSet(shouldSet, inputId, inputValue) {
