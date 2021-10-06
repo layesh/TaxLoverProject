@@ -32,6 +32,7 @@ urlpatterns = [
     path('upload-salary-statement/', views.upload_salary_statement, name='upload-salary-statement'),
     path('get_category_wise_exempted_value/', views.get_category_wise_exempted_value,
          name='get_category_wise_exempted_value'),
-    path('other-income/', views.other_income, name='other-income')
+    path('other-income/', views.other_income, name='other-income'),
+    path('other_income-delete/<int:pk>/', views.other_income_delete, name='other_income_delete'),
 
 ]

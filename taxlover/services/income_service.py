@@ -119,3 +119,12 @@ def get_interest_from_mutual_fund_exempted(interest_from_mutual_fund):
 
 def get_cash_dividend_exempted(cash_dividend):
     return Decimal(min(CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, Decimal(cash_dividend)))
+
+
+def get_total_other_income_taxable(other_income):
+    return other_income.get_interest_from_mutual_fund_unit_fund - \
+           get_interest_from_mutual_fund_exempted(other_income.get_interest_from_mutual_fund_unit_fund) + \
+           other_income.get_cash_dividend_from_company_listed_in_stock_exchange - \
+           get_cash_dividend_exempted(other_income.get_cash_dividend_from_company_listed_in_stock_exchange) + \
+           other_income.get_sanchaypatra_income + other_income.get_others
+

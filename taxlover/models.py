@@ -732,7 +732,6 @@ class OtherIncome(models.Model):
     cash_dividend_from_company_listed_in_stock_exchange = models.DecimalField(max_digits=20, decimal_places=2,
                                                                               null=True, blank=True)
     interest_income_from_wedb = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    conveyance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     us_dollar_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     pound_sterling_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     euro_premium_investment_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
@@ -745,8 +744,65 @@ class OtherIncome(models.Model):
         return f'{self.tax_payer.name} OtherIncome'
 
     @property
+    def get_interest_from_mutual_fund_unit_fund(self):
+        if self.interest_from_mutual_fund_unit_fund:
+            return self.interest_from_mutual_fund_unit_fund
+        else:
+            return 0
+
+    @property
+    def get_cash_dividend_from_company_listed_in_stock_exchange(self):
+        if self.cash_dividend_from_company_listed_in_stock_exchange:
+            return self.cash_dividend_from_company_listed_in_stock_exchange
+        else:
+            return 0
+
+    @property
+    def get_interest_income_from_wedb(self):
+        if self.interest_income_from_wedb:
+            return self.interest_income_from_wedb
+        else:
+            return 0
+
+    @property
+    def get_us_dollar_premium_investment_bond(self):
+        if self.us_dollar_premium_investment_bond:
+            return self.us_dollar_premium_investment_bond
+        else:
+            return 0
+
+    @property
+    def get_pound_sterling_premium_investment_bond(self):
+        if self.pound_sterling_premium_investment_bond:
+            return self.pound_sterling_premium_investment_bond
+        else:
+            return 0
+
+    @property
+    def get_euro_premium_investment_bond(self):
+        if self.euro_premium_investment_bond:
+            return self.euro_premium_investment_bond
+        else:
+            return 0
+
+    @property
+    def get_sanchaypatra_income(self):
+        if self.sanchaypatra_income:
+            return self.sanchaypatra_income
+        else:
+            return 0
+
+    @property
     def get_others(self):
         if self.others:
             return self.others
         else:
             return 0
+
+    @property
+    def get_total(self):
+        return self.get_interest_from_mutual_fund_unit_fund + \
+               self.get_cash_dividend_from_company_listed_in_stock_exchange + \
+               self.get_interest_income_from_wedb + self.get_us_dollar_premium_investment_bond + \
+               self.get_pound_sterling_premium_investment_bond + self.get_euro_premium_investment_bond + \
+               self.get_sanchaypatra_income + self.get_others

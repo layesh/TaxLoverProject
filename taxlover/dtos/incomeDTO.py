@@ -1,10 +1,11 @@
+from taxlover.services.income_service import get_total_other_income_taxable
 from taxlover.services.salary_service import get_total_taxable
 from taxlover.utils import get_income_years
 
 
 class IncomeDTO:
 
-    def __init__(self, income, salary):
+    def __init__(self, income, salary, other_income):
         self.has_salary_income = income.has_salary_income
         self.has_no_salary_income = income.has_no_salary_income
         self.has_interest_on_securities = income.has_interest_on_securities
@@ -33,9 +34,16 @@ class IncomeDTO:
         self.has_no_advance_paid_tax = income.has_no_advance_paid_tax
         self.has_adjustment_of_tax_refund = income.has_adjustment_of_tax_refund
         self.has_no_adjustment_of_tax_refund = income.has_no_adjustment_of_tax_refund
+
+        self.income_year_beg, self.income_year_end = get_income_years()
+
         if salary:
-            self.income_year_beg, self.income_year_end = get_income_years()
             self.salaryId = salary.id
-            self.taxable = get_total_taxable(salary)
-            self.total = salary.get_total
+            self.total_salary_taxable = get_total_taxable(salary)
+            self.total_salary_income = salary.get_total
             self.basic = salary.get_basic
+        if other_income:
+            self.otherIncomeId = other_income.id
+            self.total_other_income_taxable = get_total_other_income_taxable(other_income)
+            self.total_other_income = other_income.get_total
+            self.total_exempted_other_income = self.total_other_income - self.total_other_income_taxable
