@@ -6,67 +6,460 @@
             {% csrf_token %}
             <table class="table">
                 <thead>
-                    <tr>
-                        <th scope="col" class="col-6"></th>
-                        <th scope="col" class="text-align-right">Invested Amount</th>
-                        <th scope="col" class="text-align-right">Allowed Amount</th>
-                    </tr>
+                <tr>
+                    <th scope="col" class="col-6"></th>
+                    <th scope="col" class="text-align-right">Invested Amount</th>
+                    <th scope="col" class="text-align-right">Allowed Amount</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">
-                            <label for="{{ form.life_insurance_premium.id_for_label }}"
-                                   class="col-form-label">Life Insurance Premium</label>
-                            <sup style="padding-left: 2px;">
-                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                   data-bs-toggle="tooltip" data-bs-placement="right"
-                                   title="Investment in life insurance premium."></i>
-                            </sup>
-                            <div class="row g-3">
-                                <div class="col-auto" style="padding-left: 40px">
-                                    <label for="{{ form.life_insurance_premium_policy_value.id_for_label }}" class="col-form-label">Policy Value</label>
-                                </div>
-                                <div class="col-auto" style="padding-left: 50px">
-                                    {{ form.life_insurance_premium_policy_value }}
-                                </div>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.life_insurance_premium.id_for_label }}"
+                               class="col-form-label">Life Insurance Premium</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Investment in life insurance premium."></i>
+                        </sup>
+                        <div class="row g-3">
+                            <div class="col-auto" style="padding-left: 40px">
+                                <label for="{{ form.life_insurance_premium_policy_value.id_for_label }}"
+                                       class="col-form-label">Policy Value</label>
                             </div>
-                        </th>
-                        <td>
-                            {{ form.life_insurance_premium }}
-                        </td>
-                        <td>
-                            <input id="id_life_insurance_premium_allowed" class="form-control text-align-right" type="text" placeholder=""
-                                   aria-label="Disabled input example" disabled>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <label for="{{ form.contribution_to_pf_as_per_act_1925.id_for_label }}"
-                                   class="col-form-label">Contribution to Provident Fund to which Provident Fund Act, 1925 Applies</label>
-                            <sup style="padding-left: 2px;">
-                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                   data-bs-toggle="tooltip" data-bs-placement="right"
-                                   title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
-                            </sup>
-                        </th>
-                        <td>
-                            {{ form.contribution_to_pf_as_per_act_1925 }}
-                        </td>
-                        <td>
-                            <input id="id_contribution_to_pf_as_per_act_1925_allowed" class="form-control text-align-right" type="text" placeholder=""
-                                   aria-label="Disabled input example" disabled>
-                        </td>
-                    </tr>
+                            <div class="col-auto" style="padding-left: 50px">
+                                {{ form.life_insurance_premium_policy_value }}
+                            </div>
+                        </div>
+                    </th>
+                    <td>
+                        {{ form.life_insurance_premium }}
+                    </td>
+                    <td>
+                        <input id="id_life_insurance_premium_allowed" class="form-control text-align-right" type="text"
+                               placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_pf_as_per_act_1925.id_for_label }}"
+                               class="col-form-label">Contribution to Provident Fund to which Provident Fund Act, 1925
+                            Applies</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_pf_as_per_act_1925 }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_pf_as_per_act_1925_allowed" class="form-control text-align-right"
+                               type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.self_and_employers_contribution_to_pf.id_for_label }}"
+                               class="col-form-label">Self Contribution and Employer’s Contribution to Recognized
+                            Fund</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.self_and_employers_contribution_to_pf }}
+                    </td>
+                    <td>
+                        <input id="id_self_and_employers_contribution_to_pf_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_super_annuation_fund.id_for_label }}"
+                               class="col-form-label">Contribution to Super Annuation Fund</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_super_annuation_fund }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_super_annuation_fund_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.investment_in_approved_debenture_or_stock_or_shares.id_for_label }}"
+                               class="col-form-label">Investment in Approved Debenture or Debenture Stock, Stock or
+                            Shares</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.investment_in_approved_debenture_or_stock_or_shares }}
+                    </td>
+                    <td>
+                        <input id="id_investment_in_approved_debenture_or_stock_or_shares_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_dps.id_for_label }}"
+                               class="col-form-label">Contribution to Deposit Pension Scheme</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_dps }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_dps_allowed" class="form-control text-align-right" type="text"
+                               placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_benevolent_fund_and_group_insurance_premium.id_for_label }}"
+                               class="col-form-label">Contribution to Benevolent Fund and Group Insurance
+                            Premium</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_benevolent_fund_and_group_insurance_premium }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_benevolent_fund_and_group_insurance_premium_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_zakat_fund.id_for_label }}"
+                               class="col-form-label">Contribution to Zakat Fund</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_zakat_fund }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_zakat_fund_allowed" class="form-control text-align-right"
+                               type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.investment_in_savings_certificates_sanchaypatra.id_for_label }}"
+                               class="col-form-label">Investment in Savings Certificates / Sanchaypatra</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.investment_in_savings_certificates_sanchaypatra }}
+                    </td>
+                    <td>
+                        <input id="id_investment_in_savings_certificates_sanchaypatra_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.investment_in_bangladesh_govt_treasury_bond.id_for_label }}"
+                               class="col-form-label">Investment in Bangladesh Govt. Treasury Bond</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.investment_in_bangladesh_govt_treasury_bond }}
+                    </td>
+                    <td>
+                        <input id="id_investment_in_bangladesh_govt_treasury_bond_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation.id_for_label }}"
+                               class="col-form-label">Donation to National Level Institution set up in the memory of
+                            Bangabandhu</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_a_charitable_hospital_recognized_by_nbr.id_for_label }}"
+                               class="col-form-label">Donation to a Charitable Hospital recognized by NBR</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_a_charitable_hospital_recognized_by_nbr }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_a_charitable_hospital_recognized_by_nbr_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_organizations_set_up_for_the_welfare_of_retarded_people.id_for_label }}"
+                               class="col-form-label">Donation to Organizations set up for the welfare of retarded
+                            people</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_organizations_set_up_for_the_welfare_of_retarded_people }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_national_level_institution_set_up_in_memory_of_liberation_war.id_for_label }}"
+                               class="col-form-label">Contribution to national level institution set up in memory of
+                            Liberation war</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_national_level_institution_set_up_in_memory_of_liberation_war }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_liberation_war_museum.id_for_label }}"
+                               class="col-form-label">Contribution to Liberation war Museum</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_liberation_war_museum }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_liberation_war_museum_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_aga_khan_development_network.id_for_label }}"
+                               class="col-form-label">Contribution to Aga Khan Development Network</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_aga_khan_development_network }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_aga_khan_development_network_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_asiatic_society_bangladesh.id_for_label }}"
+                               class="col-form-label">Contribution to Asiatic Society,Bangladesh</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_asiatic_society_bangladesh }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_asiatic_society_bangladesh_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_icddrb.id_for_label }}"
+                               class="col-form-label">Donation to ICDDRB</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_icddrb }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_icddrb_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_crp.id_for_label }}"
+                               class="col-form-label">Donation to Centre for the Rehabilitation of the Paralysed
+                            (CRP)</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_crp }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_crp_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.donation_to_educational_institution_recognized_by_government.id_for_label }}"
+                               class="col-form-label">Donation to Educational Institution recognized by
+                            Government</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.donation_to_educational_institution_recognized_by_government }}
+                    </td>
+                    <td>
+                        <input id="id_donation_to_educational_institution_recognized_by_government_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.contribution_to_ahsania_mission_cancer_hospital.id_for_label }}"
+                               class="col-form-label">Contribution to Ahsania Mission Cancer Hospital</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.contribution_to_ahsania_mission_cancer_hospital }}
+                    </td>
+                    <td>
+                        <input id="id_contribution_to_ahsania_mission_cancer_hospital_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="{{ form.mutual_fund.id_for_label }}"
+                               class="col-form-label">Mutual Fund</label>
+                        <sup style="padding-left: 2px;">
+                            <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                               data-bs-toggle="tooltip" data-bs-placement="right"
+                               title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                        </sup>
+                    </th>
+                    <td>
+                        {{ form.mutual_fund }}
+                    </td>
+                    <td>
+                        <input id="id_mutual_fund_allowed"
+                               class="form-control text-align-right" type="text" placeholder=""
+                               aria-label="Disabled input example" disabled>
+                    </td>
+                </tr>
                 </tbody>
                 <tfoot>
-                    <th scope="col" class="col-6">Total</th>
-                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_investment_amount"></th>
-                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_allowed_amount"></th>
+                <th scope="col" class="col-6">Total</th>
+                <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_investment_amount"></th>
+                <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_allowed_amount"></th>
                 </tfoot>
             </table>
             <div style="text-align: center;padding-top: 20px">
                 <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
-                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel</button>
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel
+                </button>
             </div>
         </form>
     </div>
