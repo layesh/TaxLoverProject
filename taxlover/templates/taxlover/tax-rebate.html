@@ -1,0 +1,191 @@
+{% extends "taxlover/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="input-form-main">
+        <form method="post">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-6"></th>
+                        <th scope="col" class="text-align-right">Invested Amount</th>
+                        <th scope="col" class="text-align-right">Allowed Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.life_insurance_premium.id_for_label }}"
+                                   class="col-form-label">Life Insurance Premium</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Investment in life insurance premium."></i>
+                            </sup>
+                            <div class="row g-3">
+                                <div class="col-auto" style="padding-left: 40px">
+                                    <label for="{{ form.life_insurance_premium_policy_value.id_for_label }}" class="col-form-label">Policy Value</label>
+                                </div>
+                                <div class="col-auto" style="padding-left: 50px">
+                                    {{ form.life_insurance_premium_policy_value }}
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            {{ form.life_insurance_premium }}
+                        </td>
+                        <td>
+                            <input id="id_life_insurance_premium_allowed" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.contribution_to_pf_as_per_act_1925.id_for_label }}"
+                                   class="col-form-label">Contribution to Provident Fund to which Provident Fund Act, 1925 Applies</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Amount of contribution to provident fund to which Provident Fund Act, 1925 applies."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.contribution_to_pf_as_per_act_1925 }}
+                        </td>
+                        <td>
+                            <input id="id_contribution_to_pf_as_per_act_1925_allowed" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <th scope="col" class="col-6">Total</th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_investment_amount"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_allowed_amount"></th>
+                </tfoot>
+            </table>
+            <div style="text-align: center;padding-top: 20px">
+                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script type="application/javascript">
+        function goToIncomeHome() {
+            location.href='{% url "income" %}';
+        }
+
+        $(function () {
+            {#setTaxableColumns();#}
+            {#setAllTotalRow();#}
+        });
+
+        function setAllTotalRow() {
+            setYearlyIncomeTotalRow();
+            setTaxableTotalRow();
+        }
+
+        function setYearlyIncomeTotalRow() {
+            let interestFromMutualFund = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund');
+            let cashDividend = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
+            let wedb = parseDecimalInputValue('id_interest_income_from_wedb');
+            let dollarPremium = parseDecimalInputValue('id_us_dollar_premium_investment_bond');
+            let poundSterlingPremium = parseDecimalInputValue('id_pound_sterling_premium_investment_bond');
+            let euroPremium = parseDecimalInputValue('id_euro_premium_investment_bond');
+            let sanchaypatraIncome = parseDecimalInputValue('id_sanchaypatra_income');
+            let others = parseDecimalInputValue('id_others');
+
+            let totalIncome = interestFromMutualFund + cashDividend + wedb + dollarPremium + poundSterlingPremium + euroPremium + sanchaypatraIncome + others;
+
+            setLabelValue('total_other_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
+        }
+
+        function setTaxableTotalRow() {
+            let interestFromMutualFundT = parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund_taxable');
+            let cashDividendT = parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange_taxable');
+            let wedbT = parseDecimalInputValue('id_interest_income_from_wedb_taxable');
+            let dollarPremiumT = parseDecimalInputValue('id_us_dollar_premium_investment_bond_taxable');
+            let poundSterlingPremiumT = parseDecimalInputValue('id_pound_sterling_premium_investment_bond_taxable');
+            let euroPremiumT = parseDecimalInputValue('id_euro_premium_investment_bond_taxable');
+            let sanchaypatraIncomeT = parseDecimalInputValue('id_sanchaypatra_income_taxable');
+            let othersT = parseDecimalInputValue('id_others_taxable');
+
+            let totalTaxable = interestFromMutualFundT + cashDividendT + wedbT + dollarPremiumT + poundSterlingPremiumT + euroPremiumT + sanchaypatraIncomeT + othersT;
+
+            setLabelValue('total_other_income_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
+        }
+
+        function setTaxableColumns() {
+            let hasInterestFromMutualFundInputValue = hasInputValue('id_interest_from_mutual_fund_unit_fund');
+            let hasCashDividendInputValue = hasInputValue('id_cash_dividend_from_company_listed_in_stock_exchange');
+            let hasInterestFromWEDBInputValue = hasInputValue('id_interest_income_from_wedb');
+            let hasUsDollarPremiumInputValue = hasInputValue('id_us_dollar_premium_investment_bond');
+            let hasPoundSterlingPremiumInputValue = hasInputValue('id_pound_sterling_premium_investment_bond');
+            let hasEuroPremiumInputValue = hasInputValue('id_euro_premium_investment_bond');
+            let hasSanchaypatraIncomeInputValue = hasInputValue('id_sanchaypatra_income');
+            let hasOthersInputValue = hasInputValue('id_others');
+
+            let sanchaypatraIncome = parseDecimalInputValue('id_sanchaypatra_income');
+            let others = parseDecimalInputValue('id_others');
+
+            setTaxableAjax(hasInterestFromMutualFundInputValue, 'interest_from_mutual_fund_unit_fund');
+            setTaxableAjax(hasCashDividendInputValue, 'cash_dividend_from_company_listed_in_stock_exchange');
+
+            checkAndSet(hasInterestFromWEDBInputValue, 'id_interest_income_from_wedb_taxable', 0);
+            checkAndSet(hasUsDollarPremiumInputValue, 'id_us_dollar_premium_investment_bond_taxable', 0);
+            checkAndSet(hasPoundSterlingPremiumInputValue, 'id_pound_sterling_premium_investment_bond_taxable', 0);
+            checkAndSet(hasEuroPremiumInputValue, 'id_euro_premium_investment_bond_taxable', 0);
+            checkAndSet(hasSanchaypatraIncomeInputValue, 'id_sanchaypatra_income_taxable', sanchaypatraIncome);
+            checkAndSet(hasOthersInputValue, 'id_others_taxable', others);
+        }
+
+        function checkAndSet(shouldSet, inputId, inputValue) {
+            if (shouldSet) {
+                setTextBoxValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
+            } else {
+                setTextBoxValue(inputId, '');
+            }
+        }
+
+        function onInputBlurred(textBoxObject) {
+            if (!isNaN(textBoxObject.value)) {
+                textBoxObject.value = removeCommas(textBoxObject.value);
+                textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
+                setTaxableColumns();
+                setAllTotalRow();
+            }
+        }
+
+        function setTaxableAjax(shouldSet, category) {
+            if (shouldSet) {
+                let url = '{% url "get_category_wise_exempted_value" %}';
+                let data = {};
+
+                if (category === 'interest_from_mutual_fund_unit_fund') {
+                    data = {
+                        'interest_from_mutual_fund_unit_fund': parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund'),
+                        'category': 'interest_from_mutual_fund_unit_fund'
+                    };
+                } else if (category === 'cash_dividend_from_company_listed_in_stock_exchange') {
+                    data = {
+                        'cash_dividend_from_company_listed_in_stock_exchange': parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange'),
+                        'category': 'cash_dividend_from_company_listed_in_stock_exchange'
+                    };
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
+                        setTextBoxValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
+                        setTaxableTotalRow();
+                    }
+                });
+            } else {
+                setTextBoxValue('id_' + category + '_taxable', '');
+            }
+        }
+    </script>
+{% endblock content %}

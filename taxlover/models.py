@@ -806,3 +806,57 @@ class OtherIncome(models.Model):
                self.get_interest_income_from_wedb + self.get_us_dollar_premium_investment_bond + \
                self.get_pound_sterling_premium_investment_bond + self.get_euro_premium_investment_bond + \
                self.get_sanchaypatra_income + self.get_others
+
+
+class TaxRebate(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    life_insurance_premium = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    life_insurance_premium_policy_value = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    contribution_to_pf_as_per_act_1925 = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    self_and_employers_contribution_to_pf = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    contribution_to_super_annuation_fund = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    investment_in_approved_debenture_or_stock_or_shares = models.DecimalField(max_digits=20, decimal_places=2,
+                                                                              null=True, blank=True)
+    contribution_to_dps = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    contribution_to_benevolent_fund_and_group_insurance_premium = models.DecimalField(max_digits=20, decimal_places=2,
+                                                                                      null=True, blank=True)
+    contribution_to_zakat_fund = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    investment_in_savings_certificates_sanchaypatra = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                          blank=True)
+    investment_in_bangladesh_govt_treasury_bond = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                      blank=True)
+    donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation = models.DecimalField(
+        max_digits=20, decimal_places=2, null=True, blank=True)
+    donation_to_a_charitable_hospital_recognized_by_nbr = models.DecimalField(max_digits=20, decimal_places=2,
+                                                                              null=True, blank=True)
+    donation_to_organizations_set_up_for_the_welfare_of_retarded_people = models.DecimalField(max_digits=20,
+                                                                                              decimal_places=2,
+                                                                                              null=True, blank=True)
+    contribution_to_national_level_institution_set_up_in_memory_of_liberation_war = models.DecimalField(max_digits=20,
+                                                                                                        decimal_places=2,
+                                                                                                        null=True,
+                                                                                                        blank=True)
+    contribution_to_liberation_war_museum = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    contribution_to_aga_khan_development_network = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                       blank=True)
+    contribution_to_asiatic_society_bangladesh = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                     blank=True)
+    donation_to_icddrb = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    donation_to_crp = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    donation_to_educational_institution_recognized_by_government = models.DecimalField(max_digits=20, decimal_places=2,
+                                                                                       null=True, blank=True)
+    contribution_to_ahsania_mission_cancer_hospital = models.DecimalField(max_digits=20, decimal_places=2, null=True,
+                                                                          blank=True)
+    mutual_fund = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} TaxRebate'
+
+    @property
+    def get_life_insurance_premium(self):
+        if self.life_insurance_premium:
+            return self.life_insurance_premium
+        else:
+            return 0

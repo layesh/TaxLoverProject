@@ -12,15 +12,15 @@ from django.contrib.auth.decorators import login_required
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm
-from taxlover.models import TaxPayer, Salary, Document, OtherIncome
+from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
-    get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted
+    get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma, has_other_income, \
-    set_form_validation_errors, set_form_initial_value
+    set_form_validation_errors, set_form_initial_value, copy_request
 
 import os
 from django.conf import settings
@@ -212,13 +212,18 @@ def save_income_data(request, source, answer):
             return redirect('income')
     elif source == 'interest_on_security' or source == 'rental_property' or source == 'agriculture' or \
             source == 'business' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
-            source == 'capital_gains' or source == 'foreign_income' or source == 'tax_rebate' or \
+            source == 'capital_gains' or source == 'foreign_income' or \
             source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
             source == 'adjustment_of_tax_refund':
         return redirect('income')
     elif source == 'other_sources':
         if latest_income.other_sources:
             return redirect('other-income')
+        else:
+            return redirect('income')
+    elif source == 'tax_rebate':
+        if latest_income.tax_rebate:
+            return redirect('tax_rebate')
         else:
             return redirect('income')
 
@@ -233,14 +238,7 @@ def salary_info(request):
                         financial_year_end=financial_year_end)
 
     if request.method == 'POST':
-        request_copy = request.POST.copy()
-
-        for key in request_copy:
-            if key != 'csrfmiddlewaretoken':
-                val = remove_comma(request_copy[key])
-                request_copy[key] = val
-
-        form = SalaryForm(request_copy, instance=salary)
+        form = SalaryForm(copy_request(request), instance=salary)
 
         if form.is_valid():
             form.save()
@@ -347,14 +345,7 @@ def other_income(request):
                                        financial_year_end=financial_year_end)
 
     if request.method == 'POST':
-        request_copy = request.POST.copy()
-
-        for key in request_copy:
-            if key != 'csrfmiddlewaretoken':
-                val = remove_comma(request_copy[key])
-                request_copy[key] = val
-
-        form = OtherIncomeForm(request_copy, instance=other_income_obj)
+        form = OtherIncomeForm(copy_request(request), instance=other_income_obj)
 
         if form.is_valid():
             form.save()
@@ -377,6 +368,40 @@ def other_income(request):
     }
 
     return render(request, 'taxlover/other-income.html', context)
+
+
+@login_required
+def tax_rebate(request):
+    tax_rebate_obj = get_current_financial_year_tax_rebate_by_payer(request.user.id)
+    if not tax_rebate_obj:
+        financial_year_beg, financial_year_end = get_income_years()
+        tax_rebate_obj = TaxRebate(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                   financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = TaxRebateForm(copy_request(request), instance=tax_rebate_obj)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your tax rebate has been updated!')
+            return redirect('income')
+        else:
+            error_dictionary = form.errors
+            form = TaxRebateForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+    else:
+        form = TaxRebateForm(instance=tax_rebate_obj)
+
+    set_form_initial_value(form.initial)
+
+    context = {
+        'title': 'Tax Rebate',
+        'form': form
+    }
+
+    return render(request, 'taxlover/tax-rebate.html', context)
 
 
 @login_required

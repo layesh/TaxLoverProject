@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE
-from taxlover.models import OtherIncome
+from taxlover.models import OtherIncome, TaxRebate
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -76,11 +76,14 @@ def save_income(latest_income, source, answer, request):
         elif answer == 'no':
             latest_income.foreign_income = False
     elif source == 'tax_rebate':
-        show_success_message = True
         if answer == 'yes':
             latest_income.tax_rebate = True
         elif answer == 'no':
+            show_success_message = True
             latest_income.tax_rebate = False
+            tax_rebate = get_current_financial_year_tax_rebate_by_payer(request.user.id)
+            if tax_rebate:
+                tax_rebate.delete()
     elif source == 'tax_deducted_at_source':
         show_success_message = True
         if answer == 'yes':
@@ -128,3 +131,10 @@ def get_total_other_income_taxable(other_income):
            get_cash_dividend_exempted(other_income.get_cash_dividend_from_company_listed_in_stock_exchange) + \
            other_income.get_sanchaypatra_income + other_income.get_others
 
+
+def get_current_financial_year_tax_rebate_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return TaxRebate.objects.filter(tax_payer_id=payer_id,
+                                    financial_year_beg=financial_year_beg,
+                                    financial_year_end=financial_year_end).first()

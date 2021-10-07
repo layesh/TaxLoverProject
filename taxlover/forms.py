@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 
-from .models import TaxPayer, Document, Salary, OtherIncome
+from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -57,4 +57,21 @@ class OtherIncomeForm(forms.ModelForm):
             'sanchaypatra_income': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
             'others': TextInput(attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class TaxRebateForm(forms.ModelForm):
+    class Meta:
+        model = TaxRebate
+        fields = ['life_insurance_premium', 'life_insurance_premium_policy_value', 'contribution_to_pf_as_per_act_1925',
+                  'self_and_employers_contribution_to_pf']
+        widgets = {
+            'life_insurance_premium': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'life_insurance_premium_policy_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'contribution_to_pf_as_per_act_1925': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'self_and_employers_contribution_to_pf': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

@@ -103,3 +103,14 @@ def set_form_initial_value(initial_dictionary):
     for key in initial_dictionary:
         if initial_dictionary[key]:
             initial_dictionary[key] = add_comma(initial_dictionary[key])
+
+
+def copy_request(request):
+    request_copy = request.POST.copy()
+
+    for key in request_copy:
+        if key != 'csrfmiddlewaretoken':
+            val = remove_comma(request_copy[key])
+            request_copy[key] = val
+
+    return request_copy
