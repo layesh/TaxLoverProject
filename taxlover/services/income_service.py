@@ -138,3 +138,7 @@ def get_current_financial_year_tax_rebate_by_payer(payer_id):
     return TaxRebate.objects.filter(tax_payer_id=payer_id,
                                     financial_year_beg=financial_year_beg,
                                     financial_year_end=financial_year_end).first()
+
+
+def get_life_insurance_premium_allowed(life_insurance_premium, life_insurance_premium_policy_value):
+    return Decimal(min(float(life_insurance_premium_policy_value) * 0.1, float(life_insurance_premium)))

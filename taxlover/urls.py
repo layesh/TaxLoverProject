@@ -34,5 +34,7 @@ urlpatterns = [
          name='get_category_wise_exempted_value'),
     path('other-income/', views.other_income, name='other-income'),
     path('other_income-delete/<int:pk>/', views.other_income_delete, name='other_income_delete'),
-    path('tax_rebate/', views.tax_rebate, name='tax_rebate')
+    path('tax_rebate/', views.tax_rebate, name='tax_rebate'),
+    path('get_category_wise_allowed_investment_value/', views.get_category_wise_allowed_investment_value,
+         name='get_category_wise_allowed_investment_value'),
 ]

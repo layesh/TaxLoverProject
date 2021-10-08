@@ -521,7 +521,7 @@
         }
 
         function onInputBlurred(textBoxObject) {
-            if (!isNaN(textBoxObject.value)) {
+            if (!isNaN(removeCommas(textBoxObject.value))) {
                 textBoxObject.value = removeCommas(textBoxObject.value);
                 textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
                 setAllowedAmountColumns();
@@ -531,18 +531,14 @@
 
         function setAllowedAmountAjax(shouldSet, category) {
             if (shouldSet) {
-                let url = '{% url "get_category_wise_exempted_value" %}';
+                let url = '{% url "get_category_wise_allowed_investment_value" %}';
                 let data = {};
 
-                if (category === 'interest_from_mutual_fund_unit_fund') {
+                if (category === 'life_insurance_premium') {
                     data = {
-                        'interest_from_mutual_fund_unit_fund': parseDecimalInputValue('id_interest_from_mutual_fund_unit_fund'),
-                        'category': 'interest_from_mutual_fund_unit_fund'
-                    };
-                } else if (category === 'cash_dividend_from_company_listed_in_stock_exchange') {
-                    data = {
-                        'cash_dividend_from_company_listed_in_stock_exchange': parseDecimalInputValue('id_cash_dividend_from_company_listed_in_stock_exchange'),
-                        'category': 'cash_dividend_from_company_listed_in_stock_exchange'
+                        'life_insurance_premium': parseDecimalInputValue('id_life_insurance_premium'),
+                        'life_insurance_premium_policy_value': parseDecimalInputValue('id_life_insurance_premium_policy_value'),
+                        'category': category
                     };
                 }
 
@@ -551,13 +547,13 @@
                     url: url,
                     data: data,
                     success: function (data) {
-                        let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
-                        setTextBoxValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
+                        let allowedAmount = parseFloat(data[category + '_allowed']);
+                        setTextBoxValue('id_' + category + '_allowed', addCommas(formatToTwoDecimalPlaces(allowedAmount)));
                         setAllowedAmountTotalRow();
                     }
                 });
             } else {
-                setTextBoxValue('id_' + category + '_taxable', '');
+                setTextBoxValue('id_' + category + '_allowed', '');
             }
         }
     </script>

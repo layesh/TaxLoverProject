@@ -15,7 +15,8 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
-    get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer
+    get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
+    get_life_insurance_premium_allowed
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
@@ -613,6 +614,24 @@ def get_category_wise_exempted_value(request):
             data = {
                 'cash_dividend_from_company_listed_in_stock_exchange_exempted': get_cash_dividend_exempted(
                     cash_dividend)
+            }
+
+        return JsonResponse(data)
+
+
+@login_required
+def get_category_wise_allowed_investment_value(request):
+    if request.is_ajax() and request.method == 'GET':
+        category = request.GET['category']
+        data = {}
+
+        if category == 'life_insurance_premium':
+            life_insurance_premium = request.GET['life_insurance_premium']
+            life_insurance_premium_policy_value = request.GET['life_insurance_premium_policy_value']
+
+            data = {
+                'life_insurance_premium_allowed': get_life_insurance_premium_allowed(life_insurance_premium,
+                                                                                     life_insurance_premium_policy_value)
             }
 
         return JsonResponse(data)
