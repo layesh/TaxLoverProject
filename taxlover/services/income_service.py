@@ -1,6 +1,7 @@
 from decimal import Decimal
 
-from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE
+from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
+    DPS_MAX_ALLOWED_RATE
 from taxlover.models import OtherIncome, TaxRebate
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
@@ -142,3 +143,7 @@ def get_current_financial_year_tax_rebate_by_payer(payer_id):
 
 def get_life_insurance_premium_allowed(life_insurance_premium, life_insurance_premium_policy_value):
     return Decimal(min(float(life_insurance_premium_policy_value) * 0.1, float(life_insurance_premium)))
+
+
+def get_contribution_to_dps_allowed(contribution_to_dps):
+    return Decimal(min(DPS_MAX_ALLOWED_RATE, Decimal(contribution_to_dps)))

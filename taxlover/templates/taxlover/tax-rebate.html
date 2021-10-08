@@ -488,28 +488,147 @@
 
         function setInvestedAmountTotalRow() {
             let lifeInsurancePremium = parseDecimalInputValue('id_life_insurance_premium');
+            let contributionToPFAsPerAct1925 = parseDecimalInputValue('id_contribution_to_pf_as_per_act_1925');
+            let selfAndEmployersContributionToPF = parseDecimalInputValue('id_self_and_employers_contribution_to_pf');
+            let contributionToSuperAnnuationFund = parseDecimalInputValue('id_contribution_to_super_annuation_fund');
+            let investmentInApprovedDebentureOrStockOrShares = parseDecimalInputValue('id_investment_in_approved_debenture_or_stock_or_shares');
+            let contributionToDPS = parseDecimalInputValue('id_contribution_to_dps');
+            let contributionToBenevolentFundAndGroupInsurancePremium = parseDecimalInputValue('id_contribution_to_benevolent_fund_and_group_insurance_premium');
+            let contributionToZakatFund = parseDecimalInputValue('id_contribution_to_zakat_fund');
+            let investmentInSavingsCertificatesSanchaypatra = parseDecimalInputValue('id_investment_in_savings_certificates_sanchaypatra');
+            let investmentInBangladeshGovtTreasuryBond = parseDecimalInputValue('id_investment_in_bangladesh_govt_treasury_bond');
+            let donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNation = parseDecimalInputValue('id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation');
+            let donationToCharitableHospitalRecognizedByNBR = parseDecimalInputValue('id_donation_to_a_charitable_hospital_recognized_by_nbr');
+            let donationToOrganizationsSetUpForTheWelfareOfRetardedPeople = parseDecimalInputValue('id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people');
+            let contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWar = parseDecimalInputValue('id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war');
+            let contributionToLiberationWarMuseum = parseDecimalInputValue('id_contribution_to_liberation_war_museum');
+            let contributionToAgaKhanDevelopmentNetwork = parseDecimalInputValue('id_contribution_to_aga_khan_development_network');
+            let contributionToAsiaticSocietyBangladesh = parseDecimalInputValue('id_contribution_to_asiatic_society_bangladesh');
+            let donationToIcddrb = parseDecimalInputValue('id_donation_to_icddrb');
+            let donationToCrp = parseDecimalInputValue('id_donation_to_crp');
+            let donationToEducationalInstitutionRecognizedByGovernment = parseDecimalInputValue('id_donation_to_educational_institution_recognized_by_government');
+            let contributionToAhsaniaMissionCancerHospital = parseDecimalInputValue('id_contribution_to_ahsania_mission_cancer_hospital');
+            let mutualFund = parseDecimalInputValue('id_mutual_fund');
 
-            let totalInvestedAmount = lifeInsurancePremium;
+            let totalInvestedAmount = lifeInsurancePremium + contributionToPFAsPerAct1925 + selfAndEmployersContributionToPF +
+                contributionToSuperAnnuationFund + investmentInApprovedDebentureOrStockOrShares + contributionToDPS +
+                contributionToBenevolentFundAndGroupInsurancePremium + contributionToZakatFund + investmentInSavingsCertificatesSanchaypatra +
+                investmentInBangladeshGovtTreasuryBond + donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNation +
+                donationToCharitableHospitalRecognizedByNBR + donationToOrganizationsSetUpForTheWelfareOfRetardedPeople +
+                contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWar + contributionToLiberationWarMuseum +
+                contributionToAgaKhanDevelopmentNetwork + contributionToAsiaticSocietyBangladesh + donationToIcddrb +
+                donationToCrp + donationToEducationalInstitutionRecognizedByGovernment + contributionToAhsaniaMissionCancerHospital + mutualFund;
 
             setLabelValue('total_investment_amount', addCommas(formatToTwoDecimalPlaces(totalInvestedAmount.toString())));
         }
 
         function setAllowedAmountTotalRow() {
             let interestFromMutualFundA = parseDecimalInputValue('id_life_insurance_premium_allowed');
+            let contributionToPFAsPerAct1925A = parseDecimalInputValue('id_contribution_to_pf_as_per_act_1925_allowed');
+            let selfAndEmployersContributionToPFA = parseDecimalInputValue('id_self_and_employers_contribution_to_pf_allowed');
+            let contributionToSuperAnnuationFundA = parseDecimalInputValue('id_contribution_to_super_annuation_fund_allowed');
+            let investmentInApprovedDebentureOrStockOrSharesA = parseDecimalInputValue('id_investment_in_approved_debenture_or_stock_or_shares_allowed');
+            let contributionToDPSA = parseDecimalInputValue('id_contribution_to_dps_allowed');
+            let contributionToBenevolentFundAndGroupInsurancePremiumA = parseDecimalInputValue('id_contribution_to_benevolent_fund_and_group_insurance_premium_allowed');
+            let contributionToZakatFundA = parseDecimalInputValue('id_contribution_to_zakat_fund_allowed');
+            let investmentInSavingsCertificatesSanchaypatraA = parseDecimalInputValue('id_investment_in_savings_certificates_sanchaypatra_allowed');
+            let investmentInBangladeshGovtTreasuryBondA = parseDecimalInputValue('id_investment_in_bangladesh_govt_treasury_bond_allowed');
+            let donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNationA = parseDecimalInputValue('id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation_allowed');
+            let donationToCharitableHospitalRecognizedByNBRA = parseDecimalInputValue('id_donation_to_a_charitable_hospital_recognized_by_nbr_allowed');
+            let donationToOrganizationsSetUpForTheWelfareOfRetardedPeopleA = parseDecimalInputValue('id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people_allowed');
+            let contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWarA = parseDecimalInputValue('id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war_allowed');
+            let contributionToLiberationWarMuseumA = parseDecimalInputValue('id_contribution_to_liberation_war_museum_allowed');
+            let contributionToAgaKhanDevelopmentNetworkA = parseDecimalInputValue('id_contribution_to_aga_khan_development_network_allowed');
+            let contributionToAsiaticSocietyBangladeshA = parseDecimalInputValue('id_contribution_to_asiatic_society_bangladesh_allowed');
+            let donationToIcddrbA = parseDecimalInputValue('id_donation_to_icddrb_allowed');
+            let donationToCrpA = parseDecimalInputValue('id_donation_to_crp_allowed');
+            let donationToEducationalInstitutionRecognizedByGovernmentA = parseDecimalInputValue('id_donation_to_educational_institution_recognized_by_government_allowed');
+            let contributionToAhsaniaMissionCancerHospitalA = parseDecimalInputValue('id_contribution_to_ahsania_mission_cancer_hospital_allowed');
+            let mutualFundA = parseDecimalInputValue('id_mutual_fund_allowed');
 
-            let totalAllowedAmount = interestFromMutualFundA;
+            let totalAllowedAmount = interestFromMutualFundA + contributionToPFAsPerAct1925A + selfAndEmployersContributionToPFA +
+                contributionToSuperAnnuationFundA + investmentInApprovedDebentureOrStockOrSharesA + contributionToDPSA +
+                contributionToBenevolentFundAndGroupInsurancePremiumA + contributionToZakatFundA + investmentInSavingsCertificatesSanchaypatraA +
+                investmentInBangladeshGovtTreasuryBondA + donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNationA +
+                donationToCharitableHospitalRecognizedByNBRA + donationToOrganizationsSetUpForTheWelfareOfRetardedPeopleA +
+                contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWarA + contributionToLiberationWarMuseumA +
+                contributionToAgaKhanDevelopmentNetworkA + contributionToAsiaticSocietyBangladeshA + donationToIcddrbA +
+                donationToCrpA + donationToEducationalInstitutionRecognizedByGovernmentA + contributionToAhsaniaMissionCancerHospitalA +
+                mutualFundA;
 
             setLabelValue('total_allowed_amount', addCommas(formatToTwoDecimalPlaces(totalAllowedAmount.toString())));
         }
 
         function setAllowedAmountColumns() {
             let hasLifeInsurancePremiumInputValue = hasInputValue('id_life_insurance_premium');
+            let hasContributionToPFAsPerAct1925InputValue = hasInputValue('id_contribution_to_pf_as_per_act_1925');
+            let hasSelfAndEmployersContributionToPFInputValue = hasInputValue('id_self_and_employers_contribution_to_pf');
+            let hasContributionToSuperAnnuationFundInputValue = hasInputValue('id_contribution_to_super_annuation_fund');
+            let hasInvestmentInApprovedDebentureOrStockOrSharesInputValue = hasInputValue('id_investment_in_approved_debenture_or_stock_or_shares');
+            let hasContributionToDPSSchemeInputValue = hasInputValue('id_contribution_to_dps');
+            let hasContributionToBenevolentFundAndGroupInsurancePremiumInputValue = hasInputValue('id_contribution_to_benevolent_fund_and_group_insurance_premium');
+            let hasContributionToZakatFundInputValue = hasInputValue('id_contribution_to_zakat_fund');
+            let hasInvestmentInSavingsCertificatesSanchaypatraInputValue = hasInputValue('id_investment_in_savings_certificates_sanchaypatra');
+            let hasInvestmentInBangladeshGovtTreasuryBondInputValue = hasInputValue('id_investment_in_bangladesh_govt_treasury_bond');
+            let hasDonationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNationInputValue = hasInputValue('id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation');
+            let hasDonationToCharitableHospitalRecognizedByNBRInputValue = hasInputValue('id_donation_to_a_charitable_hospital_recognized_by_nbr');
+            let hasDonationToOrganizationsSetUpForTheWelfareOfRetardedPeopleInputValue = hasInputValue('id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people');
+            let hasContributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWarInputValue = hasInputValue('id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war');
+            let hasContributionToLiberationWarMuseumInputValue = hasInputValue('id_contribution_to_liberation_war_museum');
+            let hasContributionToAgaKhanDevelopmentNetworkInputValue = hasInputValue('id_contribution_to_aga_khan_development_network');
+            let hasContributionToAsiaticSocietyBangladeshInputValue = hasInputValue('id_contribution_to_asiatic_society_bangladesh');
+            let hasDonationToIcddrbInputValue = hasInputValue('id_donation_to_icddrb');
+            let hasDonationToCrpInputValue = hasInputValue('id_donation_to_crp');
+            let hasDonationToEducationalInstitutionRecognizedByGovernmentInputValue = hasInputValue('id_donation_to_educational_institution_recognized_by_government');
+            let hasContributionToAhsaniaMissionCancerHospitalInputValue = hasInputValue('id_contribution_to_ahsania_mission_cancer_hospital');
+            let hasMutualFundInputValue = hasInputValue('id_mutual_fund');
 
-            {#let sanchaypatraIncome = parseDecimalInputValue('id_sanchaypatra_income');#}
+            let contributionToPFAsPerAct1925 = parseDecimalInputValue('id_contribution_to_pf_as_per_act_1925');
+            let selfAndEmployersContributionToPF = parseDecimalInputValue('id_self_and_employers_contribution_to_pf');
+            let contributionToSuperAnnuationFund = parseDecimalInputValue('id_contribution_to_super_annuation_fund');
+            let investmentInApprovedDebentureOrStockOrShares = parseDecimalInputValue('id_investment_in_approved_debenture_or_stock_or_shares');
+            let contributionToBenevolentFundAndGroupInsurancePremium = parseDecimalInputValue('id_contribution_to_benevolent_fund_and_group_insurance_premium');
+            let contributionToZakatFund = parseDecimalInputValue('id_contribution_to_zakat_fund');
+            let investmentInSavingsCertificatesSanchaypatra = parseDecimalInputValue('id_investment_in_savings_certificates_sanchaypatra');
+            let investmentInBangladeshGovtTreasuryBond = parseDecimalInputValue('id_investment_in_bangladesh_govt_treasury_bond');
+            let donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNation = parseDecimalInputValue('id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation');
+            let donationToCharitableHospitalRecognizedByNBR = parseDecimalInputValue('id_donation_to_a_charitable_hospital_recognized_by_nbr');
+            let donationToOrganizationsSetUpForTheWelfareOfRetardedPeople = parseDecimalInputValue('id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people');
+            let contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWar = parseDecimalInputValue('id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war');
+            let contributionToLiberationWarMuseum = parseDecimalInputValue('id_contribution_to_liberation_war_museum');
+            let contributionToAgaKhanDevelopmentNetwork = parseDecimalInputValue('id_contribution_to_aga_khan_development_network');
+            let contributionToAsiaticSocietyBangladesh = parseDecimalInputValue('id_contribution_to_asiatic_society_bangladesh');
+            let donationToIcddrb = parseDecimalInputValue('id_donation_to_icddrb');
+            let donationToCrp = parseDecimalInputValue('id_donation_to_crp');
+            let donationToEducationalInstitutionRecognizedByGovernment = parseDecimalInputValue('id_donation_to_educational_institution_recognized_by_government');
+            let contributionToAhsaniaMissionCancerHospital = parseDecimalInputValue('id_contribution_to_ahsania_mission_cancer_hospital');
+            let mutualFund = parseDecimalInputValue('id_mutual_fund');
 
             setAllowedAmountAjax(hasLifeInsurancePremiumInputValue, 'life_insurance_premium');
 
-            {#checkAndSet(hasInterestFromMutualFundInputValue, 'id_interest_income_from_wedb_taxable', 0);#}
+            checkAndSet(hasContributionToPFAsPerAct1925InputValue, 'id_contribution_to_pf_as_per_act_1925_allowed', contributionToPFAsPerAct1925);
+            checkAndSet(hasSelfAndEmployersContributionToPFInputValue, 'id_self_and_employers_contribution_to_pf_allowed', selfAndEmployersContributionToPF);
+            checkAndSet(hasContributionToSuperAnnuationFundInputValue, 'id_contribution_to_super_annuation_fund_allowed', contributionToSuperAnnuationFund);
+            checkAndSet(hasInvestmentInApprovedDebentureOrStockOrSharesInputValue, 'id_investment_in_approved_debenture_or_stock_or_shares_allowed', investmentInApprovedDebentureOrStockOrShares);
+
+            setAllowedAmountAjax(hasContributionToDPSSchemeInputValue, 'contribution_to_dps')
+
+            checkAndSet(hasContributionToBenevolentFundAndGroupInsurancePremiumInputValue, 'id_contribution_to_benevolent_fund_and_group_insurance_premium_allowed', contributionToBenevolentFundAndGroupInsurancePremium);
+            checkAndSet(hasContributionToZakatFundInputValue, 'id_contribution_to_zakat_fund_allowed', contributionToZakatFund);
+            checkAndSet(hasInvestmentInSavingsCertificatesSanchaypatraInputValue, 'id_investment_in_savings_certificates_sanchaypatra_allowed', investmentInSavingsCertificatesSanchaypatra);
+            checkAndSet(hasInvestmentInBangladeshGovtTreasuryBondInputValue, 'id_investment_in_bangladesh_govt_treasury_bond_allowed', investmentInBangladeshGovtTreasuryBond);
+            checkAndSet(hasDonationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNationInputValue, 'id_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation_allowed', donationToNationalLevelInstitutionSetUpInTheMemoryOfFatherOfTheNation);
+            checkAndSet(hasDonationToCharitableHospitalRecognizedByNBRInputValue, 'id_donation_to_a_charitable_hospital_recognized_by_nbr_allowed', donationToCharitableHospitalRecognizedByNBR);
+            checkAndSet(hasDonationToOrganizationsSetUpForTheWelfareOfRetardedPeopleInputValue, 'id_donation_to_organizations_set_up_for_the_welfare_of_retarded_people_allowed', donationToOrganizationsSetUpForTheWelfareOfRetardedPeople);
+            checkAndSet(hasContributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWarInputValue, 'id_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war_allowed', contributionToNationalLevelInstitutionSetUpInMemoryOfLiberationWar);
+            checkAndSet(hasContributionToLiberationWarMuseumInputValue, 'id_contribution_to_liberation_war_museum_allowed', contributionToLiberationWarMuseum);
+            checkAndSet(hasContributionToAgaKhanDevelopmentNetworkInputValue, 'id_contribution_to_aga_khan_development_network_allowed', contributionToAgaKhanDevelopmentNetwork);
+            checkAndSet(hasContributionToAsiaticSocietyBangladeshInputValue, 'id_contribution_to_asiatic_society_bangladesh_allowed', contributionToAsiaticSocietyBangladesh);
+            checkAndSet(hasDonationToIcddrbInputValue, 'id_donation_to_icddrb_allowed', donationToIcddrb);
+            checkAndSet(hasDonationToCrpInputValue, 'id_donation_to_crp_allowed', donationToCrp);
+            checkAndSet(hasDonationToEducationalInstitutionRecognizedByGovernmentInputValue, 'id_donation_to_educational_institution_recognized_by_government_allowed', donationToEducationalInstitutionRecognizedByGovernment);
+            checkAndSet(hasContributionToAhsaniaMissionCancerHospitalInputValue, 'id_contribution_to_ahsania_mission_cancer_hospital_allowed', contributionToAhsaniaMissionCancerHospital);
+            checkAndSet(hasMutualFundInputValue, 'id_mutual_fund_allowed', mutualFund);
         }
 
         function checkAndSet(shouldSet, inputId, inputValue) {
@@ -538,6 +657,11 @@
                     data = {
                         'life_insurance_premium': parseDecimalInputValue('id_life_insurance_premium'),
                         'life_insurance_premium_policy_value': parseDecimalInputValue('id_life_insurance_premium_policy_value'),
+                        'category': category
+                    };
+                } else if (category === 'contribution_to_dps') {
+                    data = {
+                        'contribution_to_dps': parseDecimalInputValue('id_contribution_to_dps'),
                         'category': category
                     };
                 }

@@ -16,7 +16,7 @@ from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeFor
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
-    get_life_insurance_premium_allowed
+    get_life_insurance_premium_allowed, get_contribution_to_dps_allowed
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
@@ -395,6 +395,11 @@ def tax_rebate(request):
     else:
         form = TaxRebateForm(instance=tax_rebate_obj)
 
+    if not form.initial['self_and_employers_contribution_to_pf']:
+        salary = get_current_financial_year_salary_by_payer(request.user.id)
+        if salary and salary.get_employers_contribution_to_pf > 0:
+            form.initial['self_and_employers_contribution_to_pf'] = salary.get_employers_contribution_to_pf * 2
+
     set_form_initial_value(form.initial)
 
     context = {
@@ -632,6 +637,12 @@ def get_category_wise_allowed_investment_value(request):
             data = {
                 'life_insurance_premium_allowed': get_life_insurance_premium_allowed(life_insurance_premium,
                                                                                      life_insurance_premium_policy_value)
+            }
+        elif category == 'contribution_to_dps':
+            contribution_to_dps = request.GET['contribution_to_dps']
+
+            data = {
+                'contribution_to_dps_allowed': get_contribution_to_dps_allowed(contribution_to_dps)
             }
 
         return JsonResponse(data)
