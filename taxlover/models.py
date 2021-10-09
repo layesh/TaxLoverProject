@@ -860,3 +860,175 @@ class TaxRebate(models.Model):
             return self.life_insurance_premium
         else:
             return 0
+
+    @property
+    def get_life_insurance_premium_policy_value(self):
+        if self.life_insurance_premium_policy_value:
+            return self.life_insurance_premium_policy_value
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_pf_as_per_act_1925(self):
+        if self.contribution_to_pf_as_per_act_1925:
+            return self.contribution_to_pf_as_per_act_1925
+        else:
+            return 0
+
+    @property
+    def get_self_and_employers_contribution_to_pf(self):
+        if self.self_and_employers_contribution_to_pf:
+            return self.self_and_employers_contribution_to_pf
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_super_annuation_fund(self):
+        if self.contribution_to_super_annuation_fund:
+            return self.contribution_to_super_annuation_fund
+        else:
+            return 0
+
+    @property
+    def get_investment_in_approved_debenture_or_stock_or_shares(self):
+        if self.investment_in_approved_debenture_or_stock_or_shares:
+            return self.investment_in_approved_debenture_or_stock_or_shares
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_dps(self):
+        if self.contribution_to_dps:
+            return self.contribution_to_dps
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_benevolent_fund_and_group_insurance_premium(self):
+        if self.contribution_to_benevolent_fund_and_group_insurance_premium:
+            return self.contribution_to_benevolent_fund_and_group_insurance_premium
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_zakat_fund(self):
+        if self.contribution_to_zakat_fund:
+            return self.contribution_to_zakat_fund
+        else:
+            return 0
+
+    @property
+    def get_investment_in_savings_certificates_sanchaypatra(self):
+        if self.investment_in_savings_certificates_sanchaypatra:
+            return self.investment_in_savings_certificates_sanchaypatra
+        else:
+            return 0
+
+    @property
+    def get_investment_in_bangladesh_govt_treasury_bond(self):
+        if self.investment_in_bangladesh_govt_treasury_bond:
+            return self.investment_in_bangladesh_govt_treasury_bond
+        else:
+            return 0
+
+    @property
+    def get_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation(self):
+        if self.donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation:
+            return self.donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation
+        else:
+            return 0
+
+    @property
+    def get_donation_to_a_charitable_hospital_recognized_by_nbr(self):
+        if self.donation_to_a_charitable_hospital_recognized_by_nbr:
+            return self.donation_to_a_charitable_hospital_recognized_by_nbr
+        else:
+            return 0
+
+    @property
+    def get_donation_to_organizations_set_up_for_the_welfare_of_retarded_people(self):
+        if self.donation_to_organizations_set_up_for_the_welfare_of_retarded_people:
+            return self.donation_to_organizations_set_up_for_the_welfare_of_retarded_people
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war(self):
+        if self.contribution_to_national_level_institution_set_up_in_memory_of_liberation_war:
+            return self.contribution_to_national_level_institution_set_up_in_memory_of_liberation_war
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_liberation_war_museum(self):
+        if self.contribution_to_liberation_war_museum:
+            return self.contribution_to_liberation_war_museum
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_aga_khan_development_network(self):
+        if self.contribution_to_aga_khan_development_network:
+            return self.contribution_to_aga_khan_development_network
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_asiatic_society_bangladesh(self):
+        if self.contribution_to_asiatic_society_bangladesh:
+            return self.contribution_to_asiatic_society_bangladesh
+        else:
+            return 0
+
+    @property
+    def get_donation_to_icddrb(self):
+        if self.donation_to_icddrb:
+            return self.donation_to_icddrb
+        else:
+            return 0
+
+    @property
+    def get_donation_to_crp(self):
+        if self.donation_to_crp:
+            return self.donation_to_crp
+        else:
+            return 0
+
+    @property
+    def get_donation_to_educational_institution_recognized_by_government(self):
+        if self.donation_to_educational_institution_recognized_by_government:
+            return self.donation_to_educational_institution_recognized_by_government
+        else:
+            return 0
+
+    @property
+    def get_contribution_to_ahsania_mission_cancer_hospital(self):
+        if self.contribution_to_ahsania_mission_cancer_hospital:
+            return self.contribution_to_ahsania_mission_cancer_hospital
+        else:
+            return 0
+
+    @property
+    def get_mutual_fund(self):
+        if self.mutual_fund:
+            return self.mutual_fund
+        else:
+            return 0
+
+    @property
+    def get_total(self):
+        return self.get_life_insurance_premium + self.get_contribution_to_pf_as_per_act_1925 + \
+               self.get_self_and_employers_contribution_to_pf + self.get_contribution_to_super_annuation_fund + \
+               self.get_investment_in_approved_debenture_or_stock_or_shares + self.get_contribution_to_dps + \
+               self.get_contribution_to_benevolent_fund_and_group_insurance_premium + \
+               self.get_contribution_to_zakat_fund + self.get_investment_in_savings_certificates_sanchaypatra + \
+               self.get_investment_in_bangladesh_govt_treasury_bond + \
+               self.get_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation + \
+               self.get_donation_to_a_charitable_hospital_recognized_by_nbr + \
+               self.get_donation_to_organizations_set_up_for_the_welfare_of_retarded_people + \
+               self.get_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war + \
+               self.get_contribution_to_liberation_war_museum + \
+               self.get_contribution_to_aga_khan_development_network + \
+               self.get_contribution_to_asiatic_society_bangladesh + self.get_donation_to_icddrb + \
+               self.get_donation_to_crp + self.get_donation_to_educational_institution_recognized_by_government + \
+               self.get_contribution_to_ahsania_mission_cancer_hospital + self.get_mutual_fund

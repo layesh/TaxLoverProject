@@ -1,11 +1,11 @@
-from taxlover.services.income_service import get_total_other_income_taxable
+from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount
 from taxlover.services.salary_service import get_total_taxable
 from taxlover.utils import get_income_years
 
 
 class IncomeDTO:
 
-    def __init__(self, income, salary, other_income):
+    def __init__(self, income, salary, other_income, tax_rebate):
         self.has_salary_income = income.has_salary_income
         self.has_no_salary_income = income.has_no_salary_income
         self.has_interest_on_securities = income.has_interest_on_securities
@@ -47,3 +47,7 @@ class IncomeDTO:
             self.total_other_income_taxable = get_total_other_income_taxable(other_income)
             self.total_other_income = other_income.get_total
             self.total_exempted_other_income = self.total_other_income - self.total_other_income_taxable
+        if tax_rebate:
+            self.taxRebateId = tax_rebate.id
+            self.total_invested_amount = tax_rebate.get_total
+            self.total_allowed_amount = get_total_allowed_amount(tax_rebate)

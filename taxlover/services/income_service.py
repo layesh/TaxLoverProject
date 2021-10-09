@@ -147,3 +147,27 @@ def get_life_insurance_premium_allowed(life_insurance_premium, life_insurance_pr
 
 def get_contribution_to_dps_allowed(contribution_to_dps):
     return Decimal(min(DPS_MAX_ALLOWED_RATE, Decimal(contribution_to_dps)))
+
+
+def get_total_allowed_amount(tax_rebate):
+    return get_life_insurance_premium_allowed(tax_rebate.get_life_insurance_premium,
+                                              tax_rebate.get_life_insurance_premium_policy_value) + \
+           tax_rebate.get_contribution_to_pf_as_per_act_1925 + \
+           tax_rebate.get_self_and_employers_contribution_to_pf + \
+           tax_rebate.get_contribution_to_super_annuation_fund + \
+           tax_rebate.get_investment_in_approved_debenture_or_stock_or_shares + \
+           get_contribution_to_dps_allowed(tax_rebate.get_contribution_to_dps) + \
+           tax_rebate.get_contribution_to_benevolent_fund_and_group_insurance_premium + \
+           tax_rebate.get_contribution_to_zakat_fund + \
+           tax_rebate.get_investment_in_savings_certificates_sanchaypatra + \
+           tax_rebate.get_investment_in_bangladesh_govt_treasury_bond + \
+           tax_rebate.get_donation_to_national_level_institution_set_up_in_the_memory_of_father_of_the_nation + \
+           tax_rebate.get_donation_to_a_charitable_hospital_recognized_by_nbr + \
+           tax_rebate.get_donation_to_organizations_set_up_for_the_welfare_of_retarded_people + \
+           tax_rebate.get_contribution_to_national_level_institution_set_up_in_memory_of_liberation_war + \
+           tax_rebate.get_contribution_to_liberation_war_museum + \
+           tax_rebate.get_contribution_to_aga_khan_development_network + \
+           tax_rebate.get_contribution_to_asiatic_society_bangladesh + tax_rebate.get_donation_to_icddrb + \
+           tax_rebate.get_donation_to_crp + \
+           tax_rebate.get_donation_to_educational_institution_recognized_by_government + \
+           tax_rebate.get_contribution_to_ahsania_mission_cancer_hospital + tax_rebate.get_mutual_fund

@@ -180,7 +180,8 @@ def income(request):
     current_income = create_or_get_current_income_obj(request.user.id)
     current_salary = get_current_financial_year_salary_by_payer(request.user.id)
     current_other_income = get_current_financial_year_other_income_by_payer(request.user.id)
-    income_dto = IncomeDTO(current_income, current_salary, current_other_income)
+    current_tax_rebate = get_current_financial_year_tax_rebate_by_payer(request.user.id)
+    income_dto = IncomeDTO(current_income, current_salary, current_other_income, current_tax_rebate)
 
     context = {
         'income_dto': income_dto,
@@ -282,6 +283,17 @@ def other_income_delete(request, pk):
         OtherIncome.objects.filter(id=pk).delete()
         latest_income = create_or_get_current_income_obj(request.user.id)
         latest_income.other_sources = None
+        latest_income.save()
+
+    return redirect('income')
+
+
+@login_required
+def tax_rebate_delete(request, pk):
+    if request.method == 'POST':
+        TaxRebate.objects.filter(id=pk).delete()
+        latest_income = create_or_get_current_income_obj(request.user.id)
+        latest_income.tax_rebate = None
         latest_income.save()
 
     return redirect('income')

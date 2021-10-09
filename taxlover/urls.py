@@ -37,4 +37,5 @@ urlpatterns = [
     path('tax_rebate/', views.tax_rebate, name='tax_rebate'),
     path('get_category_wise_allowed_investment_value/', views.get_category_wise_allowed_investment_value,
          name='get_category_wise_allowed_investment_value'),
+    path('tax_rebate_delete/<int:pk>/', views.tax_rebate_delete, name='tax_rebate_delete'),
 ]
