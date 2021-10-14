@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 
-from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate
+from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -124,4 +124,17 @@ class TaxRebateForm(forms.ModelForm):
             'mutual_fund': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
 
+        }
+
+
+class DeductionAtSourceForm(forms.ModelForm):
+    class Meta:
+        model = DeductionAtSource
+        fields = ['id', 'description', 'tax_deducted_at_source']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'description': TextInput(
+                attrs={'class': 'form-control'}),
+            'tax_deducted_at_source': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

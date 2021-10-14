@@ -38,4 +38,8 @@ urlpatterns = [
     path('get_category_wise_allowed_investment_value/', views.get_category_wise_allowed_investment_value,
          name='get_category_wise_allowed_investment_value'),
     path('tax_rebate_delete/<int:pk>/', views.tax_rebate_delete, name='tax_rebate_delete'),
+    path('save-tax-deduction-at-source/', views.save_tax_deduction_at_source, name='save-tax-deduction-at-source'),
+    path('get-data-for-edit/', views.get_data_for_edit, name='get-data-for-edit'),
+    path('tax-deduction-at-source-delete/', views.tax_deduction_at_source_delete,
+         name='tax-deduction-at-source-delete')
 ]

@@ -1032,3 +1032,28 @@ class TaxRebate(models.Model):
                self.get_contribution_to_asiatic_society_bangladesh + self.get_donation_to_icddrb + \
                self.get_donation_to_crp + self.get_donation_to_educational_institution_recognized_by_government + \
                self.get_contribution_to_ahsania_mission_cancer_hospital + self.get_mutual_fund
+
+
+class DeductionAtSource(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    description = models.CharField(max_length=100, null=True, blank=True)
+    tax_deducted_at_source = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} DeductionAtSource'
+
+    @property
+    def get_description(self):
+        if self.description:
+            return self.description
+        else:
+            return ""
+
+    @property
+    def get_tax_deducted_at_source(self):
+        if self.tax_deducted_at_source:
+            return self.tax_deducted_at_source
+        else:
+            return 0

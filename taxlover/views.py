@@ -12,8 +12,8 @@ from django.contrib.auth.decorators import login_required
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm
-from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate
+from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed
@@ -181,11 +181,14 @@ def income(request):
     current_salary = get_current_financial_year_salary_by_payer(request.user.id)
     current_other_income = get_current_financial_year_other_income_by_payer(request.user.id)
     current_tax_rebate = get_current_financial_year_tax_rebate_by_payer(request.user.id)
-    income_dto = IncomeDTO(current_income, current_salary, current_other_income, current_tax_rebate)
+    income_dto = IncomeDTO(request.user.id, current_income, current_salary, current_other_income, current_tax_rebate)
+
+    das_form = DeductionAtSourceForm(request.POST)
 
     context = {
         'income_dto': income_dto,
-        'title': 'Income'
+        'title': 'Income',
+        'das_form': das_form
     }
 
     return render(request, 'taxlover/income.html', context)
@@ -295,6 +298,28 @@ def tax_rebate_delete(request, pk):
         latest_income = create_or_get_current_income_obj(request.user.id)
         latest_income.tax_rebate = None
         latest_income.save()
+
+    return redirect('income')
+
+
+@login_required
+def tax_deduction_at_source_delete(request):
+    if request.method == 'POST':
+        deduction_id = 0
+        if request.POST['deduction_id_for_delete'] != '':
+            deduction_id = int(request.POST['deduction_id_for_delete'])
+        if deduction_id > 0:
+            DeductionAtSource.objects.filter(id=deduction_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = DeductionAtSource.objects.filter(tax_payer_id=request.user.id,
+                                                     financial_year_beg=financial_year_beg,
+                                                     financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_income = create_or_get_current_income_obj(request.user.id)
+                latest_income.tax_deducted_at_source = None
+                latest_income.save()
 
     return redirect('income')
 
@@ -420,6 +445,33 @@ def tax_rebate(request):
     }
 
     return render(request, 'taxlover/tax-rebate.html', context)
+
+
+@login_required
+def save_tax_deduction_at_source(request):
+    if request.method == 'POST':
+        financial_year_beg, financial_year_end = get_income_years()
+        deduction_id = 0
+        if request.POST['deduction_id'] != '':
+            deduction_id = int(request.POST['deduction_id'])
+        if deduction_id > 0:
+            deduction_at_source = DeductionAtSource.objects.get(pk=deduction_id)
+        else:
+            deduction_at_source = DeductionAtSource(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                                    financial_year_end=financial_year_end)
+        form = DeductionAtSourceForm(copy_request(request), instance=deduction_at_source)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Tax deduction at source added!')
+            return redirect('income')
+        else:
+            error_dictionary = form.errors
+            form = DeductionAtSourceForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+        return redirect('income')
 
 
 @login_required
@@ -655,6 +707,24 @@ def get_category_wise_allowed_investment_value(request):
 
             data = {
                 'contribution_to_dps_allowed': get_contribution_to_dps_allowed(contribution_to_dps)
+            }
+
+        return JsonResponse(data)
+
+
+@login_required
+def get_data_for_edit(request):
+    if request.is_ajax() and request.method == 'GET':
+        section = request.GET['section']
+        data_id = request.GET['id']
+        data = {}
+
+        if section == 'deduction_at_source':
+            deduction_at_source = DeductionAtSource.objects.get(pk=data_id)
+            data = {
+                'id': deduction_at_source.id,
+                'description': deduction_at_source.description,
+                'tax_deducted_at_source': deduction_at_source.tax_deducted_at_source
             }
 
         return JsonResponse(data)

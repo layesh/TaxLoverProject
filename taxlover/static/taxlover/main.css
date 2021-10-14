@@ -172,3 +172,7 @@ a.article-title:hover {
 .text-align-right {
     text-align:right;
 }
+
+.text-box-width-20 {
+    width: 200px;
+}
