@@ -633,9 +633,9 @@
 
         function checkAndSet(shouldSet, inputId, inputValue) {
             if (shouldSet) {
-                setTextBoxValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
+                setInputValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
             } else {
-                setTextBoxValue(inputId, '');
+                setInputValue(inputId, '');
             }
         }
 
@@ -672,12 +672,12 @@
                     data: data,
                     success: function (data) {
                         let allowedAmount = parseFloat(data[category + '_allowed']);
-                        setTextBoxValue('id_' + category + '_allowed', addCommas(formatToTwoDecimalPlaces(allowedAmount)));
+                        setInputValue('id_' + category + '_allowed', addCommas(formatToTwoDecimalPlaces(allowedAmount)));
                         setAllowedAmountTotalRow();
                     }
                 });
             } else {
-                setTextBoxValue('id_' + category + '_allowed', '');
+                setInputValue('id_' + category + '_allowed', '');
             }
         }
     </script>

@@ -12,8 +12,9 @@ from django.contrib.auth.decorators import login_required
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
-from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm
-from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource
+from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
+    AdvanceTaxPaidForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed
@@ -177,18 +178,16 @@ def personal_info(request):
 
 @login_required
 def income(request):
-    current_income = create_or_get_current_income_obj(request.user.id)
-    current_salary = get_current_financial_year_salary_by_payer(request.user.id)
-    current_other_income = get_current_financial_year_other_income_by_payer(request.user.id)
-    current_tax_rebate = get_current_financial_year_tax_rebate_by_payer(request.user.id)
-    income_dto = IncomeDTO(request.user.id, current_income, current_salary, current_other_income, current_tax_rebate)
+    income_dto = IncomeDTO(request.user.id)
 
     das_form = DeductionAtSourceForm(request.POST)
+    atp_form = AdvanceTaxPaidForm(request.POST)
 
     context = {
         'income_dto': income_dto,
         'title': 'Income',
-        'das_form': das_form
+        'das_form': das_form,
+        'atp_form': atp_form
     }
 
     return render(request, 'taxlover/income.html', context)
@@ -325,6 +324,28 @@ def tax_deduction_at_source_delete(request):
 
 
 @login_required
+def advance_paid_tax_delete(request):
+    if request.method == 'POST':
+        advance_paid_id = 0
+        if request.POST['advance_paid_tax_id_for_delete'] != '':
+            advance_paid_id = int(request.POST['advance_paid_tax_id_for_delete'])
+        if advance_paid_id > 0:
+            AdvanceTax.objects.filter(id=advance_paid_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = AdvanceTax.objects.filter(tax_payer_id=request.user.id,
+                                              financial_year_beg=financial_year_beg,
+                                              financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_income = create_or_get_current_income_obj(request.user.id)
+                latest_income.advance_paid_tax = None
+                latest_income.save()
+
+    return redirect('income')
+
+
+@login_required
 def upload_salary_statement(request):
     if request.method == 'POST':
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
@@ -454,24 +475,73 @@ def save_tax_deduction_at_source(request):
         deduction_id = 0
         if request.POST['deduction_id'] != '':
             deduction_id = int(request.POST['deduction_id'])
+
         if deduction_id > 0:
             deduction_at_source = DeductionAtSource.objects.get(pk=deduction_id)
         else:
             deduction_at_source = DeductionAtSource(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
                                                     financial_year_end=financial_year_end)
-        form = DeductionAtSourceForm(copy_request(request), instance=deduction_at_source)
+        das_form = DeductionAtSourceForm(copy_request(request), instance=deduction_at_source)
 
-        if form.is_valid():
-            form.save()
+        if das_form.is_valid():
+            das_form.save()
             messages.success(request, f'Tax deduction at source added!')
             return redirect('income')
         else:
-            error_dictionary = form.errors
-            form = DeductionAtSourceForm(request.POST)
-            set_form_validation_errors(error_dictionary, form.fields)
+            error_dictionary = das_form.errors
+            das_form = DeductionAtSourceForm(request.POST)
+            set_form_validation_errors(error_dictionary, das_form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
-        return redirect('income')
+        income_dto = IncomeDTO(request.user.id)
+        atp_form = AdvanceTaxPaidForm(request.POST)
+
+        context = {
+            'income_dto': income_dto,
+            'title': 'Income',
+            'das_form': das_form,
+            'atp_form': atp_form
+        }
+
+        return render(request, 'taxlover/income.html', context)
+
+
+@login_required
+def save_advance_paid_tax(request):
+    if request.method == 'POST':
+        financial_year_beg, financial_year_end = get_income_years()
+        advance_paid_tax_id = 0
+        if request.POST['advance_paid_tax_id'] != '':
+            advance_paid_tax_id = int(request.POST['advance_paid_tax_id'])
+
+        if advance_paid_tax_id > 0:
+            advance_paid_tax = AdvanceTax.objects.get(pk=advance_paid_tax_id)
+        else:
+            advance_paid_tax = AdvanceTax(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                          financial_year_end=financial_year_end)
+        atp_form = AdvanceTaxPaidForm(copy_request(request), instance=advance_paid_tax)
+
+        if atp_form.is_valid():
+            atp_form.save()
+            messages.success(request, f'Advance paid tax added!')
+            return redirect('income')
+        else:
+            error_dictionary = atp_form.errors
+            apt_form = AdvanceTaxPaidForm(request.POST)
+            set_form_validation_errors(error_dictionary, apt_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+        income_dto = IncomeDTO(request.user.id)
+        das_form = DeductionAtSourceForm(request.POST)
+
+        context = {
+            'income_dto': income_dto,
+            'title': 'Income',
+            'das_form': das_form,
+            'atp_form': atp_form
+        }
+
+        return render(request, 'taxlover/income.html', context)
 
 
 @login_required
@@ -725,6 +795,14 @@ def get_data_for_edit(request):
                 'id': deduction_at_source.id,
                 'description': deduction_at_source.description,
                 'tax_deducted_at_source': deduction_at_source.tax_deducted_at_source
+            }
+        elif section == 'advance_tax_paid':
+            advance_tax = AdvanceTax.objects.get(pk=data_id)
+            data = {
+                'id': advance_tax.id,
+                'type': advance_tax.type,
+                'description': advance_tax.description,
+                'advance_paid_tax': advance_tax.advance_paid_tax
             }
 
         return JsonResponse(data)

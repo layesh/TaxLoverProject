@@ -110,7 +110,7 @@ function parseDecimalInputValue(id) {
     }
 }
 
-function setTextBoxValue(id, value) {
+function setInputValue(id, value) {
     document.getElementById(id).value = value;
 }
 

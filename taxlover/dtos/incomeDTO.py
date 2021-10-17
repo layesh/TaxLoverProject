@@ -1,12 +1,18 @@
 from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
-    get_current_financial_year_deduction_at_source_by_payer
-from taxlover.services.salary_service import get_total_taxable
-from taxlover.utils import get_income_years
+    get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
+    get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer
+from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer
+from taxlover.utils import get_income_years, create_or_get_current_income_obj
 
 
 class IncomeDTO:
 
-    def __init__(self, tax_payer_id, income, salary, other_income, tax_rebate):
+    def __init__(self, tax_payer_id):
+        income = create_or_get_current_income_obj(tax_payer_id)
+        salary = get_current_financial_year_salary_by_payer(tax_payer_id)
+        other_income = get_current_financial_year_other_income_by_payer(tax_payer_id)
+        tax_rebate = get_current_financial_year_tax_rebate_by_payer(tax_payer_id)
+
         self.has_salary_income = income.has_salary_income
         self.has_no_salary_income = income.has_no_salary_income
         self.has_interest_on_securities = income.has_interest_on_securities
@@ -54,3 +60,4 @@ class IncomeDTO:
             self.total_allowed_amount = get_total_allowed_amount(tax_rebate)
 
         self.source_deductions = get_current_financial_year_deduction_at_source_by_payer(tax_payer_id)
+        self.advance_tax_paid = get_current_financial_year_advance_tax_paid_by_payer(tax_payer_id)

@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
     DPS_MAX_ALLOWED_RATE
-from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource
+from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -179,3 +179,11 @@ def get_current_financial_year_deduction_at_source_by_payer(payer_id):
     return DeductionAtSource.objects.filter(tax_payer_id=payer_id,
                                             financial_year_beg=financial_year_beg,
                                             financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_advance_tax_paid_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return AdvanceTax.objects.filter(tax_payer_id=payer_id,
+                                     financial_year_beg=financial_year_beg,
+                                     financial_year_end=financial_year_end)

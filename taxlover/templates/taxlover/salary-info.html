@@ -275,9 +275,9 @@
 
         function checkAndSet(shouldSet, inputId, inputValue) {
             if (shouldSet) {
-                setTextBoxValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
+                setInputValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
             } else {
-                setTextBoxValue(inputId, '');
+                setInputValue(inputId, '');
             }
         }
 
@@ -319,16 +319,16 @@
                     url: url,
                     data: data,
                     success: function (data) {
-                        setTextBoxValue('id_' + category + '_exempted', addCommas(formatToTwoDecimalPlaces(data[category + '_exempted'])));
+                        setInputValue('id_' + category + '_exempted', addCommas(formatToTwoDecimalPlaces(data[category + '_exempted'])));
                         let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
-                        setTextBoxValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
+                        setInputValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
                         setExemptedTotalRow();
                         setTaxableTotalRow();
                     }
                 });
             } else {
-                setTextBoxValue('id_' + category + '_exempted', '');
-                setTextBoxValue('id_' + category + '_taxable', '');
+                setInputValue('id_' + category + '_exempted', '');
+                setInputValue('id_' + category + '_taxable', '');
             }
         }
     </script>

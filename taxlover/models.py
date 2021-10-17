@@ -1057,3 +1057,44 @@ class DeductionAtSource(models.Model):
             return self.tax_deducted_at_source
         else:
             return 0
+
+
+ADVANCE_TAX_PAID_TYPE = [
+    ('CarAdvanceTax', 'Car Advance Tax'),
+    ('Other', 'Other')
+]
+
+
+class AdvanceTax(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    type = models.CharField(max_length=20, choices=ADVANCE_TAX_PAID_TYPE, default='Other')
+    description = models.CharField(max_length=100, null=True, blank=True)
+    advance_paid_tax = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} AdvanceTax'
+
+    @property
+    def get_type(self):
+        if self.type:
+            if self.type == 'CarAdvanceTax':
+                return 'Car Advance Tax'
+            return self.type
+        else:
+            return ""
+
+    @property
+    def get_description(self):
+        if self.description:
+            return self.description
+        else:
+            return ""
+
+    @property
+    def get_advance_paid_tax(self):
+        if self.advance_paid_tax:
+            return self.advance_paid_tax
+        else:
+            return 0

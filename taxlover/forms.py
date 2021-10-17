@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import TextInput
 
-from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource
+from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
+    ADVANCE_TAX_PAID_TYPE
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -136,5 +137,20 @@ class DeductionAtSourceForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control'}),
             'tax_deducted_at_source': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class AdvanceTaxPaidForm(forms.ModelForm):
+    class Meta:
+        model = AdvanceTax
+        fields = ['id', 'type', 'description', 'advance_paid_tax']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'type': forms.Select(
+                attrs={'class': 'form-select dropdown-width-165'}),
+            'description': TextInput(
+                attrs={'class': 'form-control', 'id': 'id_apt_description'}),
+            'advance_paid_tax': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

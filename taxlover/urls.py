@@ -41,5 +41,8 @@ urlpatterns = [
     path('save-tax-deduction-at-source/', views.save_tax_deduction_at_source, name='save-tax-deduction-at-source'),
     path('get-data-for-edit/', views.get_data_for_edit, name='get-data-for-edit'),
     path('tax-deduction-at-source-delete/', views.tax_deduction_at_source_delete,
-         name='tax-deduction-at-source-delete')
+         name='tax-deduction-at-source-delete'),
+    path('advance-paid-tax-delete/', views.advance_paid_tax_delete,
+         name='advance-paid-tax-delete'),
+    path('save-advance-paid-tax/', views.save_advance_paid_tax, name='save-advance-paid-tax'),
 ]
