@@ -45,4 +45,6 @@ urlpatterns = [
     path('advance-paid-tax-delete/', views.advance_paid_tax_delete,
          name='advance-paid-tax-delete'),
     path('save-advance-paid-tax/', views.save_advance_paid_tax, name='save-advance-paid-tax'),
+    path('save-tax-refund/', views.save_tax_refund, name='save-tax-refund'),
+    path('tax-refund-delete/<int:pk>/', views.tax_refund_delete, name='tax-refund-delete'),
 ]

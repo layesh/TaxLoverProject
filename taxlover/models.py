@@ -1098,3 +1098,20 @@ class AdvanceTax(models.Model):
             return self.advance_paid_tax
         else:
             return 0
+
+
+class TaxRefund(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    refund = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} TaxRefund'
+
+    @property
+    def get_refund(self):
+        if self.refund:
+            return self.refund
+        else:
+            return 0

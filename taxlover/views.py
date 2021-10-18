@@ -13,11 +13,11 @@ from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
-    AdvanceTaxPaidForm
-from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax
+    AdvanceTaxPaidForm, TaxRefundForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
-    get_life_insurance_premium_allowed, get_contribution_to_dps_allowed
+    get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
@@ -178,16 +178,18 @@ def personal_info(request):
 
 @login_required
 def income(request):
-    income_dto = IncomeDTO(request.user.id)
+    income_dto = IncomeDTO(request.user.id, False)
 
     das_form = DeductionAtSourceForm(request.POST)
     atp_form = AdvanceTaxPaidForm(request.POST)
+    tr_form = TaxRefundForm(request.POST)
 
     context = {
         'income_dto': income_dto,
         'title': 'Income',
         'das_form': das_form,
-        'atp_form': atp_form
+        'atp_form': atp_form,
+        'tr_form': tr_form
     }
 
     return render(request, 'taxlover/income.html', context)
@@ -346,6 +348,17 @@ def advance_paid_tax_delete(request):
 
 
 @login_required
+def tax_refund_delete(request, pk):
+    if request.method == 'POST':
+        TaxRefund.objects.filter(id=pk).delete()
+        latest_income = create_or_get_current_income_obj(request.user.id)
+        latest_income.adjustment_of_tax_refund = None
+        latest_income.save()
+
+    return redirect('income')
+
+
+@login_required
 def upload_salary_statement(request):
     if request.method == 'POST':
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
@@ -493,7 +506,7 @@ def save_tax_deduction_at_source(request):
             set_form_validation_errors(error_dictionary, das_form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
-        income_dto = IncomeDTO(request.user.id)
+        income_dto = IncomeDTO(request.user.id, False)
         atp_form = AdvanceTaxPaidForm(request.POST)
 
         context = {
@@ -531,7 +544,7 @@ def save_advance_paid_tax(request):
             set_form_validation_errors(error_dictionary, apt_form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
-        income_dto = IncomeDTO(request.user.id)
+        income_dto = IncomeDTO(request.user.id, False)
         das_form = DeductionAtSourceForm(request.POST)
 
         context = {
@@ -539,6 +552,44 @@ def save_advance_paid_tax(request):
             'title': 'Income',
             'das_form': das_form,
             'atp_form': atp_form
+        }
+
+        return render(request, 'taxlover/income.html', context)
+
+
+@login_required
+def save_tax_refund(request):
+    tax_refund_obj = get_current_financial_year_tax_refund_by_payer(request.user.id)
+    if not tax_refund_obj:
+        financial_year_beg, financial_year_end = get_income_years()
+        tax_refund_obj = TaxRefund(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                   financial_year_end=financial_year_end)
+
+    has_error = False
+    if request.method == 'POST':
+        tr_form = TaxRefundForm(copy_request(request), instance=tax_refund_obj)
+
+        if tr_form.is_valid():
+            tr_form.save()
+            messages.success(request, f'Tax refund added!')
+            return redirect('income')
+        else:
+            error_dictionary = tr_form.errors
+            tr_form = TaxRefundForm(request.POST)
+            set_form_validation_errors(error_dictionary, tr_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        income_dto = IncomeDTO(request.user.id, has_error)
+        das_form = DeductionAtSourceForm(request.POST)
+        atp_form = AdvanceTaxPaidForm(request.POST)
+
+        context = {
+            'income_dto': income_dto,
+            'title': 'Income',
+            'das_form': das_form,
+            'atp_form': atp_form,
+            'tr_form': tr_form
         }
 
         return render(request, 'taxlover/income.html', context)
