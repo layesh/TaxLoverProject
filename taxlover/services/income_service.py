@@ -91,18 +91,27 @@ def save_income(latest_income, source, answer, request):
             latest_income.tax_deducted_at_source = True
         elif answer == 'no':
             latest_income.tax_deducted_at_source = False
+            deductions = get_current_financial_year_deduction_at_source_by_payer(request.user.id)
+            if deductions:
+                deductions.delete()
     elif source == 'advance_paid_tax':
         show_success_message = True
         if answer == 'yes':
             latest_income.advance_paid_tax = True
         elif answer == 'no':
             latest_income.advance_paid_tax = False
+            advances = get_current_financial_year_advance_tax_paid_by_payer(request.user.id)
+            if advances:
+                advances.delete()
     elif source == 'adjustment_of_tax_refund':
         show_success_message = True
         if answer == 'yes':
             latest_income.adjustment_of_tax_refund = True
         elif answer == 'no':
             latest_income.adjustment_of_tax_refund = False
+            refunds = get_current_financial_year_tax_refund_by_payer(request.user.id)
+            if refunds:
+                refunds.delete()
 
     latest_income.save()
 
