@@ -1115,3 +1115,285 @@ class TaxRefund(models.Model):
             return self.refund
         else:
             return 0
+
+
+class Assets(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    income_year_beg = models.IntegerField(default=0)
+    income_year_end = models.IntegerField(default=0)
+    business_capital = models.BooleanField(null=True)
+    directors_shareholding_assets = models.BooleanField(null=True)
+    non_agricultural_property = models.BooleanField(null=True)
+    agricultural_property = models.BooleanField(null=True)
+    investments = models.BooleanField(null=True)
+    motor_vehicle = models.BooleanField(null=True)
+    furniture = models.BooleanField(null=True)
+    jewellery = models.BooleanField(null=True)
+    electronic_equipment = models.BooleanField(null=True)
+    cash_assets = models.BooleanField(null=True)
+    other_assets = models.BooleanField(null=True)
+    other_assets_receipt = models.BooleanField(null=True)
+    previous_year_net_wealth = models.BooleanField(null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Assets'
+
+    @property
+    def has_business_capital(self):
+        if self.business_capital is not None:
+            if self.business_capital:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_business_capital(self):
+        if self.business_capital is not None:
+            if self.business_capital:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_directors_shareholding_assets(self):
+        if self.directors_shareholding_assets is not None:
+            if self.directors_shareholding_assets:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_directors_shareholding_assets(self):
+        if self.directors_shareholding_assets is not None:
+            if self.directors_shareholding_assets:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_non_agricultural_property(self):
+        if self.non_agricultural_property is not None:
+            if self.non_agricultural_property:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_non_agricultural_property(self):
+        if self.non_agricultural_property is not None:
+            if self.non_agricultural_property:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_agricultural_property(self):
+        if self.agricultural_property is not None:
+            if self.agricultural_property:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_agricultural_property(self):
+        if self.agricultural_property is not None:
+            if self.agricultural_property:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_investments(self):
+        if self.investments is not None:
+            if self.investments:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_investments(self):
+        if self.investments is not None:
+            if self.investments:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_motor_vehicle(self):
+        if self.motor_vehicle is not None:
+            if self.motor_vehicle:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_motor_vehicle(self):
+        if self.motor_vehicle is not None:
+            if self.motor_vehicle:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_furniture(self):
+        if self.furniture is not None:
+            if self.furniture:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_furniture(self):
+        if self.furniture is not None:
+            if self.furniture:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_jewellery(self):
+        if self.jewellery is not None:
+            if self.jewellery:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_jewellery(self):
+        if self.jewellery is not None:
+            if self.jewellery:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_electronic_equipment(self):
+        if self.electronic_equipment is not None:
+            if self.electronic_equipment:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_electronic_equipment(self):
+        if self.electronic_equipment is not None:
+            if self.electronic_equipment:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_cash_assets(self):
+        if self.cash_assets is not None:
+            if self.cash_assets:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_cash_assets(self):
+        if self.cash_assets is not None:
+            if self.cash_assets:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_other_assets(self):
+        if self.other_assets is not None:
+            if self.other_assets:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_other_assets(self):
+        if self.other_assets is not None:
+            if self.other_assets:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_other_assets_receipt(self):
+        if self.other_assets_receipt is not None:
+            if self.other_assets_receipt:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_other_assets_receipt(self):
+        if self.other_assets_receipt is not None:
+            if self.other_assets_receipt:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_previous_year_net_wealth(self):
+        if self.previous_year_net_wealth is not None:
+            if self.previous_year_net_wealth:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_previous_year_net_wealth(self):
+        if self.previous_year_net_wealth is not None:
+            if self.previous_year_net_wealth:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""

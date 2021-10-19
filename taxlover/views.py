@@ -10,11 +10,13 @@ from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY
+from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
     AdvanceTaxPaidForm, TaxRefundForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund
+from taxlover.services.assets_service import save_assets
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -22,7 +24,7 @@ from taxlover.services.salary_service import process_and_save_salary, get_house_
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma, has_other_income, \
-    set_form_validation_errors, set_form_initial_value, copy_request
+    set_form_validation_errors, set_form_initial_value, copy_request, create_or_get_current_assets_obj
 
 import os
 from django.conf import settings
@@ -597,23 +599,34 @@ def save_tax_refund(request):
 
 @login_required
 def assets(request):
-    if request.method == 'POST':
-        tax_payer = TaxPayer.objects.get(user_id=request.user.id)
+    assets_dto = AssetsDTO(request.user.id, False)
 
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Assets'
-        }
-    else:
-        try:
-            tax_payer = TaxPayer.objects.get(user_id=request.user.id)
-        except TaxPayer.DoesNotExist:
-            tax_payer = TaxPayer.objects.create(user_id=request.user.id)
-        context = {
-            'tax_payer': tax_payer,
-            'title': 'Assets'
-        }
-    return render(request, 'taxlover/personal-info.html', context)
+    context = {
+        'assets_dto': assets_dto
+    }
+
+    return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_assets_data(request, source, answer):
+    latest_assets = create_or_get_current_assets_obj(request.user.id)
+    show_success_message = save_assets(latest_assets, source, answer, request)
+
+    if show_success_message:
+        messages.success(request, f'Data updated successfully!')
+
+    context = {
+        'latest_assets': latest_assets,
+        'title': 'Assets'
+    }
+
+    if source == 'business_capital' or source == 'rental_property' or source == 'agriculture' or \
+            source == 'business' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
+            source == 'capital_gains' or source == 'foreign_income' or \
+            source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
+            source == 'adjustment_of_tax_refund':
+        return redirect('assets')
 
 
 def index(request):

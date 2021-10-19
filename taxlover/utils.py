@@ -1,7 +1,7 @@
 import re
 from decimal import Decimal
 
-from taxlover.models import TaxPayer, Income, Salary, OtherIncome
+from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets
 import datetime
 
 from taxlover.services.html_parser import strip_tags
@@ -114,3 +114,15 @@ def copy_request(request):
             request_copy[key] = val
 
     return request_copy
+
+
+def create_or_get_current_assets_obj(user_id):
+    income_year_beg, income_year_end = get_income_years()
+
+    try:
+        latest_assets = Assets.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                           income_year_end=income_year_end)
+    except Assets.DoesNotExist:
+        latest_assets = Assets.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                              income_year_end=income_year_end)
+    return latest_assets
