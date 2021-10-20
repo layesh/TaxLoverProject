@@ -1,3 +1,4 @@
+from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer
 from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
     get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
@@ -39,6 +40,8 @@ class AssetsDTO:
         self.has_no_previous_year_net_wealth = assets.has_no_previous_year_net_wealth
 
         self.income_year_beg, self.income_year_end = get_income_years()
+
+        self.agricultural_properties = get_current_financial_year_agricultural_property_by_payer(tax_payer_id)
 
         self.has_form_error = has_form_error
 

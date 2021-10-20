@@ -14,9 +14,10 @@ from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
-    AdvanceTaxPaidForm, TaxRefundForm
-from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund
-from taxlover.services.assets_service import save_assets
+    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm
+from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
+    TaxRefund, AgriculturalProperty
+from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -361,6 +362,28 @@ def tax_refund_delete(request, pk):
 
 
 @login_required
+def agricultural_property_delete(request):
+    if request.method == 'POST':
+        agricultural_property_id = 0
+        if request.POST['agricultural_property_id_for_delete'] != '':
+            agricultural_property_id = int(request.POST['agricultural_property_id_for_delete'])
+        if agricultural_property_id > 0:
+            AgriculturalProperty.objects.filter(id=agricultural_property_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = AgriculturalProperty.objects.filter(tax_payer_id=request.user.id,
+                                                        financial_year_beg=financial_year_beg,
+                                                        financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.agricultural_property = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
 def upload_salary_statement(request):
     if request.method == 'POST':
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
@@ -598,11 +621,54 @@ def save_tax_refund(request):
 
 
 @login_required
+def save_agricultural_property(request):
+    if request.method == 'POST':
+        financial_year_beg, financial_year_end = get_income_years()
+        agricultural_property_id = 0
+        if request.POST['agricultural_property_id'] != '':
+            agricultural_property_id = int(request.POST['agricultural_property_id'])
+
+        if agricultural_property_id > 0:
+            agricultural_property = AgriculturalProperty.objects.get(pk=agricultural_property_id)
+        else:
+            agricultural_property = AgriculturalProperty(tax_payer_id=request.user.id,
+                                                         financial_year_beg=financial_year_beg,
+                                                         financial_year_end=financial_year_end)
+        ap_form = AgriculturalPropertyForm(copy_request(request), instance=agricultural_property)
+
+        if ap_form.is_valid():
+            ap_form.save()
+            messages.success(request, f'Agricultural property added!')
+            return redirect('assets')
+        else:
+            error_dictionary = ap_form.errors
+            ap_form = AgriculturalPropertyForm(request.POST)
+            set_form_validation_errors(error_dictionary, ap_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        # das_form = DeductionAtSourceForm(request.POST)
+        # atp_form = AdvanceTaxPaidForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
 def assets(request):
     assets_dto = AssetsDTO(request.user.id, False)
 
+    ap_form = AgriculturalPropertyForm(request.POST)
+
     context = {
-        'assets_dto': assets_dto
+        'assets_dto': assets_dto,
+        'ap_form': ap_form
     }
 
     return render(request, 'taxlover/assets.html', context)
@@ -621,8 +687,9 @@ def save_assets_data(request, source, answer):
         'title': 'Assets'
     }
 
-    if source == 'business_capital' or source == 'rental_property' or source == 'agriculture' or \
-            source == 'business' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
+    if source == 'business_capital' or source == 'directors_shareholding_assets' or \
+            source == 'non_agricultural_property' or \
+            source == 'agricultural_property' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
             source == 'capital_gains' or source == 'foreign_income' or \
             source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
             source == 'adjustment_of_tax_refund':
@@ -867,6 +934,13 @@ def get_data_for_edit(request):
                 'type': advance_tax.type,
                 'description': advance_tax.description,
                 'advance_paid_tax': advance_tax.advance_paid_tax
+            }
+        elif section == 'agricultural_property':
+            agricultural_property = AgriculturalProperty.objects.get(pk=data_id)
+            data = {
+                'id': agricultural_property.id,
+                'description': agricultural_property.description,
+                'value': agricultural_property.value
             }
 
         return JsonResponse(data)

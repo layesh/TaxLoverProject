@@ -2,7 +2,7 @@ from django import forms
 from django.forms import TextInput
 
 from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
-    ADVANCE_TAX_PAID_TYPE, TaxRefund
+    ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -162,5 +162,18 @@ class TaxRefundForm(forms.ModelForm):
         fields = ['refund']
         widgets = {
             'refund': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class AgriculturalPropertyForm(forms.ModelForm):
+    class Meta:
+        model = AgriculturalProperty
+        fields = ['id', 'description', 'value']
+        widgets = {
+            'id': forms.HiddenInput(),
+            'description': TextInput(
+                attrs={'class': 'form-control', 'id': 'id_ap_description'}),
+            'value': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

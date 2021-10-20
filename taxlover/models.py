@@ -1397,3 +1397,28 @@ class Assets(models.Model):
                 return "checked"
         else:
             return ""
+
+
+class AgriculturalProperty(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    description = models.CharField(max_length=100, null=True, blank=True)
+    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} AgriculturalProperty'
+
+    @property
+    def get_description(self):
+        if self.description:
+            return self.description
+        else:
+            return ""
+
+    @property
+    def get_value(self):
+        if self.value:
+            return self.value
+        else:
+            return 0

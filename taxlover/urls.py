@@ -48,4 +48,7 @@ urlpatterns = [
     path('save-tax-refund/', views.save_tax_refund, name='save-tax-refund'),
     path('tax-refund-delete/<int:pk>/', views.tax_refund_delete, name='tax-refund-delete'),
     path('save-assets-data/<str:source>/<str:answer>/', views.save_assets_data, name='save-assets-data'),
+    path('agricultural-property-delete/', views.agricultural_property_delete,
+         name='agricultural-property-delete'),
+    path('save-agricultural-property/', views.save_agricultural_property, name='save-agricultural-property'),
 ]
