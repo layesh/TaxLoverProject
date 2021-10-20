@@ -51,4 +51,7 @@ urlpatterns = [
     path('agricultural-property-delete/', views.agricultural_property_delete,
          name='agricultural-property-delete'),
     path('save-agricultural-property/', views.save_agricultural_property, name='save-agricultural-property'),
+    path('investment-info/<int:pk>/', views.investment_info, name='investment-info'),
+    path('investment-delete/', views.investment_delete,
+         name='investment-delete'),
 ]

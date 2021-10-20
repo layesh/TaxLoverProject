@@ -2,7 +2,8 @@ from decimal import Decimal
 
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
     DPS_MAX_ALLOWED_RATE
-from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, AgriculturalProperty
+from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, AgriculturalProperty, \
+    Investment
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -34,81 +35,69 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.agricultural_property = True
         elif answer == 'no':
             latest_assets.agricultural_property = False
-    # elif source == 'business':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.business = True
-    #     elif answer == 'no':
-    #         latest_assets.business = False
-    # elif source == 'share_of_profit_in_firm':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.share_of_profit_in_firm = True
-    #     elif answer == 'no':
-    #         latest_assets.share_of_profit_in_firm = False
-    # elif source == 'spouse_or_child':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.spouse_or_child = True
-    #     elif answer == 'no':
-    #         latest_assets.spouse_or_child = False
-    # elif source == 'capital_gains':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.capital_gains = True
-    #     elif answer == 'no':
-    #         latest_assets.capital_gains = False
-    # elif source == 'other_sources':
-    #     if answer == 'yes':
-    #         latest_assets.other_sources = True
-    #     elif answer == 'no':
-    #         show_success_message = True
-    #         latest_assets.other_sources = False
-    #         other_income = get_current_financial_year_other_income_by_payer(request.user.id)
-    #         if other_income:
-    #             other_income.delete()
-    # elif source == 'foreign_income':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.foreign_income = True
-    #     elif answer == 'no':
-    #         latest_assets.foreign_income = False
-    # elif source == 'tax_rebate':
-    #     if answer == 'yes':
-    #         latest_assets.tax_rebate = True
-    #     elif answer == 'no':
-    #         show_success_message = True
-    #         latest_assets.tax_rebate = False
-    #         tax_rebate = get_current_financial_year_tax_rebate_by_payer(request.user.id)
-    #         if tax_rebate:
-    #             tax_rebate.delete()
-    # elif source == 'tax_deducted_at_source':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.tax_deducted_at_source = True
-    #     elif answer == 'no':
-    #         latest_assets.tax_deducted_at_source = False
-    #         deductions = get_current_financial_year_deduction_at_source_by_payer(request.user.id)
-    #         if deductions:
-    #             deductions.delete()
-    # elif source == 'advance_paid_tax':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.advance_paid_tax = True
-    #     elif answer == 'no':
-    #         latest_assets.advance_paid_tax = False
-    #         advances = get_current_financial_year_advance_tax_paid_by_payer(request.user.id)
-    #         if advances:
-    #             advances.delete()
-    # elif source == 'adjustment_of_tax_refund':
-    #     show_success_message = True
-    #     if answer == 'yes':
-    #         latest_assets.adjustment_of_tax_refund = True
-    #     elif answer == 'no':
-    #         latest_assets.adjustment_of_tax_refund = False
-    #         refunds = get_current_financial_year_tax_refund_by_payer(request.user.id)
-    #         if refunds:
-    #             refunds.delete()
+    elif source == 'investments':
+        if answer == 'yes':
+            latest_assets.investments = True
+        elif answer == 'no':
+            show_success_message = True
+            latest_assets.investments = False
+            investments = get_current_financial_year_investments_by_payer(request.user.id)
+            if investments:
+                investments.delete()
+    elif source == 'share_of_profit_in_firm':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.share_of_profit_in_firm = True
+        elif answer == 'no':
+            latest_assets.share_of_profit_in_firm = False
+    elif source == 'motor_vehicle':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.motor_vehicle = True
+        elif answer == 'no':
+            latest_assets.motor_vehicle = False
+    elif source == 'furniture':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.furniture = True
+        elif answer == 'no':
+            latest_assets.furniture = False
+    elif source == 'jewellery':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.jewellery = True
+        elif answer == 'no':
+            latest_assets.jewellery = False
+    elif source == 'electronic_equipment':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.electronic_equipment = True
+        elif answer == 'no':
+            latest_assets.electronic_equipment = False
+    elif source == 'cash_assets':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.cash_assets = True
+        elif answer == 'no':
+            latest_assets.cash_assets = False
+    elif source == 'other_assets':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.other_assets = True
+        elif answer == 'no':
+            latest_assets.other_assets = False
+    elif source == 'other_assets_receipt':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.other_assets_receipt = True
+        elif answer == 'no':
+            latest_assets.other_assets_receipt = False
+    elif source == 'previous_year_net_wealth':
+        show_success_message = True
+        if answer == 'yes':
+            latest_assets.previous_year_net_wealth = True
+        elif answer == 'no':
+            latest_assets.previous_year_net_wealth = False
 
     latest_assets.save()
 
@@ -121,3 +110,11 @@ def get_current_financial_year_agricultural_property_by_payer(payer_id):
     return AgriculturalProperty.objects.filter(tax_payer_id=payer_id,
                                                financial_year_beg=financial_year_beg,
                                                financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_investments_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return Investment.objects.filter(tax_payer_id=payer_id,
+                                     financial_year_beg=financial_year_beg,
+                                     financial_year_end=financial_year_end)

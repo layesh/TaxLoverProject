@@ -14,9 +14,9 @@ from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
-    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm
+    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
-    TaxRefund, AgriculturalProperty
+    TaxRefund, AgriculturalProperty, Investment
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
@@ -623,6 +623,7 @@ def save_tax_refund(request):
 @login_required
 def save_agricultural_property(request):
     if request.method == 'POST':
+        message = f'Agricultural property added!'
         financial_year_beg, financial_year_end = get_income_years()
         agricultural_property_id = 0
         if request.POST['agricultural_property_id'] != '':
@@ -630,6 +631,7 @@ def save_agricultural_property(request):
 
         if agricultural_property_id > 0:
             agricultural_property = AgriculturalProperty.objects.get(pk=agricultural_property_id)
+            message = f'Agricultural property updated!'
         else:
             agricultural_property = AgriculturalProperty(tax_payer_id=request.user.id,
                                                          financial_year_beg=financial_year_beg,
@@ -638,7 +640,7 @@ def save_agricultural_property(request):
 
         if ap_form.is_valid():
             ap_form.save()
-            messages.success(request, f'Agricultural property added!')
+            messages.success(request, message)
             return redirect('assets')
         else:
             error_dictionary = ap_form.errors
@@ -687,13 +689,76 @@ def save_assets_data(request, source, answer):
         'title': 'Assets'
     }
 
-    if source == 'business_capital' or source == 'directors_shareholding_assets' or \
+    if source == 'investments':
+        if latest_assets.investments:
+            return redirect('investment-info', 0)
+        else:
+            return redirect('assets')
+    elif source == 'business_capital' or source == 'directors_shareholding_assets' or \
             source == 'non_agricultural_property' or \
-            source == 'agricultural_property' or source == 'share_of_profit_in_firm' or source == 'spouse_or_child' or \
-            source == 'capital_gains' or source == 'foreign_income' or \
-            source == 'tax_deducted_at_source' or source == 'advance_paid_tax' or \
-            source == 'adjustment_of_tax_refund':
+            source == 'agricultural_property' or source == 'motor_vehicle' or \
+            source == 'furniture' or source == 'jewellery' or \
+            source == 'electronic_equipment' or source == 'cash_assets' or \
+            source == 'other_assets' or source == 'other_assets_receipt' or source == 'previous_year_net_wealth':
         return redirect('assets')
+
+
+@login_required
+def investment_info(request, pk):
+    financial_year_beg, financial_year_end = get_income_years()
+    if pk > 0:
+        investment = Investment.objects.get(pk=pk)
+    else:
+        investment = Investment(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = InvestmentForm(copy_request(request), instance=investment)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your investment has been updated!')
+            return redirect('assets')
+        else:
+            error_dictionary = form.errors
+            form = InvestmentForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+    else:
+        form = InvestmentForm(instance=investment)
+
+    if pk > 0:
+        form.initial['value'] = add_comma(form.initial['value'])
+
+    context = {
+        'title': 'Investment',
+        'form': form
+    }
+
+    return render(request, 'taxlover/investment-info.html', context)
+
+
+@login_required
+def investment_delete(request):
+    if request.method == 'POST':
+        investment_id = 0
+        if request.POST['investment_id_for_delete'] != '':
+            investment_id = int(request.POST['investment_id_for_delete'])
+        if investment_id > 0:
+            Investment.objects.filter(id=investment_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = Investment.objects.filter(tax_payer_id=request.user.id,
+                                              financial_year_beg=financial_year_beg,
+                                              financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.investments = None
+                latest_assets.save()
+
+    return redirect('assets')
 
 
 def index(request):

@@ -237,241 +237,103 @@
                         <h2 class="accordion-header" id="headingFive">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                {% if assets_dto.has_business or assets_dto.has_no_business %}
+                                {% if assets_dto.has_investments or assets_dto.has_no_investments %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Business Income
+                                Investments
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Income from business and profession includes the annual net income received for any business or profession."></i>
+                                       title="An asset or item that is purchased with the hope that it will generate income or appreciate in the future."></i>
                                 </sup>
                             </button>
                         </h2>
                         <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
                              data-bs-parent="#accordionLeftAssets">
                             <div class="accordion-body hor-align-center">
-                                <strong>Do you have any Business or Profession income?</strong>
+                                <strong>Do you have any investment?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="businessYesBtn"
+                                    <input type="checkbox" class="btn-check" id="investmentsYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "business" "yes" %}'" {{ assets_dto.has_business }}>
-                                    <label class="btn btn-outline-success" for="businessYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="businessNoBtn"
+                                           onclick="location.href='{% url "save-assets-data" "investments" "yes" %}'" {{ assets_dto.has_investments }}>
+                                    <label class="btn btn-outline-success" for="investmentsYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="investmentsNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "business" "no" %}'" {{ assets_dto.has_no_business }}>
-                                    <label class="btn btn-outline-success" for="businessNoBtn">No</label>
+                                           onclick="location.href='{% url "save-assets-data" "investments" "no" %}'" {{ assets_dto.has_no_investments }}>
+                                    <label class="btn btn-outline-success" for="investmentsNoBtn">No</label>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingSix">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                {% if assets_dto.has_share_of_profit_in_firm or assets_dto.has_no_share_of_profit_in_firm %}
-                                    <span><i class="bi bi-check-circle-fill"
-                                             style="color: #2ca01c; padding-right: 7px"></i></span>
-                                {% endif %}
-                                Share Of Profit In Firm
-                                <sup style="padding-left: 5px;">
-                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                       data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Share of profit in a firm includes the annual income you received from a business that you have full or part ownership in. This does not refer to the sale of shares or other securities or dividends."></i>
-                                </sup>
-                            </button>
-                        </h2>
-                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
-                             data-bs-parent="#accordionLeftAssets">
-                            <div class="accordion-body hor-align-center">
-                                <strong>Do you have any share of firm profit?</strong>
-                                <br/>
-                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="shareOfProfitInFirmYesBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "share_of_profit_in_firm" "yes" %}'" {{ assets_dto.has_share_of_profit_in_firm }}>
-                                    <label class="btn btn-outline-success" for="shareOfProfitInFirmYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="shareOfProfitInFirmNoBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "share_of_profit_in_firm" "no" %}'" {{ assets_dto.has_no_share_of_profit_in_firm }}>
-                                    <label class="btn btn-outline-success" for="shareOfProfitInFirmNoBtn">No</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingSeven">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                                {% if assets_dto.has_spouse_or_child or assets_dto.has_no_spouse_or_child %}
-                                    <span><i class="bi bi-check-circle-fill"
-                                             style="color: #2ca01c; padding-right: 7px"></i></span>
-                                {% endif %}
-                                Spouse/Child Income
-                                <sup style="padding-left: 5px;">
-                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                       data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="If any tax payer's minor child or spouse have no TIN but income occurs from there own asset or capital and its not like joint or family return."></i>
-                                </sup>
-                            </button>
-                        </h2>
-                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
-                             data-bs-parent="#accordionLeftAssets">
-                            <div class="accordion-body hor-align-center">
-                                <strong>Do you have any spouse or minor child income ?</strong>
-                                <br/>
-                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="spouseOrChildYesBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "spouse_or_child" "yes" %}'" {{ assets_dto.has_spouse_or_child }}>
-                                    <label class="btn btn-outline-success" for="spouseOrChildYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="spouseOrChildNoBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "spouse_or_child" "no" %}'" {{ assets_dto.has_no_spouse_or_child }}>
-                                    <label class="btn btn-outline-success" for="spouseOrChildNoBtn">No</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="accordion" id="accordionRightIncome">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingEight">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                {% if assets_dto.has_capital_gains or assets_dto.has_no_capital_gains %}
-                                    <span><i class="bi bi-check-circle-fill"
-                                             style="color: #2ca01c; padding-right: 7px"></i></span>
-                                {% endif %}
-                                Capital Gains
-                                <sup style="padding-left: 5px;">
-                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                       data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Any profits and gains arising from the transfer of a capital asset and such profits and gains shall be deemed to be the income of the income year."></i>
-                                </sup>
-                            </button>
-                        </h2>
-                        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
-                             data-bs-parent="#accordionRightIncome">
-                            <div class="accordion-body hor-align-center">
-                                <strong>Do you have any income from capital gain?</strong>
-                                <br/>
-                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="capitalGainsYesBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "capital_gains" "yes" %}'" {{ assets_dto.has_capital_gains }}>
-                                    <label class="btn btn-outline-success" for="capitalGainsYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="capitalGainsNoBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "capital_gains" "no" %}'" {{ assets_dto.has_no_capital_gains }}>
-                                    <label class="btn btn-outline-success" for="capitalGainsNoBtn">No</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingNine">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                                {% if assets_dto.has_other_sources or assets_dto.has_no_other_sources %}
-                                    <span><i class="bi bi-check-circle-fill"
-                                             style="color: #2ca01c; padding-right: 7px"></i></span>
-                                {% endif %}
-                                Other Sources Of Income
-                                <sup style="padding-left: 5px;">
-                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                       data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Income from other sources like: Interest on Bank deposit, Cash Dividend, Royalties, Fees for technical service, Other income."></i>
-                                </sup>
-                            </button>
-                        </h2>
-                        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
-                             data-bs-parent="#accordionRightIncome">
-                            <div class="accordion-body hor-align-center">
-                                <strong>Do you have any income from other sources?</strong>
-                                <br/>
-                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="otherSourcesYesBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "other_sources" "yes" %}'" {{ assets_dto.has_other_sources }}>
-                                    <label class="btn btn-outline-success" for="otherSourcesYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="otherSourcesNoBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "other_sources" "no" %}'" {{ assets_dto.has_no_other_sources }}>
-                                    <label class="btn btn-outline-success" for="otherSourcesNoBtn">No</label>
-                                </div>
-                                {% if assets_dto.otherIncomeId and assets_dto.has_other_sources %}
+                                {% if assets_dto.has_investments and assets_dto.investments %}
                                     <div style="padding-top: 20px">
                                         <table class="table table-striped table-bordered">
                                             <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Income Year</th>
-                                                <th scope="col">Exempted<br/>Other Income</th>
-                                                <th scope="col">Total<br/>Other Income</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Value</th>
                                                 <th scope="col"></th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>{{ assets_dto.income_year_beg }}-{{ assets_dto.income_year_end }}</td>
-                                                <td>{{ assets_dto.total_exempted_other_income|format_decimal }}</td>
-                                                <td>{{ assets_dto.total_other_income|format_decimal }}</td>
-                                                <td>
-                                                    <a href="{% url "other-income" %}">
-                                                        <i class="bi bi-pencil-square"
-                                                           style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                       data-bs-target="#otherIncomeStaticBackdrop">
-                                                        <i class="bi bi-trash"
-                                                           style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="otherIncomeStaticBackdrop"
-                                                         data-bs-backdrop="static"
-                                                         data-bs-keyboard="false" tabindex="-1"
-                                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">
-                                                                        Delete
-                                                                        Other Sources Of Income</h5>
-                                                                    <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
+                                            {% for investment in assets_dto.investments %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ investment.get_type }}</td>
+                                                    <td>{{ investment.get_description }}</td>
+                                                    <td>{{ investment.get_value|format_decimal }}</td>
+                                                    <td>
+                                                        <a href="{% url "investment-info" investment.id %}">
+                                                            <i class="bi bi-pencil-square"
+                                                               style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
+                                                        <a href="#" data-bs-toggle="modal"
+                                                           onclick="getDataForDelete('investment', '{{ investment.id }}')"
+                                                           data-bs-target="#deleteInvestmentStaticBackdrop">
+                                                            <i class="bi bi-trash"
+                                                               style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="deleteInvestmentStaticBackdrop"
+                                                             data-bs-backdrop="static"
+                                                             data-bs-keyboard="false" tabindex="-1"
+                                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="staticBackdropLabel">Delete
+                                                                            Investment</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form action="{% url 'investment-delete' %}"
+                                                                          method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden"
+                                                                               id="investment_id_for_delete"
+                                                                               name="investment_id_for_delete">
+                                                                        <div class="modal-body"
+                                                                             style="text-align: left">
+                                                                            Are you sure you want to delete the investment?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal">Cancel
+                                                                            </button>
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary">
+                                                                                Delete
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
-                                                                <form action="{% url 'other_income_delete' assets_dto.otherIncomeId %}"
-                                                                      method="POST">
-                                                                    {% csrf_token %}
-                                                                    <div class="modal-body" style="text-align: left">
-                                                                        Are you sure you want to delete the other
-                                                                        sources of income?
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Cancel
-                                                                        </button>
-                                                                        <button type="submit" class="btn btn-primary">
-                                                                            Delete
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5">
-                                                    Total Taxable Other Income
-                                                    = {{ assets_dto.total_other_income_taxable|format_decimal }} BDT
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -480,34 +342,174 @@
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTen">
+                        <h2 class="accordion-header" id="headingSix">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
-                                {% if assets_dto.has_foreign_income or assets_dto.has_no_foreign_income %}
+                                    data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                {% if assets_dto.has_motor_vehicle or assets_dto.has_no_motor_vehicle %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Foreign Income
+                                Motor Vehicle
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Income received from foreign source, example: wages if you work abroad, foreign investments and savings interest, rental income on overseas property"></i>
+                                       title="This refers the purchase cost of all personal and family motor vehicle as like: car, bike etc."></i>
+                                </sup>
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                             data-bs-parent="#accordionLeftAssets">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any motor vehicle?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="motorVehicleYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "motor_vehicle" "yes" %}'" {{ assets_dto.has_motor_vehicle }}>
+                                    <label class="btn btn-outline-success" for="motorVehicleYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="motorVehicleNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "motor_vehicle" "no" %}'" {{ assets_dto.has_no_motor_vehicle }}>
+                                    <label class="btn btn-outline-success" for="motorVehicleNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSeven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                {% if assets_dto.has_furniture or assets_dto.has_no_furniture %}
+                                    <span><i class="bi bi-check-circle-fill"
+                                             style="color: #2ca01c; padding-right: 7px"></i></span>
+                                {% endif %}
+                                Furniture
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="This refers all kinds residential and family furniture in purchase cost. As like : Cot, Sofa, Almirah, Showcase etc."></i>
+                                </sup>
+                            </button>
+                        </h2>
+                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                             data-bs-parent="#accordionLeftAssets">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any furniture?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="furnitureYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "furniture" "yes" %}'" {{ assets_dto.has_furniture }}>
+                                    <label class="btn btn-outline-success" for="furnitureYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="furnitureNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "furniture" "no" %}'" {{ assets_dto.has_no_furniture }}>
+                                    <label class="btn btn-outline-success" for="furnitureNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="accordion" id="accordionRightAssets">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingEight">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                {% if assets_dto.has_jewellery or assets_dto.has_no_jewellery %}
+                                    <span><i class="bi bi-check-circle-fill"
+                                             style="color: #2ca01c; padding-right: 7px"></i></span>
+                                {% endif %}
+                                Jewellery
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="This refers the quantity and value of jewellery at purchase cost. As like: Gold, Silver or Diamond Jewellery."></i>
+                                </sup>
+                            </button>
+                        </h2>
+                        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
+                             data-bs-parent="#accordionRightAssets">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any jewellery?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="jewelleryYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "jewellery" "yes" %}'" {{ assets_dto.has_jewellery }}>
+                                    <label class="btn btn-outline-success" for="jewelleryYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="jewelleryNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "jewellery" "no" %}'" {{ assets_dto.has_no_jewellery }}>
+                                    <label class="btn btn-outline-success" for="jewelleryNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingNine">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                                {% if assets_dto.has_electronic_equipment or assets_dto.has_no_electronic_equipment %}
+                                    <span><i class="bi bi-check-circle-fill"
+                                             style="color: #2ca01c; padding-right: 7px"></i></span>
+                                {% endif %}
+                                Electronic Equipment
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="This refers all kinds residential and family use electric equipment in purchase cost. As like : TV, Freeze, AC, Personal Computer etc."></i>
+                                </sup>
+                            </button>
+                        </h2>
+                        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
+                             data-bs-parent="#accordionRightAssets">
+                            <div class="accordion-body hor-align-center">
+                                <strong>Do you have any electronic equipment?</strong>
+                                <br/>
+                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
+                                    <input type="checkbox" class="btn-check" id="otherSourcesYesBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "electronic_equipment" "yes" %}'" {{ assets_dto.has_electronic_equipment }}>
+                                    <label class="btn btn-outline-success" for="otherSourcesYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="otherSourcesNoBtn"
+                                           autocomplete="off"
+                                           onclick="location.href='{% url "save-assets-data" "electronic_equipment" "no" %}'" {{ assets_dto.has_no_electronic_equipment }}>
+                                    <label class="btn btn-outline-success" for="otherSourcesNoBtn">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTen">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                                {% if assets_dto.has_cash_assets or assets_dto.has_no_cash_assets %}
+                                    <span><i class="bi bi-check-circle-fill"
+                                             style="color: #2ca01c; padding-right: 7px"></i></span>
+                                {% endif %}
+                                Cash Asset Outside Business
+                                <sup style="padding-left: 5px;">
+                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                       data-bs-toggle="tooltip" data-bs-placement="right"
+                                       title="Cash or deposit asset those are outside of business or profession."></i>
                                 </sup>
                             </button>
                         </h2>
                         <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen"
-                             data-bs-parent="#accordionRightIncome">
+                             data-bs-parent="#accordionRightAssets">
                             <div class="accordion-body hor-align-center">
-                                <strong>Do you have any foreign income?</strong>
+                                <strong>Do you have any cash assets outside business?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="foreignIncomeYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "foreign_income" "yes" %}'" {{ assets_dto.has_foreign_income }}>
+                                           onclick="location.href='{% url "save-assets-data" "cash_assets" "yes" %}'" {{ assets_dto.has_cash_assets }}>
                                     <label class="btn btn-outline-success" for="foreignIncomeYesBtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="foreignIncomeNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "foreign_income" "no" %}'" {{ assets_dto.has_no_foreign_income }}>
+                                           onclick="location.href='{% url "save-assets-data" "cash_assets" "no" %}'" {{ assets_dto.has_no_cash_assets }}>
                                     <label class="btn btn-outline-success" for="foreignIncomeNoBtn">No</label>
                                 </div>
                             </div>
@@ -518,102 +520,33 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseEleven" aria-expanded="false"
                                     aria-controls="collapseEleven">
-                                {% if assets_dto.has_tax_rebate or assets_dto.has_no_tax_rebate %}
+                                {% if assets_dto.has_other_assets or assets_dto.has_no_other_assets %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Tax Rebate
+                                Other Assets
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Exemption of amount of tax payable  for investment some recognized field."></i>
+                                       title="Any other assets except the previously stated assets purchased on or before June 30."></i>
                                 </sup>
                             </button>
                         </h2>
                         <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven"
-                             data-bs-parent="#accordionRightIncome">
+                             data-bs-parent="#accordionRightAssets">
                             <div class="accordion-body hor-align-center">
-                                <strong>Did you invest in any tax deductible investments?</strong>
+                                <strong>Do you have any other assets?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="taxRebateYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "tax_rebate" "yes" %}'" {{ assets_dto.has_tax_rebate }}>
+                                           onclick="location.href='{% url "save-assets-data" "other_assets" "yes" %}'" {{ assets_dto.has_other_assets }}>
                                     <label class="btn btn-outline-success" for="taxRebateYesBtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="taxRebateNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "tax_rebate" "no" %}'" {{ assets_dto.has_no_tax_rebate }}>
+                                           onclick="location.href='{% url "save-assets-data" "other_assets" "no" %}'" {{ assets_dto.has_no_other_assets }}>
                                     <label class="btn btn-outline-success" for="taxRebateNoBtn">No</label>
                                 </div>
-                                {% if assets_dto.taxRebateId and assets_dto.has_tax_rebate %}
-                                    <div style="padding-top: 20px">
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Income Year</th>
-                                                <th scope="col">Total Invested Amount</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>{{ assets_dto.income_year_beg }}-{{ assets_dto.income_year_end }}</td>
-                                                <td>{{ assets_dto.total_invested_amount|format_decimal }}</td>
-                                                <td>
-                                                    <a href="{% url 'tax_rebate' %}">
-                                                        <i class="bi bi-pencil-square"
-                                                           style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                       data-bs-target="#taxRebateStaticBackdrop">
-                                                        <i class="bi bi-trash"
-                                                           style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="taxRebateStaticBackdrop"
-                                                         data-bs-backdrop="static"
-                                                         data-bs-keyboard="false" tabindex="-1"
-                                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">
-                                                                        Delete
-                                                                        Tax Rebate</h5>
-                                                                    <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                </div>
-                                                                <form action="{% url 'tax_rebate_delete' assets_dto.taxRebateId %}"
-                                                                      method="POST">
-                                                                    {% csrf_token %}
-                                                                    <div class="modal-body" style="text-align: left">
-                                                                        Are you sure you want to delete the tax rebate?
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Cancel
-                                                                        </button>
-                                                                        <button type="submit" class="btn btn-primary">
-                                                                            Delete
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5">
-                                                    Total Allowable Investment
-                                                    = {{ assets_dto.total_allowed_amount|format_decimal }} BDT
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -622,122 +555,33 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseTwelve" aria-expanded="false"
                                     aria-controls="collapseTwelve">
-                                {% if assets_dto.has_tax_deducted_at_source or assets_dto.has_no_tax_deducted_at_source %}
+                                {% if assets_dto.has_other_assets_receipt or assets_dto.has_no_other_assets_receipt %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Tax Deducted At Source
+                                Other Assets Receipt
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Any deduction or collection of tax from income, interest on Bank Deposite."></i>
+                                       title="A unit of ownership that represents an equal proportion of a company's capital."></i>
                                 </sup>
                             </button>
                         </h2>
                         <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve"
-                             data-bs-parent="#accordionRightIncome">
+                             data-bs-parent="#accordionRightAssets">
                             <div class="accordion-body hor-align-center">
-                                <strong>Did any tax automatically get deducted from your income?</strong>
+                                <strong>Do you have any receipt?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="taxDeductedAtSourceYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "tax_deducted_at_source" "yes" %}'" {{ assets_dto.has_tax_deducted_at_source }}>
+                                           onclick="location.href='{% url "save-assets-data" "other_assets_receipt" "yes" %}'" {{ assets_dto.has_other_assets_receipt }}>
                                     <label class="btn btn-outline-success" for="taxDeductedAtSourceYesBtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="taxDeductedAtSourceNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "tax_deducted_at_source" "no" %}'" {{ assets_dto.has_no_tax_deducted_at_source }}>
+                                           onclick="location.href='{% url "save-assets-data" "other_assets_receipt" "no" %}'" {{ assets_dto.has_no_other_assets_receipt }}>
                                     <label class="btn btn-outline-success" for="taxDeductedAtSourceNoBtn">No</label>
                                 </div>
-                                {% if assets_dto.has_tax_deducted_at_source %}
-                                    <div style="padding-top: 20px">
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Tax Deducted</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for deduction in assets_dto.source_deductions %}
-                                                <tr>
-                                                    <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ deduction.get_description }}</td>
-                                                    <td>{{ deduction.get_tax_deducted_at_source|format_decimal }}</td>
-                                                    <td>
-                                                        <a href="javascript:void(0)"
-                                                           onclick="getDataForEdit('deduction_at_source', '{{ deduction.id }}')">
-                                                            <i class="bi bi-pencil-square"
-                                                               style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                        <a href="#" data-bs-toggle="modal"
-                                                           onclick="getDataForDelete('deduction_at_source', '{{ deduction.id }}')"
-                                                           data-bs-target="#deductionAtSourceStaticBackdrop">
-                                                            <i class="bi bi-trash"
-                                                               style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="deductionAtSourceStaticBackdrop"
-                                                             data-bs-backdrop="static"
-                                                             data-bs-keyboard="false" tabindex="-1"
-                                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="staticBackdropLabel">Delete
-                                                                            Tax Deducted At Source</h5>
-                                                                        <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                    </div>
-                                                                    <form action="{% url 'tax-deduction-at-source-delete' %}"
-                                                                          method="POST">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden"
-                                                                               id="deduction_id_for_delete"
-                                                                               name="deduction_id_for_delete">
-                                                                        <div class="modal-body"
-                                                                             style="text-align: left">
-                                                                            Are you sure you want to delete the tax
-                                                                            deducted at source?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Cancel
-                                                                            </button>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-primary">
-                                                                                Delete
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            <tr>
-                                                <form method="post"
-                                                      action="{% url 'save-tax-deduction-at-source' %}">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" id="deduction_id" name="deduction_id">
-                                                    <td></td>
-                                                    <td>{{ das_form.description }}</td>
-                                                    <td>{{ das_form.tax_deducted_at_source }}</td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-primary"
-                                                                id="deductionAtSourceSaveBtn">Save
-                                                        </button>
-                                                    </td>
-                                                </form>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -746,244 +590,33 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseThirteen" aria-expanded="false"
                                     aria-controls="collapseThirteen">
-                                {% if assets_dto.has_advance_paid_tax or assets_dto.has_no_advance_paid_tax %}
+                                {% if assets_dto.has_previous_year_net_wealth or assets_dto.has_no_previous_year_net_wealth %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Advance Paid Tax
+                                Previous Year Net Wealth
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="This is the amount of tax that the taxpayer chooses to pay ahead of time for the next financial year."></i>
+                                       title="Net wealth shown in the previous year return statement."></i>
                                 </sup>
                             </button>
                         </h2>
                         <div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen"
-                             data-bs-parent="#accordionRightIncome">
+                             data-bs-parent="#accordionRightAssets">
                             <div class="accordion-body hor-align-center">
-                                <strong>Did you pay any tax in advance?</strong>
+                                <strong>Do you have any net wealth?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="advancePaidTaxYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "advance_paid_tax" "yes" %}'" {{ assets_dto.has_advance_paid_tax }}>
+                                           onclick="location.href='{% url "save-assets-data" "previous_year_net_wealth" "yes" %}'" {{ assets_dto.has_previous_year_net_wealth }}>
                                     <label class="btn btn-outline-success" for="advancePaidTaxYesBtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="advancePaidTaxNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "advance_paid_tax" "no" %}'" {{ assets_dto.has_no_advance_paid_tax }}>
+                                           onclick="location.href='{% url "save-assets-data" "previous_year_net_wealth" "no" %}'" {{ assets_dto.has_no_previous_year_net_wealth }}>
                                     <label class="btn btn-outline-success" for="advancePaidTaxNoBtn">No</label>
                                 </div>
-                                {% if assets_dto.has_advance_paid_tax %}
-                                    <div style="padding-top: 20px">
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Type</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Paid Amount</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for advance in assets_dto.advance_tax_paid %}
-                                                <tr>
-                                                    <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ advance.get_type }}</td>
-                                                    <td>{{ advance.get_description }}</td>
-                                                    <td>{{ advance.get_advance_paid_tax|format_decimal }}</td>
-                                                    <td>
-                                                        <a href="javascript:void(0)"
-                                                           onclick="getDataForEdit('advance_tax_paid', '{{ advance.id }}')">
-                                                            <i class="bi bi-pencil-square"
-                                                               style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                        <a href="#" data-bs-toggle="modal"
-                                                           onclick="getDataForDelete('advance_tax_paid', '{{ advance.id }}')"
-                                                           data-bs-target="#advancePaidTaxStaticBackdrop">
-                                                            <i class="bi bi-trash"
-                                                               style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="advancePaidTaxStaticBackdrop"
-                                                             data-bs-backdrop="static"
-                                                             data-bs-keyboard="false" tabindex="-1"
-                                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="staticBackdropLabel">Delete
-                                                                            Advance Paid Tax</h5>
-                                                                        <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                    </div>
-                                                                    <form action="{% url 'advance-paid-tax-delete' %}"
-                                                                          method="POST">
-                                                                        {% csrf_token %}
-                                                                        <input type="hidden"
-                                                                               id="advance_paid_tax_id_for_delete"
-                                                                               name="advance_paid_tax_id_for_delete">
-                                                                        <div class="modal-body"
-                                                                             style="text-align: left">
-                                                                            Are you sure you want to delete the advance
-                                                                            paid tax?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Cancel
-                                                                            </button>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-primary">
-                                                                                Delete
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            <tr>
-                                                <form method="post"
-                                                      action="{% url 'save-advance-paid-tax' %}">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" id="advance_paid_tax_id"
-                                                           name="advance_paid_tax_id">
-                                                    <td></td>
-                                                    <td>{{ atp_form.type }}</td>
-                                                    <td>{{ atp_form.description }}</td>
-                                                    <td>{{ atp_form.advance_paid_tax }}</td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-primary"
-                                                                id="advanceTaxPaidSaveBtn">Save
-                                                        </button>
-                                                    </td>
-                                                </form>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFourteen">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseFourteen" aria-expanded="false"
-                                    aria-controls="collapseFourteen">
-                                {% if assets_dto.has_adjustment_of_tax_refund or assets_dto.has_no_adjustment_of_tax_refund %}
-                                    <span><i class="bi bi-check-circle-fill"
-                                             style="color: #2ca01c; padding-right: 7px"></i></span>
-                                {% endif %}
-                                Adjustment Of Tax Refund
-                                <sup style="padding-left: 5px;">
-                                    <i class="bi bi-info-circle" style="color: red; font-size: 14px"
-                                       data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="Adjust of tax refund if any tax refund claim on last year."></i>
-                                </sup>
-                            </button>
-                        </h2>
-                        <div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen"
-                             data-bs-parent="#accordionRightIncome">
-                            <div class="accordion-body hor-align-center">
-                                <strong>Did you have any adjustments to your tax refund?</strong>
-                                <br/>
-                                <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="adjustmentOfTaxRefundYesBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "adjustment_of_tax_refund" "yes" %}'" {{ assets_dto.has_adjustment_of_tax_refund }}>
-                                    <label class="btn btn-outline-success" for="adjustmentOfTaxRefundYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="adjustmentOfTaxRefundNoBtn"
-                                           autocomplete="off"
-                                           onclick="location.href='{% url "save-assets-data" "adjustment_of_tax_refund" "no" %}'" {{ assets_dto.has_no_adjustment_of_tax_refund }}>
-                                    <label class="btn btn-outline-success" for="adjustmentOfTaxRefundNoBtn">No</label>
-                                </div>
-                                {% if assets_dto.has_adjustment_of_tax_refund %}
-                                    <div style="padding-top: 20px">
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Adjustment Amount</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% if assets_dto.taxRefundId %}
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td id="taxRefundData">{{ assets_dto.tax_refund|format_decimal }}</td>
-                                                    <td>
-                                                        <a href="javascript:void(0)"
-                                                           onclick="populateTaxRefundData()">
-                                                            <i class="bi bi-pencil-square"
-                                                               style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
-                                                        <a href="#" data-bs-toggle="modal"
-                                                           data-bs-target="#taxRefundStaticBackdrop">
-                                                            <i class="bi bi-trash"
-                                                               style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="taxRefundStaticBackdrop"
-                                                             data-bs-backdrop="static"
-                                                             data-bs-keyboard="false" tabindex="-1"
-                                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="staticBackdropLabel">Delete
-                                                                            Adjustment Of Tax Refund</h5>
-                                                                        <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                    </div>
-                                                                    <form action="{% url 'tax-refund-delete' assets_dto.taxRefundId %}"
-                                                                          method="POST">
-                                                                        {% csrf_token %}
-                                                                        <div class="modal-body"
-                                                                             style="text-align: left">
-                                                                            Are you sure you want to delete the
-                                                                            adjustment
-                                                                            of tax refund?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-bs-dismiss="modal">Cancel
-                                                                            </button>
-                                                                            <button type="submit"
-                                                                                    class="btn btn-primary">
-                                                                                Delete
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            <tr id="taxRefundSaveOrUpdateRow"
-                                                {% if assets_dto.taxRefundId and not assets_dto.has_form_error %}style="display: none"{% endif %}>
-                                                <form method="post"
-                                                      action="{% url 'save-tax-refund' %}">
-                                                    {% csrf_token %}
-                                                    <td></td>
-                                                    <td>{{ tr_form.refund }}</td>
-                                                    <td>
-                                                        <button type="submit" class="btn btn-primary"
-                                                                id="taxRefundSaveBtn">Save
-                                                        </button>
-                                                    </td>
-                                                </form>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -1014,12 +647,12 @@
             let active = $("#accordionLeftAssets .show").attr('id');
             Cookies.set('activeAccordionGroupForAssets', active);
 
-            $("#accordionRightIncome .collapse").removeClass('show');
-            $("#accordionRightIncome .accordion-button").addClass('collapsed');
+            $("#accordionRightAssets .collapse").removeClass('show');
+            $("#accordionRightAssets .accordion-button").addClass('collapsed');
         });
 
-        $("#accordionRightIncome").bind('shown.bs.collapse', function () {
-            let active = $("#accordionRightIncome .show").attr('id');
+        $("#accordionRightAssets").bind('shown.bs.collapse', function () {
+            let active = $("#accordionRightAssets .show").attr('id');
             Cookies.set('activeAccordionGroupForAssets', active);
 
             $("#accordionLeftAssets .collapse").removeClass('show');
@@ -1064,8 +697,8 @@
         }
 
         function getDataForDelete(section, id) {
-            if (section === 'agricultural_property') {
-                setInputValue('agricultural_property_id_for_delete', id);
+            if (section === 'investment') {
+                setInputValue('investment_id_for_delete', id);
             } else if (section === 'advance_tax_paid') {
                 setInputValue('advance_paid_tax_id_for_delete', id);
             }
