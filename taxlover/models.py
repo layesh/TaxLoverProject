@@ -1464,3 +1464,44 @@ class Investment(models.Model):
             return self.value
         else:
             return 0
+
+
+class MotorVehicle(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    brand_or_type = models.CharField(max_length=100, null=True)
+    reg_no = models.CharField(max_length=50, null=True)
+    engine_capacity = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} MotorVehicle'
+
+    @property
+    def get_brand_or_type(self):
+        if self.brand_or_type:
+            return self.brand_or_type
+        else:
+            return ""
+
+    @property
+    def get_reg_no(self):
+        if self.reg_no:
+            return self.reg_no
+        else:
+            return ""
+
+    @property
+    def get_engine_capacity(self):
+        if self.engine_capacity:
+            return self.engine_capacity
+        else:
+            return ""
+
+    @property
+    def get_value(self):
+        if self.value:
+            return self.value
+        else:
+            return 0

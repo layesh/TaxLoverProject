@@ -54,4 +54,7 @@ urlpatterns = [
     path('investment-info/<int:pk>/', views.investment_info, name='investment-info'),
     path('investment-delete/', views.investment_delete,
          name='investment-delete'),
+    path('motor-vehicle-info/<int:pk>/', views.motor_vehicle_info, name='motor-vehicle-info'),
+    path('motor-vehicle-delete/', views.motor_vehicle_delete,
+         name='motor-vehicle-delete'),
 ]

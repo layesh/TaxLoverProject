@@ -3,7 +3,7 @@ from decimal import Decimal
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
     DPS_MAX_ALLOWED_RATE
 from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, AgriculturalProperty, \
-    Investment
+    Investment, MotorVehicle
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -44,18 +44,15 @@ def save_assets(latest_assets, source, answer, request):
             investments = get_current_financial_year_investments_by_payer(request.user.id)
             if investments:
                 investments.delete()
-    elif source == 'share_of_profit_in_firm':
-        show_success_message = True
-        if answer == 'yes':
-            latest_assets.share_of_profit_in_firm = True
-        elif answer == 'no':
-            latest_assets.share_of_profit_in_firm = False
     elif source == 'motor_vehicle':
-        show_success_message = True
         if answer == 'yes':
             latest_assets.motor_vehicle = True
         elif answer == 'no':
+            show_success_message = True
             latest_assets.motor_vehicle = False
+            investments = get_current_financial_year_motor_vehicle_by_payer(request.user.id)
+            if investments:
+                investments.delete()
     elif source == 'furniture':
         show_success_message = True
         if answer == 'yes':
@@ -118,3 +115,11 @@ def get_current_financial_year_investments_by_payer(payer_id):
     return Investment.objects.filter(tax_payer_id=payer_id,
                                      financial_year_beg=financial_year_beg,
                                      financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_motor_vehicle_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return MotorVehicle.objects.filter(tax_payer_id=payer_id,
+                                       financial_year_beg=financial_year_beg,
+                                       financial_year_end=financial_year_end)

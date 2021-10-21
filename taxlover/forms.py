@@ -2,7 +2,7 @@ from django import forms
 from django.forms import TextInput
 
 from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
-    ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty, Investment
+    ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty, Investment, MotorVehicle
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -187,6 +187,22 @@ class InvestmentForm(forms.ModelForm):
             'type': forms.Select(
                 attrs={'class': 'form-select'}),
             'description': TextInput(
+                attrs={'class': 'form-control'}),
+            'value': TextInput(
+                attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class MotorVehicleForm(forms.ModelForm):
+    class Meta:
+        model = MotorVehicle
+        fields = ['brand_or_type', 'reg_no', 'engine_capacity', 'value']
+        widgets = {
+            'brand_or_type': TextInput(
+                attrs={'class': 'form-control'}),
+            'reg_no': TextInput(
+                attrs={'class': 'form-control'}),
+            'engine_capacity': TextInput(
                 attrs={'class': 'form-control'}),
             'value': TextInput(
                 attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})

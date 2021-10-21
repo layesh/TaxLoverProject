@@ -14,9 +14,9 @@ from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
-    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm
+    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
-    TaxRefund, AgriculturalProperty, Investment
+    TaxRefund, AgriculturalProperty, Investment, MotorVehicle
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
@@ -694,9 +694,14 @@ def save_assets_data(request, source, answer):
             return redirect('investment-info', 0)
         else:
             return redirect('assets')
+    if source == 'motor_vehicle':
+        if latest_assets.motor_vehicle:
+            return redirect('motor-vehicle-info', 0)
+        else:
+            return redirect('assets')
     elif source == 'business_capital' or source == 'directors_shareholding_assets' or \
             source == 'non_agricultural_property' or \
-            source == 'agricultural_property' or source == 'motor_vehicle' or \
+            source == 'agricultural_property' or \
             source == 'furniture' or source == 'jewellery' or \
             source == 'electronic_equipment' or source == 'cash_assets' or \
             source == 'other_assets' or source == 'other_assets_receipt' or source == 'previous_year_net_wealth':
@@ -740,6 +745,42 @@ def investment_info(request, pk):
 
 
 @login_required
+def motor_vehicle_info(request, pk):
+    financial_year_beg, financial_year_end = get_income_years()
+    if pk > 0:
+        motor_vehicle = MotorVehicle.objects.get(pk=pk)
+    else:
+        motor_vehicle = MotorVehicle(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                     financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = MotorVehicleForm(copy_request(request), instance=motor_vehicle)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your motor vehicle has been updated!')
+            return redirect('assets')
+        else:
+            error_dictionary = form.errors
+            form = MotorVehicleForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+    else:
+        form = MotorVehicleForm(instance=motor_vehicle)
+
+    if pk > 0:
+        form.initial['value'] = add_comma(form.initial['value'])
+
+    context = {
+        'title': 'Motor Vehicle',
+        'form': form
+    }
+
+    return render(request, 'taxlover/motor-vehicle-info.html', context)
+
+
+@login_required
 def investment_delete(request):
     if request.method == 'POST':
         investment_id = 0
@@ -756,6 +797,28 @@ def investment_delete(request):
             if count == 0:
                 latest_assets = create_or_get_current_assets_obj(request.user.id)
                 latest_assets.investments = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def motor_vehicle_delete(request):
+    if request.method == 'POST':
+        motor_vehicle_id = 0
+        if request.POST['motor_vehicle_id_for_delete'] != '':
+            motor_vehicle_id = int(request.POST['motor_vehicle_id_for_delete'])
+        if motor_vehicle_id > 0:
+            MotorVehicle.objects.filter(id=motor_vehicle_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = MotorVehicle.objects.filter(tax_payer_id=request.user.id,
+                                                financial_year_beg=financial_year_beg,
+                                                financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.motor_vehicle = None
                 latest_assets.save()
 
     return redirect('assets')
