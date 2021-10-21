@@ -14,10 +14,15 @@ from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
-    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm
+    AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm, FurnitureForm, \
+    JewelleryForm, ElectronicEquipmentForm, OtherAssetsForm, OtherAssetsReceiptForm, PreviousYearNetWealthForm, \
+    CashAssetsForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
-    TaxRefund, AgriculturalProperty, Investment, MotorVehicle
-from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer
+    TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
+    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt
+from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
+    get_current_financial_year_cash_assets_by_payer, \
+    get_current_financial_year_previous_year_net_wealth_receipt_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -384,6 +389,138 @@ def agricultural_property_delete(request):
 
 
 @login_required
+def furniture_delete(request):
+    if request.method == 'POST':
+        furniture_id = 0
+        if request.POST['furniture_id_for_delete'] != '':
+            furniture_id = int(request.POST['furniture_id_for_delete'])
+        if furniture_id > 0:
+            Furniture.objects.filter(id=furniture_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = Furniture.objects.filter(tax_payer_id=request.user.id,
+                                             financial_year_beg=financial_year_beg,
+                                             financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.furniture = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def jewellery_delete(request):
+    if request.method == 'POST':
+        jewellery_id = 0
+        if request.POST['jewellery_id_for_delete'] != '':
+            jewellery_id = int(request.POST['jewellery_id_for_delete'])
+        if jewellery_id > 0:
+            Jewellery.objects.filter(id=jewellery_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = Jewellery.objects.filter(tax_payer_id=request.user.id,
+                                             financial_year_beg=financial_year_beg,
+                                             financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.jewellery = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def electronic_equipment_delete(request):
+    if request.method == 'POST':
+        electronic_equipment_id = 0
+        if request.POST['electronic_equipment_id_for_delete'] != '':
+            electronic_equipment_id = int(request.POST['electronic_equipment_id_for_delete'])
+        if electronic_equipment_id > 0:
+            ElectronicEquipment.objects.filter(id=electronic_equipment_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = ElectronicEquipment.objects.filter(tax_payer_id=request.user.id,
+                                                       financial_year_beg=financial_year_beg,
+                                                       financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.electronic_equipment = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def cash_assets_delete(request, pk):
+    if request.method == 'POST':
+        CashAssets.objects.filter(id=pk).delete()
+        latest_assets = create_or_get_current_assets_obj(request.user.id)
+        latest_assets.cash_assets = None
+        latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def other_assets_delete(request):
+    if request.method == 'POST':
+        other_assets_id = 0
+        if request.POST['other_assets_id_for_delete'] != '':
+            other_assets_id = int(request.POST['other_assets_id_for_delete'])
+        if other_assets_id > 0:
+            OtherAssets.objects.filter(id=other_assets_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = OtherAssets.objects.filter(tax_payer_id=request.user.id,
+                                               financial_year_beg=financial_year_beg,
+                                               financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.other_assets = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def other_assets_receipt_delete(request):
+    if request.method == 'POST':
+        other_assets_receipt_id = 0
+        if request.POST['other_assets_receipt_id_for_delete'] != '':
+            other_assets_receipt_id = int(request.POST['other_assets_receipt_id_for_delete'])
+        if other_assets_receipt_id > 0:
+            OtherAssetsReceipt.objects.filter(id=other_assets_receipt_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = OtherAssetsReceipt.objects.filter(tax_payer_id=request.user.id,
+                                                      financial_year_beg=financial_year_beg,
+                                                      financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets.other_assets_receipt = None
+                latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
+def previous_year_net_wealth_delete(request, pk):
+    if request.method == 'POST':
+        PreviousYearNetWealth.objects.filter(id=pk).delete()
+        latest_assets = create_or_get_current_assets_obj(request.user.id)
+        latest_assets.previous_year_net_wealth = None
+        latest_assets.save()
+
+    return redirect('assets')
+
+
+@login_required
 def upload_salary_statement(request):
     if request.method == 'POST':
         tax_payer = create_or_get_tax_payer_obj(request.user.id)
@@ -650,13 +787,363 @@ def save_agricultural_property(request):
             has_error = True
 
         assets_dto = AssetsDTO(request.user.id, has_error)
-        # das_form = DeductionAtSourceForm(request.POST)
-        # atp_form = AdvanceTaxPaidForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
 
         context = {
             'assets_dto': assets_dto,
             'title': 'Assets',
-            'ap_form': ap_form
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_furniture(request):
+    if request.method == 'POST':
+        message = f'Furniture added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        furniture_id = 0
+        if request.POST['furniture_id'] != '':
+            furniture_id = int(request.POST['furniture_id'])
+
+        if furniture_id > 0:
+            furniture = Furniture.objects.get(pk=furniture_id)
+            message = f'Furniture updated!'
+        else:
+            furniture = Furniture(tax_payer_id=request.user.id,
+                                                         financial_year_beg=financial_year_beg,
+                                                         financial_year_end=financial_year_end)
+        f_form = FurnitureForm(copy_request(request), instance=furniture)
+
+        if f_form.is_valid():
+            f_form.save()
+            messages.success(request, message)
+            return redirect('assets')
+        else:
+            error_dictionary = f_form.errors
+            f_form = FurnitureForm(request.POST)
+            set_form_validation_errors(error_dictionary, f_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_jewellery(request):
+    if request.method == 'POST':
+        message = f'Jewellery added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        jewellery_id = 0
+        if request.POST['jewellery_id'] != '':
+            jewellery_id = int(request.POST['jewellery_id'])
+
+        if jewellery_id > 0:
+            jewellery = Jewellery.objects.get(pk=jewellery_id)
+            message = f'Jewellery updated!'
+        else:
+            jewellery = Jewellery(tax_payer_id=request.user.id,
+                                                         financial_year_beg=financial_year_beg,
+                                                         financial_year_end=financial_year_end)
+        j_form = JewelleryForm(copy_request(request), instance=jewellery)
+
+        if j_form.is_valid():
+            j_form.save()
+            messages.success(request, message)
+            return redirect('assets')
+        else:
+            error_dictionary = j_form.errors
+            j_form = JewelleryForm(request.POST)
+            set_form_validation_errors(error_dictionary, j_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_electronic_equipment(request):
+    if request.method == 'POST':
+        message = f'Electronic Equipment added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        electronic_equipment_id = 0
+        if request.POST['electronic_equipment_id'] != '':
+            electronic_equipment_id = int(request.POST['electronic_equipment_id'])
+
+        if electronic_equipment_id > 0:
+            electronic_equipment = ElectronicEquipment.objects.get(pk=electronic_equipment_id)
+            message = f'Electronic Equipment updated!'
+        else:
+            electronic_equipment = ElectronicEquipment(tax_payer_id=request.user.id,
+                                                         financial_year_beg=financial_year_beg,
+                                                         financial_year_end=financial_year_end)
+        ee_form = ElectronicEquipmentForm(copy_request(request), instance=electronic_equipment)
+
+        if ee_form.is_valid():
+            ee_form.save()
+            messages.success(request, message)
+            return redirect('assets')
+        else:
+            error_dictionary = ee_form.errors
+            ee_form = ElectronicEquipmentForm(request.POST)
+            set_form_validation_errors(error_dictionary, ee_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_cash_assets(request):
+    cash_assets = get_current_financial_year_cash_assets_by_payer(request.user.id)
+    if not cash_assets:
+        financial_year_beg, financial_year_end = get_income_years()
+        cash_assets = CashAssets(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                 financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = CashAssetsForm(copy_request(request), instance=cash_assets)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Cash assets has been updated!')
+            return redirect('assets')
+        else:
+            error_dictionary = form.errors
+            form = CashAssetsForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+    else:
+        form = CashAssetsForm(instance=cash_assets)
+
+        set_form_initial_value(form.initial)
+
+        context = {
+            'title': 'Cash Assets',
+            'form': form
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_other_assets(request):
+    if request.method == 'POST':
+        message = f'Other Assets added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        other_assets_id = 0
+        if request.POST['other_assets_id'] != '':
+            other_assets_id = int(request.POST['other_assets_id'])
+
+        if other_assets_id > 0:
+            other_assets = OtherAssets.objects.get(pk=other_assets_id)
+            message = f'Other Assets updated!'
+        else:
+            other_assets = OtherAssets(tax_payer_id=request.user.id,
+                                       financial_year_beg=financial_year_beg,
+                                       financial_year_end=financial_year_end)
+        oa_form = OtherAssetsForm(copy_request(request), instance=other_assets)
+
+        if oa_form.is_valid():
+            oa_form.save()
+            messages.success(request, message)
+            return redirect('assets')
+        else:
+            error_dictionary = oa_form.errors
+            oa_form = OtherAssetsForm(request.POST)
+            set_form_validation_errors(error_dictionary, oa_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_other_assets_receipt(request):
+    if request.method == 'POST':
+        message = f'Other Assets Receipt added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        other_assets_receipt_id = 0
+        if request.POST['other_assets_receipt_id'] != '':
+            other_assets_receipt_id = int(request.POST['other_assets_receipt_id'])
+
+        if other_assets_receipt_id > 0:
+            other_assets_receipt = OtherAssetsReceipt.objects.get(pk=other_assets_receipt_id)
+            message = f'Other Assets Receipts updated!'
+        else:
+            other_assets_receipt = OtherAssetsReceipt(tax_payer_id=request.user.id,
+                                                      financial_year_beg=financial_year_beg,
+                                                      financial_year_end=financial_year_end)
+        oar_form = OtherAssetsReceiptForm(copy_request(request), instance=other_assets_receipt)
+
+        if oar_form.is_valid():
+            oar_form.save()
+            messages.success(request, message)
+            return redirect('assets')
+        else:
+            error_dictionary = oar_form.errors
+            oar_form = OtherAssetsReceiptForm(request.POST)
+            set_form_validation_errors(error_dictionary, oar_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
+        }
+
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def save_previous_year_net_wealth(request):
+    previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_receipt_by_payer(request.user.id)
+    if not previous_year_net_wealth:
+        financial_year_beg, financial_year_end = get_income_years()
+        previous_year_net_wealth = PreviousYearNetWealth(tax_payer_id=request.user.id,
+                                                         financial_year_beg=financial_year_beg,
+                                                         financial_year_end=financial_year_end)
+
+    has_error = False
+    if request.method == 'POST':
+        pynw_form = PreviousYearNetWealthForm(copy_request(request), instance=previous_year_net_wealth)
+
+        if pynw_form.is_valid():
+            pynw_form.save()
+            messages.success(request, f'Previous year net wealth added!')
+            return redirect('assets')
+        else:
+            error_dictionary = pynw_form.errors
+            pynw_form = OtherAssetsReceiptForm(request.POST)
+            set_form_validation_errors(error_dictionary, pynw_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        assets_dto = AssetsDTO(request.user.id, has_error)
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form,
         }
 
         return render(request, 'taxlover/assets.html', context)
@@ -700,8 +1187,7 @@ def save_assets_data(request, source, answer):
         else:
             return redirect('assets')
     elif source == 'business_capital' or source == 'directors_shareholding_assets' or \
-            source == 'non_agricultural_property' or \
-            source == 'agricultural_property' or \
+            source == 'non_agricultural_property' or source == 'agricultural_property' or \
             source == 'furniture' or source == 'jewellery' or \
             source == 'electronic_equipment' or source == 'cash_assets' or \
             source == 'other_assets' or source == 'other_assets_receipt' or source == 'previous_year_net_wealth':
@@ -710,6 +1196,7 @@ def save_assets_data(request, source, answer):
 
 @login_required
 def investment_info(request, pk):
+    has_form_error = False
     financial_year_beg, financial_year_end = get_income_years()
     if pk > 0:
         investment = Investment.objects.get(pk=pk)
@@ -729,11 +1216,12 @@ def investment_info(request, pk):
             form = InvestmentForm(request.POST)
             set_form_validation_errors(error_dictionary, form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
+            has_form_error = True
 
     else:
         form = InvestmentForm(instance=investment)
 
-    if pk > 0:
+    if pk > 0 and not has_form_error:
         form.initial['value'] = add_comma(form.initial['value'])
 
     context = {
@@ -746,6 +1234,7 @@ def investment_info(request, pk):
 
 @login_required
 def motor_vehicle_info(request, pk):
+    has_form_error = False
     financial_year_beg, financial_year_end = get_income_years()
     if pk > 0:
         motor_vehicle = MotorVehicle.objects.get(pk=pk)
@@ -765,11 +1254,12 @@ def motor_vehicle_info(request, pk):
             form = MotorVehicleForm(request.POST)
             set_form_validation_errors(error_dictionary, form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
+            has_form_error = True
 
     else:
         form = MotorVehicleForm(instance=motor_vehicle)
 
-    if pk > 0:
+    if pk > 0 and not has_form_error:
         form.initial['value'] = add_comma(form.initial['value'])
 
     context = {

@@ -3,7 +3,8 @@ from decimal import Decimal
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
     DPS_MAX_ALLOWED_RATE
 from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, AgriculturalProperty, \
-    Investment, MotorVehicle
+    Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, \
+    PreviousYearNetWealth
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -123,3 +124,59 @@ def get_current_financial_year_motor_vehicle_by_payer(payer_id):
     return MotorVehicle.objects.filter(tax_payer_id=payer_id,
                                        financial_year_beg=financial_year_beg,
                                        financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_furniture_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return Furniture.objects.filter(tax_payer_id=payer_id,
+                                    financial_year_beg=financial_year_beg,
+                                    financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_jewellery_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return Jewellery.objects.filter(tax_payer_id=payer_id,
+                                    financial_year_beg=financial_year_beg,
+                                    financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_electronic_equipment_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return ElectronicEquipment.objects.filter(tax_payer_id=payer_id,
+                                              financial_year_beg=financial_year_beg,
+                                              financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_cash_assets_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return CashAssets.objects.filter(tax_payer_id=payer_id,
+                                     financial_year_beg=financial_year_beg,
+                                     financial_year_end=financial_year_end).first()
+
+
+def get_current_financial_year_other_assets_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return OtherAssets.objects.filter(tax_payer_id=payer_id,
+                                      financial_year_beg=financial_year_beg,
+                                      financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_other_assets_receipt_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return OtherAssetsReceipt.objects.filter(tax_payer_id=payer_id,
+                                             financial_year_beg=financial_year_beg,
+                                             financial_year_end=financial_year_end)
+
+
+def get_current_financial_year_previous_year_net_wealth_receipt_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return PreviousYearNetWealth.objects.filter(tax_payer_id=payer_id,
+                                                financial_year_beg=financial_year_beg,
+                                                financial_year_end=financial_year_end).first()

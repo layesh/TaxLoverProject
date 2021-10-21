@@ -1,5 +1,9 @@
 from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer, \
-    get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer
+    get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer, \
+    get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
+    get_current_financial_year_electronic_equipment_by_payer, get_current_financial_year_other_assets_by_payer, \
+    get_current_financial_year_other_assets_receipt_by_payer, get_current_financial_year_cash_assets_by_payer, \
+    get_current_financial_year_previous_year_net_wealth_receipt_by_payer
 from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
     get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
@@ -12,6 +16,8 @@ class AssetsDTO:
 
     def __init__(self, tax_payer_id, has_form_error):
         assets = create_or_get_current_assets_obj(tax_payer_id)
+        cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
+        previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_receipt_by_payer(tax_payer_id)
 
         self.has_business_capital = assets.has_business_capital
         self.has_no_business_capital = assets.has_no_business_capital
@@ -45,6 +51,20 @@ class AssetsDTO:
         self.agricultural_properties = get_current_financial_year_agricultural_property_by_payer(tax_payer_id)
         self.investments = get_current_financial_year_investments_by_payer(tax_payer_id)
         self.motor_vehicles = get_current_financial_year_motor_vehicle_by_payer(tax_payer_id)
+        self.furnitures = get_current_financial_year_furniture_by_payer(tax_payer_id)
+        self.jewelleries = get_current_financial_year_jewellery_by_payer(tax_payer_id)
+        self.electronic_equipments = get_current_financial_year_electronic_equipment_by_payer(tax_payer_id)
+        self.other_assets = get_current_financial_year_other_assets_by_payer(tax_payer_id)
+        self.other_assets_receipts = get_current_financial_year_other_assets_receipt_by_payer(tax_payer_id)
+
+        if cash_assets:
+            self.cash_in_hand = cash_assets.cash_in_hand
+            self.cash_at_bank = cash_assets.cash_at_bank
+            self.other_fund = cash_assets.other_fund
+            self.other_deposits = cash_assets.other_deposits
+
+        if previous_year_net_wealth:
+            self.previous_year_net_wealth_value = previous_year_net_wealth.value
 
         self.has_form_error = has_form_error
 
