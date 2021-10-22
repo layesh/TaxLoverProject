@@ -868,12 +868,12 @@
                     if (section === 'agricultural_property') {
                         setInputValue('agricultural_property_id', data['id']);
                         setInputValue('id_ap_description', data['description']);
-                        setInputValue('id_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_ap_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
                         document.getElementById('agriculturalPropertySaveBtn').innerHTML = 'Update';
                     } else if (section === 'furniture') {
                         setInputValue('furniture_id', data['id']);
                         setInputValue('id_f_description', data['description']);
-                        setInputValue('id_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_f_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
                         document.getElementById('furnitureSaveBtn').innerHTML = 'Update';
                     }
                 }
@@ -881,7 +881,9 @@
         }
 
         function getDataForDelete(section, id) {
-            if (section === 'investment') {
+            if (section === 'agricultural_property') {
+                setInputValue('agricultural_property_id_for_delete', id);
+            } else if (section === 'investment') {
                 setInputValue('investment_id_for_delete', id);
             } else if (section === 'motor-vehicle') {
                 setInputValue('motor_vehicle_id_for_delete', id);

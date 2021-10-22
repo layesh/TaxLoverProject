@@ -173,7 +173,8 @@ class AgriculturalPropertyForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_ap_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_ap_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -215,7 +216,8 @@ class FurnitureForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_f_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_f_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -227,7 +229,8 @@ class JewelleryForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_j_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_j_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -239,7 +242,8 @@ class ElectronicEquipmentForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_ee_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_ee_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -267,7 +271,8 @@ class OtherAssetsForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_oa_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_oa_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -279,7 +284,8 @@ class OtherAssetsReceiptForm(forms.ModelForm):
             'description': TextInput(
                 attrs={'class': 'form-control', 'id': 'id_oar_description'}),
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_oar_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -289,5 +295,6 @@ class PreviousYearNetWealthForm(forms.ModelForm):
         fields = ['value']
         widgets = {
             'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+                attrs={'class': 'form-control text-align-right', 'id': 'id_pynw_value',
+                       'onblur': 'onInputBlurred(this)'})
         }
