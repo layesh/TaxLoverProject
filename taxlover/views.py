@@ -1143,7 +1143,7 @@ def save_previous_year_net_wealth(request):
             'ee_form': ee_form,
             'oa_form': oa_form,
             'oar_form': oar_form,
-            'pynw_form': pynw_form,
+            'pynw_form': pynw_form
         }
 
         return render(request, 'taxlover/assets.html', context)
@@ -1154,10 +1154,23 @@ def assets(request):
     assets_dto = AssetsDTO(request.user.id, False)
 
     ap_form = AgriculturalPropertyForm(request.POST)
+    f_form = FurnitureForm(request.POST)
+    j_form = JewelleryForm(request.POST)
+    ee_form = ElectronicEquipmentForm(request.POST)
+    oa_form = OtherAssetsForm(request.POST)
+    oar_form = OtherAssetsReceiptForm(request.POST)
+    pynw_form = OtherAssetsReceiptForm(request.POST)
 
     context = {
         'assets_dto': assets_dto,
-        'ap_form': ap_form
+        'title': 'Assets',
+        'ap_form': ap_form,
+        'f_form': f_form,
+        'j_form': j_form,
+        'ee_form': ee_form,
+        'oa_form': oa_form,
+        'oar_form': oar_form,
+        'pynw_form': pynw_form
     }
 
     return render(request, 'taxlover/assets.html', context)
@@ -1559,6 +1572,13 @@ def get_data_for_edit(request):
                 'id': agricultural_property.id,
                 'description': agricultural_property.description,
                 'value': agricultural_property.value
+            }
+        elif section == 'furniture':
+            furniture = Furniture.objects.get(pk=data_id)
+            data = {
+                'id': furniture.id,
+                'description': furniture.description,
+                'value': furniture.value
             }
 
         return JsonResponse(data)
