@@ -1580,5 +1580,33 @@ def get_data_for_edit(request):
                 'description': furniture.description,
                 'value': furniture.value
             }
+        elif section == 'jewellery':
+            jewellery = Jewellery.objects.get(pk=data_id)
+            data = {
+                'id': jewellery.id,
+                'description': jewellery.description,
+                'value': jewellery.value
+            }
+        elif section == 'electronic_equipment':
+            electronic_equipment = ElectronicEquipment.objects.get(pk=data_id)
+            data = {
+                'id': electronic_equipment.id,
+                'description': electronic_equipment.description,
+                'value': electronic_equipment.value
+            }
+        elif section == 'other_assets':
+            other_assets = OtherAssets.objects.get(pk=data_id)
+            data = {
+                'id': other_assets.id,
+                'description': other_assets.description,
+                'value': other_assets.value
+            }
+        elif section == 'other_assets_receipt':
+            other_assets_receipt = OtherAssetsReceipt.objects.get(pk=data_id)
+            data = {
+                'id': other_assets_receipt.id,
+                'description': other_assets_receipt.description,
+                'value': other_assets_receipt.value
+            }
 
         return JsonResponse(data)

@@ -969,19 +969,11 @@
 
         function getDataForEdit(section, id) {
             let url = '{% url "get-data-for-edit" %}';
-            let data = {};
 
-            if (section === 'deduction_at_source') {
-                data = {
-                    'section': section,
-                    'id': id
-                };
-            } else if (section === 'advance_tax_paid') {
-                data = {
-                    'section': section,
-                    'id': id
-                };
-            }
+            let data = {
+                'section': section,
+                'id': id
+            };
 
             $.ajax({
                 type: 'GET',
