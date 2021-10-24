@@ -132,9 +132,9 @@ class TaxRebateForm(forms.ModelForm):
 class DeductionAtSourceForm(forms.ModelForm):
     class Meta:
         model = DeductionAtSource
-        fields = ['description', 'tax_deducted_at_source']
+        fields = ['deduction_description', 'tax_deducted_at_source']
         widgets = {
-            'description': TextInput(
+            'deduction_description': TextInput(
                 attrs={'class': 'form-control'}),
             'tax_deducted_at_source': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
@@ -144,12 +144,12 @@ class DeductionAtSourceForm(forms.ModelForm):
 class AdvanceTaxPaidForm(forms.ModelForm):
     class Meta:
         model = AdvanceTax
-        fields = ['type', 'description', 'advance_paid_tax']
+        fields = ['type', 'advance_description', 'advance_paid_tax']
         widgets = {
             'type': forms.Select(
                 attrs={'class': 'form-select dropdown-width-165'}),
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_apt_description'}),
+            'advance_description': TextInput(
+                attrs={'class': 'form-control'}),
             'advance_paid_tax': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

@@ -1038,16 +1038,16 @@ class DeductionAtSource(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
+    deduction_description = models.CharField(max_length=100, null=True, blank=True)
     tax_deducted_at_source = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} DeductionAtSource'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_deduction_description(self):
+        if self.deduction_description:
+            return self.deduction_description
         else:
             return ""
 
@@ -1070,7 +1070,7 @@ class AdvanceTax(models.Model):
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
     type = models.CharField(max_length=20, choices=ADVANCE_TAX_PAID_TYPE, default='Other')
-    description = models.CharField(max_length=100, null=True, blank=True)
+    advance_description = models.CharField(max_length=100, null=True, blank=True)
     advance_paid_tax = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
@@ -1086,9 +1086,9 @@ class AdvanceTax(models.Model):
             return ""
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_advance_description(self):
+        if self.advance_description:
+            return self.advance_description
         else:
             return ""
 

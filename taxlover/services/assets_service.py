@@ -1,11 +1,5 @@
-from decimal import Decimal
-
-from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
-    DPS_MAX_ALLOWED_RATE
-from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, AgriculturalProperty, \
-    Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, \
-    PreviousYearNetWealth
-from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
+from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
+    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth
 from taxlover.utils import get_income_years
 
 

@@ -610,7 +610,7 @@
                                             {% for deduction in income_dto.source_deductions %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ deduction.get_description }}</td>
+                                                    <td>{{ deduction.get_deduction_description }}</td>
                                                     <td>{{ deduction.get_tax_deducted_at_source|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
@@ -671,7 +671,7 @@
                                                     {% csrf_token %}
                                                     <input type="hidden" id="deduction_id" name="deduction_id">
                                                     <td></td>
-                                                    <td>{{ das_form.description }}</td>
+                                                    <td>{{ das_form.deduction_description }}</td>
                                                     <td>{{ das_form.tax_deducted_at_source }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
@@ -735,7 +735,7 @@
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ advance.get_type }}</td>
-                                                    <td>{{ advance.get_description }}</td>
+                                                    <td>{{ advance.get_advance_description }}</td>
                                                     <td>{{ advance.get_advance_paid_tax|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
@@ -796,7 +796,7 @@
                                                     <input type="hidden" id="advance_paid_tax_id" name="advance_paid_tax_id">
                                                     <td></td>
                                                     <td>{{ atp_form.type }}</td>
-                                                    <td>{{ atp_form.description }}</td>
+                                                    <td>{{ atp_form.advance_description }}</td>
                                                     <td>{{ atp_form.advance_paid_tax }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
@@ -982,13 +982,13 @@
                 success: function (data) {
                     if (section === 'deduction_at_source') {
                         setInputValue('deduction_id', data['id']);
-                        setInputValue('id_description', data['description']);
+                        setInputValue('id_deduction_description', data['deduction_description']);
                         setInputValue('id_tax_deducted_at_source', addCommas(formatToTwoDecimalPlaces(data['tax_deducted_at_source'])));
                         document.getElementById('deductionAtSourceSaveBtn').innerHTML = 'Update';
                     } else if (section === 'advance_tax_paid') {
                         setInputValue('advance_paid_tax_id', data['id']);
                         setInputValue('id_type', data['type']);
-                        setInputValue('id_apt_description', data['description']);
+                        setInputValue('id_advance_description', data['advance_description']);
                         setInputValue('id_advance_paid_tax', addCommas(formatToTwoDecimalPlaces(data['advance_paid_tax'])));
                         document.getElementById('advanceTaxPaidSaveBtn').innerHTML = 'Update';
                     }

@@ -4,12 +4,7 @@ from taxlover.services.assets_service import get_current_financial_year_agricult
     get_current_financial_year_electronic_equipment_by_payer, get_current_financial_year_other_assets_by_payer, \
     get_current_financial_year_other_assets_receipt_by_payer, get_current_financial_year_cash_assets_by_payer, \
     get_current_financial_year_previous_year_net_wealth_receipt_by_payer
-from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
-    get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
-    get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
-    get_current_financial_year_tax_refund_by_payer
-from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer
-from taxlover.utils import get_income_years, create_or_get_current_income_obj, create_or_get_current_assets_obj
+from taxlover.utils import get_income_years, create_or_get_current_assets_obj
 
 
 class AssetsDTO:

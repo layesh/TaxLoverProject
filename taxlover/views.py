@@ -670,12 +670,14 @@ def save_tax_deduction_at_source(request):
 
         income_dto = IncomeDTO(request.user.id, False)
         atp_form = AdvanceTaxPaidForm(request.POST)
+        tr_form = TaxRefundForm(request.POST)
 
         context = {
             'income_dto': income_dto,
             'title': 'Income',
             'das_form': das_form,
-            'atp_form': atp_form
+            'atp_form': atp_form,
+            'tr_form': tr_form
         }
 
         return render(request, 'taxlover/income.html', context)
@@ -702,18 +704,20 @@ def save_advance_paid_tax(request):
             return redirect('income')
         else:
             error_dictionary = atp_form.errors
-            apt_form = AdvanceTaxPaidForm(request.POST)
-            set_form_validation_errors(error_dictionary, apt_form.fields)
+            atp_form = AdvanceTaxPaidForm(request.POST)
+            set_form_validation_errors(error_dictionary, atp_form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
         income_dto = IncomeDTO(request.user.id, False)
         das_form = DeductionAtSourceForm(request.POST)
+        tr_form = TaxRefundForm(request.POST)
 
         context = {
             'income_dto': income_dto,
             'title': 'Income',
             'das_form': das_form,
-            'atp_form': atp_form
+            'atp_form': atp_form,
+            'tr_form': tr_form
         }
 
         return render(request, 'taxlover/income.html', context)
@@ -875,8 +879,8 @@ def save_jewellery(request):
             message = f'Jewellery updated!'
         else:
             jewellery = Jewellery(tax_payer_id=request.user.id,
-                                                         financial_year_beg=financial_year_beg,
-                                                         financial_year_end=financial_year_end)
+                                  financial_year_beg=financial_year_beg,
+                                  financial_year_end=financial_year_end)
         j_form = JewelleryForm(copy_request(request), instance=jewellery)
 
         if j_form.is_valid():
@@ -927,8 +931,8 @@ def save_electronic_equipment(request):
             message = f'Electronic Equipment updated!'
         else:
             electronic_equipment = ElectronicEquipment(tax_payer_id=request.user.id,
-                                                         financial_year_beg=financial_year_beg,
-                                                         financial_year_end=financial_year_end)
+                                                       financial_year_beg=financial_year_beg,
+                                                       financial_year_end=financial_year_end)
         ee_form = ElectronicEquipmentForm(copy_request(request), instance=electronic_equipment)
 
         if ee_form.is_valid():
@@ -1555,7 +1559,7 @@ def get_data_for_edit(request):
             deduction_at_source = DeductionAtSource.objects.get(pk=data_id)
             data = {
                 'id': deduction_at_source.id,
-                'description': deduction_at_source.description,
+                'deduction_description': deduction_at_source.deduction_description,
                 'tax_deducted_at_source': deduction_at_source.tax_deducted_at_source
             }
         elif section == 'advance_tax_paid':
@@ -1563,7 +1567,7 @@ def get_data_for_edit(request):
             data = {
                 'id': advance_tax.id,
                 'type': advance_tax.type,
-                'description': advance_tax.description,
+                'advance_description': advance_tax.advance_description,
                 'advance_paid_tax': advance_tax.advance_paid_tax
             }
         elif section == 'agricultural_property':
