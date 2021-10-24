@@ -168,13 +168,12 @@ class TaxRefundForm(forms.ModelForm):
 class AgriculturalPropertyForm(forms.ModelForm):
     class Meta:
         model = AgriculturalProperty
-        fields = ['description', 'value']
+        fields = ['property_description', 'property_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_ap_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_ap_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'property_description': TextInput(
+                attrs={'class': 'form-control'}),
+            'property_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -183,12 +182,9 @@ class InvestmentForm(forms.ModelForm):
         model = Investment
         fields = ['type', 'description', 'value']
         widgets = {
-            'type': forms.Select(
-                attrs={'class': 'form-select'}),
-            'description': TextInput(
-                attrs={'class': 'form-control'}),
-            'value': TextInput(
-                attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
+            'type': forms.Select(attrs={'class': 'form-select'}),
+            'description': TextInput(attrs={'class': 'form-control'}),
+            'value': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -197,53 +193,43 @@ class MotorVehicleForm(forms.ModelForm):
         model = MotorVehicle
         fields = ['brand_or_type', 'reg_no', 'engine_capacity', 'value']
         widgets = {
-            'brand_or_type': TextInput(
-                attrs={'class': 'form-control'}),
-            'reg_no': TextInput(
-                attrs={'class': 'form-control'}),
-            'engine_capacity': TextInput(
-                attrs={'class': 'form-control'}),
-            'value': TextInput(
-                attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
+            'brand_or_type': TextInput(attrs={'class': 'form-control'}),
+            'reg_no': TextInput(attrs={'class': 'form-control'}),
+            'engine_capacity': TextInput(attrs={'class': 'form-control'}),
+            'value': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
         }
 
 
 class FurnitureForm(forms.ModelForm):
     class Meta:
         model = Furniture
-        fields = ['description', 'value']
+        fields = ['furniture_description', 'furniture_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_f_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_f_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'furniture_description': TextInput(attrs={'class': 'form-control'}),
+            'furniture_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
 class JewelleryForm(forms.ModelForm):
     class Meta:
         model = Jewellery
-        fields = ['description', 'value']
+        fields = ['jewellery_description', 'jewellery_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_j_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_j_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'jewellery_description': TextInput(attrs={'class': 'form-control'}),
+            'jewellery_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
 class ElectronicEquipmentForm(forms.ModelForm):
     class Meta:
         model = ElectronicEquipment
-        fields = ['description', 'value']
+        fields = ['equipment_description', 'equipment_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_ee_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_ee_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'equipment_description': TextInput(attrs={'class': 'form-control'}),
+            'equipment_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
@@ -266,35 +252,30 @@ class CashAssetsForm(forms.ModelForm):
 class OtherAssetsForm(forms.ModelForm):
     class Meta:
         model = OtherAssets
-        fields = ['description', 'value']
+        fields = ['asset_description', 'asset_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_oa_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_oa_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'asset_description': TextInput(attrs={'class': 'form-control'}),
+            'asset_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
 class OtherAssetsReceiptForm(forms.ModelForm):
     class Meta:
         model = OtherAssetsReceipt
-        fields = ['description', 'value']
+        fields = ['other_asset_description', 'other_asset_value']
         widgets = {
-            'description': TextInput(
-                attrs={'class': 'form-control', 'id': 'id_oar_description'}),
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_oar_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'other_asset_description': TextInput(attrs={'class': 'form-control'}),
+            'other_asset_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
 
 
 class PreviousYearNetWealthForm(forms.ModelForm):
     class Meta:
         model = PreviousYearNetWealth
-        fields = ['value']
+        fields = ['wealth_value']
         widgets = {
-            'value': TextInput(
-                attrs={'class': 'form-control text-align-right', 'id': 'id_pynw_value',
-                       'onblur': 'onInputBlurred(this)'})
+            'wealth_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }

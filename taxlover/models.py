@@ -1403,23 +1403,23 @@ class AgriculturalProperty(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    property_description = models.CharField(max_length=100, null=True, blank=True)
+    property_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} AgriculturalProperty'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_property_description(self):
+        if self.property_description:
+            return self.property_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_property_value(self):
+        if self.property_value:
+            return self.property_value
         else:
             return 0
 
@@ -1511,23 +1511,23 @@ class Furniture(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    furniture_description = models.CharField(max_length=100, null=True, blank=True)
+    furniture_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} Furniture'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_furniture_description(self):
+        if self.furniture_description:
+            return self.furniture_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_furniture_value(self):
+        if self.furniture_value:
+            return self.furniture_value
         else:
             return 0
 
@@ -1536,23 +1536,23 @@ class Jewellery(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    jewellery_description = models.CharField(max_length=100, null=True, blank=True)
+    jewellery_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} Jewellery'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_jewellery_description(self):
+        if self.jewellery_description:
+            return self.jewellery_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_jewellery_value(self):
+        if self.jewellery_value:
+            return self.jewellery_value
         else:
             return 0
 
@@ -1561,23 +1561,23 @@ class ElectronicEquipment(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    equipment_description = models.CharField(max_length=100, null=True, blank=True)
+    equipment_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} ElectronicEquipment'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_equipment_description(self):
+        if self.equipment_description:
+            return self.equipment_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_equipment_value(self):
+        if self.equipment_value:
+            return self.equipment_value
         else:
             return 0
 
@@ -1627,23 +1627,23 @@ class OtherAssets(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    asset_description = models.CharField(max_length=100, null=True, blank=True)
+    asset_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} OtherAssets'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_asset_description(self):
+        if self.asset_description:
+            return self.asset_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_asset_value(self):
+        if self.asset_value:
+            return self.asset_value
         else:
             return 0
 
@@ -1652,23 +1652,23 @@ class OtherAssetsReceipt(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    other_asset_description = models.CharField(max_length=100, null=True, blank=True)
+    other_asset_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} OtherAssetsReceipt'
 
     @property
-    def get_description(self):
-        if self.description:
-            return self.description
+    def get_other_asset_description(self):
+        if self.other_asset_description:
+            return self.other_asset_description
         else:
             return ""
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_other_asset_value(self):
+        if self.other_asset_value:
+            return self.other_asset_value
         else:
             return 0
 
@@ -1677,14 +1677,14 @@ class PreviousYearNetWealth(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     financial_year_beg = models.IntegerField(default=0)
     financial_year_end = models.IntegerField(default=0)
-    value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    wealth_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} PreviousYearNetWealth'
 
     @property
-    def get_value(self):
-        if self.value:
-            return self.value
+    def get_wealth_value(self):
+        if self.wealth_value:
+            return self.wealth_value
         else:
             return 0

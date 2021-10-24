@@ -1574,43 +1574,43 @@ def get_data_for_edit(request):
             agricultural_property = AgriculturalProperty.objects.get(pk=data_id)
             data = {
                 'id': agricultural_property.id,
-                'description': agricultural_property.description,
-                'value': agricultural_property.value
+                'property_description': agricultural_property.property_description,
+                'property_value': agricultural_property.property_value
             }
         elif section == 'furniture':
             furniture = Furniture.objects.get(pk=data_id)
             data = {
                 'id': furniture.id,
-                'description': furniture.description,
-                'value': furniture.value
+                'furniture_description': furniture.furniture_description,
+                'furniture_value': furniture.furniture_value
             }
         elif section == 'jewellery':
             jewellery = Jewellery.objects.get(pk=data_id)
             data = {
                 'id': jewellery.id,
-                'description': jewellery.description,
-                'value': jewellery.value
+                'jewellery_description': jewellery.jewellery_description,
+                'jewellery_value': jewellery.jewellery_value
             }
         elif section == 'electronic_equipment':
             electronic_equipment = ElectronicEquipment.objects.get(pk=data_id)
             data = {
                 'id': electronic_equipment.id,
-                'description': electronic_equipment.description,
-                'value': electronic_equipment.value
+                'equipment_description': electronic_equipment.equipment_description,
+                'equipment_value': electronic_equipment.equipment_value
             }
         elif section == 'other_assets':
             other_assets = OtherAssets.objects.get(pk=data_id)
             data = {
                 'id': other_assets.id,
-                'description': other_assets.description,
-                'value': other_assets.value
+                'asset_description': other_assets.asset_description,
+                'asset_value': other_assets.asset_value
             }
         elif section == 'other_assets_receipt':
             other_assets_receipt = OtherAssetsReceipt.objects.get(pk=data_id)
             data = {
                 'id': other_assets_receipt.id,
-                'description': other_assets_receipt.description,
-                'value': other_assets_receipt.value
+                'other_asset_description': other_assets_receipt.other_asset_description,
+                'other_asset_value': other_assets_receipt.other_asset_value
             }
 
         return JsonResponse(data)

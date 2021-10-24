@@ -156,8 +156,8 @@
                                             {% for property in assets_dto.agricultural_properties %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ property.get_description }}</td>
-                                                    <td>{{ property.get_value|format_decimal }}</td>
+                                                    <td>{{ property.get_property_description }}</td>
+                                                    <td>{{ property.get_property_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('agricultural_property', '{{ property.id }}')">
@@ -217,8 +217,8 @@
                                                     {% csrf_token %}
                                                     <input type="hidden" id="agricultural_property_id" name="agricultural_property_id">
                                                     <td></td>
-                                                    <td>{{ ap_form.description }}</td>
-                                                    <td>{{ ap_form.value }}</td>
+                                                    <td>{{ ap_form.property_description }}</td>
+                                                    <td>{{ ap_form.property_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="agriculturalPropertySaveBtn">Save
@@ -516,8 +516,8 @@
                                             {% for furniture in assets_dto.furnitures %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ furniture.get_description }}</td>
-                                                    <td>{{ furniture.get_value|format_decimal }}</td>
+                                                    <td>{{ furniture.get_furniture_description }}</td>
+                                                    <td>{{ furniture.get_furniture_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('furniture', '{{ furniture.id }}')">
@@ -578,8 +578,8 @@
                                                     <input type="hidden" id="furniture_id"
                                                            name="furniture_id">
                                                     <td></td>
-                                                    <td>{{ f_form.description }}</td>
-                                                    <td>{{ f_form.value }}</td>
+                                                    <td>{{ f_form.furniture_description }}</td>
+                                                    <td>{{ f_form.furniture_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="furnitureSaveBtn">Save
@@ -644,8 +644,8 @@
                                             {% for jewellery in assets_dto.jewelleries %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ jewellery.get_description }}</td>
-                                                    <td>{{ jewellery.get_value|format_decimal }}</td>
+                                                    <td>{{ jewellery.get_jewellery_description }}</td>
+                                                    <td>{{ jewellery.get_jewellery_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('jewellery', '{{ jewellery.id }}')">
@@ -706,8 +706,8 @@
                                                     <input type="hidden" id="jewellery_id"
                                                            name="jewellery_id">
                                                     <td></td>
-                                                    <td>{{ j_form.description }}</td>
-                                                    <td>{{ j_form.value }}</td>
+                                                    <td>{{ j_form.jewellery_description }}</td>
+                                                    <td>{{ j_form.jewellery_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="jewellerySaveBtn">Save
@@ -768,8 +768,8 @@
                                             {% for electronic_equipment in assets_dto.electronic_equipments %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ electronic_equipment.get_description }}</td>
-                                                    <td>{{ electronic_equipment.get_value|format_decimal }}</td>
+                                                    <td>{{ electronic_equipment.get_equipment_description }}</td>
+                                                    <td>{{ electronic_equipment.get_equipment_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('electronic_equipment', '{{ electronic_equipment.id }}')">
@@ -830,8 +830,8 @@
                                                     <input type="hidden" id="electronic_equipment_id"
                                                            name="electronic_equipment_id">
                                                     <td></td>
-                                                    <td>{{ ee_form.description }}</td>
-                                                    <td>{{ ee_form.value }}</td>
+                                                    <td>{{ ee_form.equipment_description }}</td>
+                                                    <td>{{ ee_form.equipment_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="electronicEquipmentSaveBtn">Save
@@ -927,8 +927,8 @@
                                             {% for other_asset in assets_dto.other_assets %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ other_asset.get_description }}</td>
-                                                    <td>{{ other_asset.get_value|format_decimal }}</td>
+                                                    <td>{{ other_asset.get_asset_description }}</td>
+                                                    <td>{{ other_asset.get_asset_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('other_assets', '{{ other_asset.id }}')">
@@ -989,8 +989,8 @@
                                                     <input type="hidden" id="other_assets_id"
                                                            name="other_assets_id">
                                                     <td></td>
-                                                    <td>{{ oa_form.description }}</td>
-                                                    <td>{{ oa_form.value }}</td>
+                                                    <td>{{ oa_form.asset_description }}</td>
+                                                    <td>{{ oa_form.asset_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="otherAssetsSaveBtn">Save
@@ -1052,8 +1052,8 @@
                                             {% for other_assets_receipt in assets_dto.other_assets_receipts %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ other_assets_receipt.get_description }}</td>
-                                                    <td>{{ other_assets_receipt.get_value|format_decimal }}</td>
+                                                    <td>{{ other_assets_receipt.get_other_asset_description }}</td>
+                                                    <td>{{ other_assets_receipt.get_other_asset_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('other_assets_receipt', '{{ other_assets_receipt.id }}')">
@@ -1114,8 +1114,8 @@
                                                     <input type="hidden" id="other_assets_receipt_id"
                                                            name="other_assets_receipt_id">
                                                     <td></td>
-                                                    <td>{{ oar_form.description }}</td>
-                                                    <td>{{ oar_form.value }}</td>
+                                                    <td>{{ oar_form.other_asset_description }}</td>
+                                                    <td>{{ oar_form.other_asset_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="otherAssetsReceiptSaveBtn">Save
@@ -1219,33 +1219,33 @@
                 success: function (data) {
                     if (section === 'agricultural_property') {
                         setInputValue('agricultural_property_id', data['id']);
-                        setInputValue('id_ap_description', data['description']);
-                        setInputValue('id_ap_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_property_description', data['property_description']);
+                        setInputValue('id_property_value', addCommas(formatToTwoDecimalPlaces(data['property_value'])));
                         document.getElementById('agriculturalPropertySaveBtn').innerHTML = 'Update';
                     } else if (section === 'furniture') {
                         setInputValue('furniture_id', data['id']);
-                        setInputValue('id_f_description', data['description']);
-                        setInputValue('id_f_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_furniture_description', data['furniture_description']);
+                        setInputValue('id_furniture_value', addCommas(formatToTwoDecimalPlaces(data['furniture_value'])));
                         document.getElementById('furnitureSaveBtn').innerHTML = 'Update';
                     } else if (section === 'jewellery') {
                         setInputValue('jewellery_id', data['id']);
-                        setInputValue('id_j_description', data['description']);
-                        setInputValue('id_j_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_jewellery_description', data['jewellery_description']);
+                        setInputValue('id_jewellery_value', addCommas(formatToTwoDecimalPlaces(data['jewellery_value'])));
                         document.getElementById('jewellerySaveBtn').innerHTML = 'Update';
                     } else if (section === 'electronic_equipment') {
                         setInputValue('electronic_equipment_id', data['id']);
-                        setInputValue('id_ee_description', data['description']);
-                        setInputValue('id_ee_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_equipment_description', data['equipment_description']);
+                        setInputValue('id_equipment_value', addCommas(formatToTwoDecimalPlaces(data['equipment_value'])));
                         document.getElementById('electronicEquipmentSaveBtn').innerHTML = 'Update';
                     } else if (section === 'other_assets') {
                         setInputValue('other_assets_id', data['id']);
-                        setInputValue('id_oa_description', data['description']);
-                        setInputValue('id_oa_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_asset_description', data['asset_description']);
+                        setInputValue('id_asset_value', addCommas(formatToTwoDecimalPlaces(data['asset_value'])));
                         document.getElementById('otherAssetsSaveBtn').innerHTML = 'Update';
                     } else if (section === 'other_assets_receipt') {
                         setInputValue('other_assets_receipt_id', data['id']);
-                        setInputValue('id_oar_description', data['description']);
-                        setInputValue('id_oar_value', addCommas(formatToTwoDecimalPlaces(data['value'])));
+                        setInputValue('id_other_asset_description', data['other_asset_description']);
+                        setInputValue('id_other_asset_value', addCommas(formatToTwoDecimalPlaces(data['other_asset_value'])));
                         document.getElementById('otherAssetsReceiptSaveBtn').innerHTML = 'Update';
                     }
                 }
