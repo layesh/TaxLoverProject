@@ -176,3 +176,7 @@ a.article-title:hover {
 .dropdown-width-165 {
     width: 165px;
 }
+
+.col-form-label {
+    font-weight: bold;
+}
