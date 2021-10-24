@@ -1,4 +1,3 @@
-
 # Tax Buddy Pro
 
 #### Open windows command line in project directory
