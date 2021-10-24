@@ -1,0 +1,77 @@
+{% extends "taxlover/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="input-form-main">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row mb-2">
+                <label for="{{ form.cash_in_hand.id_for_label }}"
+                       class="col-form-label col-sm-5">Cash In Hand (Notes and Currencies)
+                    <sup style="padding-left: 2px;">
+                        <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                           data-bs-toggle="tooltip" data-bs-placement="right"
+                           title="The amount of money in the form of cash that a taxpayer has on the date of June 30."></i>
+                    </sup>
+                </label>
+                <div class="col-sm-7">
+                    {{ form.cash_in_hand }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.cash_at_bank.id_for_label }}"
+                       class="col-form-label col-sm-5">Cash At Bank (Banks, Cards and Other Electronic Cash)
+                    <sup style="padding-left: 2px;">
+                        <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                           data-bs-toggle="tooltip" data-bs-placement="right"
+                           title="The amount of money in the bank that a taxpayer has on the date of June 30."></i>
+                    </sup>
+                </label>
+                <div class="col-sm-7">
+                    {{ form.cash_at_bank }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.other_fund.id_for_label }}"
+                       class="col-form-label col-sm-5">Other Fund (Provident fund and other fund)
+                    <sup style="padding-left: 2px;">
+                        <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                           data-bs-toggle="tooltip" data-bs-placement="right"
+                           title="The amount of any kinds of other deposit that taxpayer has on the date of June 30."></i>
+                    </sup>
+                </label>
+                <div class="col-sm-7">
+                    {{ form.other_fund }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.other_deposits.id_for_label }}"
+                       class="col-form-label col-sm-5">Other Deposits (Other Deposits, Balance and Advance)
+                    <sup style="padding-left: 2px;">
+                        <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                           data-bs-toggle="tooltip" data-bs-placement="right"
+                           title="The amount of any kinds of other deposit that taxpayer has on the date of June 30."></i>
+                    </sup>
+                </label>
+                <div class="col-sm-7">
+                    {{ form.other_deposits }}
+                </div>
+            </div>
+            <div style="text-align: center;padding-top: 20px">
+                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToAssetsHome()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script type="application/javascript">
+        function goToAssetsHome() {
+            location.href='{% url "assets" %}';
+        }
+
+        function onInputBlurred(textBoxObject) {
+            if (!isNaN(removeCommas(textBoxObject.value))) {
+                textBoxObject.value = removeCommas(textBoxObject.value);
+                textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
+            }
+        }
+    </script>
+{% endblock content %}

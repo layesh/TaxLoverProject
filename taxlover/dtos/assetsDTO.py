@@ -3,7 +3,7 @@ from taxlover.services.assets_service import get_current_financial_year_agricult
     get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
     get_current_financial_year_electronic_equipment_by_payer, get_current_financial_year_other_assets_by_payer, \
     get_current_financial_year_other_assets_receipt_by_payer, get_current_financial_year_cash_assets_by_payer, \
-    get_current_financial_year_previous_year_net_wealth_receipt_by_payer
+    get_current_financial_year_previous_year_net_wealth_by_payer
 from taxlover.utils import get_income_years, create_or_get_current_assets_obj
 
 
@@ -12,7 +12,7 @@ class AssetsDTO:
     def __init__(self, tax_payer_id, has_form_error):
         assets = create_or_get_current_assets_obj(tax_payer_id)
         cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
-        previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_receipt_by_payer(tax_payer_id)
+        previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
 
         self.has_business_capital = assets.has_business_capital
         self.has_no_business_capital = assets.has_no_business_capital
@@ -53,13 +53,15 @@ class AssetsDTO:
         self.other_assets_receipts = get_current_financial_year_other_assets_receipt_by_payer(tax_payer_id)
 
         if cash_assets:
-            self.cash_in_hand = cash_assets.cash_in_hand
-            self.cash_at_bank = cash_assets.cash_at_bank
-            self.other_fund = cash_assets.other_fund
-            self.other_deposits = cash_assets.other_deposits
+            self.cashAssetsId = cash_assets.id
+            self.cash_in_hand = cash_assets.get_cash_in_hand
+            self.cash_at_bank = cash_assets.get_cash_at_bank
+            self.other_fund = cash_assets.get_other_fund
+            self.other_deposits = cash_assets.get_other_deposits
 
         if previous_year_net_wealth:
-            self.previous_year_net_wealth_value = previous_year_net_wealth.value
+            self.previousYearNetWealthId = previous_year_net_wealth.id
+            self.previous_year_net_wealth_value = previous_year_net_wealth.wealth_value
 
         self.has_form_error = has_form_error
 

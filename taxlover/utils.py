@@ -83,6 +83,8 @@ def remove_comma(value):
 def add_comma(value):
     if value:
         return f'{value:,.2f}'
+    else:
+        return value
 
 
 def has_other_income(user_id):

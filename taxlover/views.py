@@ -22,7 +22,7 @@ from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, 
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_cash_assets_by_payer, \
-    get_current_financial_year_previous_year_net_wealth_receipt_by_payer
+    get_current_financial_year_previous_year_net_wealth_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -970,36 +970,37 @@ def save_electronic_equipment(request):
 
 
 @login_required
-def save_cash_assets(request):
-    cash_assets = get_current_financial_year_cash_assets_by_payer(request.user.id)
-    if not cash_assets:
+def cash_assets(request):
+    cash_assets_obj = get_current_financial_year_cash_assets_by_payer(request.user.id)
+    if not cash_assets_obj:
         financial_year_beg, financial_year_end = get_income_years()
-        cash_assets = CashAssets(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
-                                 financial_year_end=financial_year_end)
+        cash_assets_obj = CashAssets(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                                     financial_year_end=financial_year_end)
 
     if request.method == 'POST':
-        form = CashAssetsForm(copy_request(request), instance=cash_assets)
+        form = CashAssetsForm(copy_request(request), instance=cash_assets_obj)
 
         if form.is_valid():
             form.save()
-            messages.success(request, f'Cash assets has been updated!')
+            messages.success(request, f'Your cash assets has been updated!')
             return redirect('assets')
         else:
             error_dictionary = form.errors
             form = CashAssetsForm(request.POST)
             set_form_validation_errors(error_dictionary, form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
+
     else:
-        form = CashAssetsForm(instance=cash_assets)
+        form = CashAssetsForm(instance=cash_assets_obj)
 
-        set_form_initial_value(form.initial)
+    set_form_initial_value(form.initial)
 
-        context = {
-            'title': 'Cash Assets',
-            'form': form
-        }
+    context = {
+        'title': 'Cash Assets',
+        'form': form
+    }
 
-        return render(request, 'taxlover/assets.html', context)
+    return render(request, 'taxlover/cash-assets.html', context)
 
 
 @login_required
@@ -1108,7 +1109,7 @@ def save_other_assets_receipt(request):
 
 @login_required
 def save_previous_year_net_wealth(request):
-    previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_receipt_by_payer(request.user.id)
+    previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(request.user.id)
     if not previous_year_net_wealth:
         financial_year_beg, financial_year_end = get_income_years()
         previous_year_net_wealth = PreviousYearNetWealth(tax_payer_id=request.user.id,
@@ -1125,7 +1126,7 @@ def save_previous_year_net_wealth(request):
             return redirect('assets')
         else:
             error_dictionary = pynw_form.errors
-            pynw_form = OtherAssetsReceiptForm(request.POST)
+            pynw_form = PreviousYearNetWealthForm(request.POST)
             set_form_validation_errors(error_dictionary, pynw_form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
             has_error = True
@@ -1163,7 +1164,7 @@ def assets(request):
     ee_form = ElectronicEquipmentForm(request.POST)
     oa_form = OtherAssetsForm(request.POST)
     oar_form = OtherAssetsReceiptForm(request.POST)
-    pynw_form = OtherAssetsReceiptForm(request.POST)
+    pynw_form = PreviousYearNetWealthForm(request.POST)
 
     context = {
         'assets_dto': assets_dto,
@@ -1198,15 +1199,19 @@ def save_assets_data(request, source, answer):
             return redirect('investment-info', 0)
         else:
             return redirect('assets')
-    if source == 'motor_vehicle':
+    elif source == 'motor_vehicle':
         if latest_assets.motor_vehicle:
             return redirect('motor-vehicle-info', 0)
         else:
             return redirect('assets')
+    elif source == 'cash_assets':
+        if latest_assets.cash_assets:
+            return redirect('cash-assets')
+        else:
+            return redirect('assets')
     elif source == 'business_capital' or source == 'directors_shareholding_assets' or \
             source == 'non_agricultural_property' or source == 'agricultural_property' or \
-            source == 'furniture' or source == 'jewellery' or \
-            source == 'electronic_equipment' or source == 'cash_assets' or \
+            source == 'furniture' or source == 'jewellery' or source == 'electronic_equipment' or \
             source == 'other_assets' or source == 'other_assets_receipt' or source == 'previous_year_net_wealth':
         return redirect('assets')
 

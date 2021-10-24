@@ -66,7 +66,7 @@ urlpatterns = [
     path('save-electronic-equipment/', views.save_electronic_equipment, name='save-electronic-equipment'),
     path('electronic-equipment-delete/', views.electronic_equipment_delete,
          name='electronic-equipment-delete'),
-    path('save-cash-assets/', views.save_cash_assets, name='save-cash-assets'),
+    path('cash-assets/', views.cash_assets, name='cash-assets'),
     path('cash-assets-delete/<int:pk>/', views.cash_assets_delete,
          name='cash-assets-delete'),
     path('save-other-assets/', views.save_other_assets, name='save-other-assets'),
