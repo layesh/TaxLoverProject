@@ -12,11 +12,12 @@ from django.contrib.auth.decorators import login_required
 from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
+from taxlover.dtos.liabilitiesDTO import LiabilitiesDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
     AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm, FurnitureForm, \
     JewelleryForm, ElectronicEquipmentForm, OtherAssetsForm, OtherAssetsReceiptForm, PreviousYearNetWealthForm, \
-    CashAssetsForm
+    CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt
@@ -1334,6 +1335,27 @@ def motor_vehicle_delete(request):
                 latest_assets.save()
 
     return redirect('assets')
+
+
+@login_required
+def liabilities(request):
+    liabilities_dto = LiabilitiesDTO(request.user.id, False)
+
+    m_form = MortgageForm(request.POST)
+    ul_form = UnsecuredLoanForm(request.POST)
+    bl_form = BankLoanForm(request.POST)
+    ol_form = OtherLiabilityForm(request.POST)
+
+    context = {
+        'liabilities_dto': liabilities_dto,
+        'title': 'Liabilities',
+        'm_form': m_form,
+        'ul_form': ul_form,
+        'bl_form': bl_form,
+        'ol_form': ol_form
+    }
+
+    return render(request, 'taxlover/liabilities.html', context)
 
 
 def index(request):

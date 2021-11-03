@@ -1688,3 +1688,196 @@ class PreviousYearNetWealth(models.Model):
             return self.wealth_value
         else:
             return 0
+
+
+class Liabilities(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    income_year_beg = models.IntegerField(default=0)
+    income_year_end = models.IntegerField(default=0)
+    mortgages = models.BooleanField(null=True)
+    unsecured_loans = models.BooleanField(null=True)
+    bank_loans = models.BooleanField(null=True)
+    other_liabilities = models.BooleanField(null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Liabilities'
+
+    @property
+    def has_mortgages(self):
+        if self.mortgages is not None:
+            if self.mortgages:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_mortgages(self):
+        if self.mortgages is not None:
+            if self.mortgages:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_unsecured_loans(self):
+        if self.unsecured_loans is not None:
+            if self.unsecured_loans:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_unsecured_loans(self):
+        if self.unsecured_loans is not None:
+            if self.unsecured_loans:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_bank_loans(self):
+        if self.bank_loans is not None:
+            if self.bank_loans:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_bank_loans(self):
+        if self.bank_loans is not None:
+            if self.bank_loans:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+    @property
+    def has_other_liabilities(self):
+        if self.other_liabilities is not None:
+            if self.other_liabilities:
+                return "checked"
+            else:
+                return ""
+        else:
+            return ""
+
+    @property
+    def has_no_other_liabilities(self):
+        if self.other_liabilities is not None:
+            if self.other_liabilities:
+                return ""
+            else:
+                return "checked"
+        else:
+            return ""
+
+
+class Mortgage(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    mortgage_description = models.CharField(max_length=100, null=True, blank=True)
+    mortgage_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Mortgage'
+
+    @property
+    def get_mortgage_description(self):
+        if self.mortgage_description:
+            return self.mortgage_description
+        else:
+            return ""
+
+    @property
+    def get_mortgage_value(self):
+        if self.mortgage_value:
+            return self.mortgage_value
+        else:
+            return 0
+
+
+class UnsecuredLoan(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    unsecured_loan_description = models.CharField(max_length=100, null=True, blank=True)
+    unsecured_loan_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} UnsecuredLoan'
+
+    @property
+    def get_unsecured_loan_description(self):
+        if self.unsecured_loan_description:
+            return self.unsecured_loan_description
+        else:
+            return ""
+
+    @property
+    def get_unsecured_loan_value(self):
+        if self.unsecured_loan_value:
+            return self.unsecured_loan_value
+        else:
+            return 0
+
+
+class BankLoan(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    bank_loan_description = models.CharField(max_length=100, null=True, blank=True)
+    bank_loan_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} BankLoan'
+
+    @property
+    def get_bank_loan_description(self):
+        if self.bank_loan_description:
+            return self.bank_loan_description
+        else:
+            return ""
+
+    @property
+    def get_bank_loan_value(self):
+        if self.bank_loan_value:
+            return self.bank_loan_value
+        else:
+            return 0
+
+
+class OtherLiability(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    other_liability_description = models.CharField(max_length=100, null=True, blank=True)
+    other_liability_value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} OtherLiability'
+
+    @property
+    def get_other_liability_description(self):
+        if self.other_liability_description:
+            return self.other_liability_description
+        else:
+            return ""
+
+    @property
+    def get_other_liability_value(self):
+        if self.other_liability_value:
+            return self.other_liability_value
+        else:
+            return 0

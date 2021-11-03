@@ -1,7 +1,7 @@
 import re
 from decimal import Decimal
 
-from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets
+from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities
 import datetime
 
 from taxlover.services.html_parser import strip_tags
@@ -128,3 +128,15 @@ def create_or_get_current_assets_obj(user_id):
         latest_assets = Assets.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
                                               income_year_end=income_year_end)
     return latest_assets
+
+
+def create_or_get_current_liabilities_obj(user_id):
+    income_year_beg, income_year_end = get_income_years()
+
+    try:
+        latest_liabilities = Liabilities.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                                     income_year_end=income_year_end)
+    except Liabilities.DoesNotExist:
+        latest_liabilities = Liabilities.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                                        income_year_end=income_year_end)
+    return latest_liabilities

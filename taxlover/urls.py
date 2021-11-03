@@ -77,5 +77,6 @@ urlpatterns = [
          name='other-assets-receipt-delete'),
     path('save-previous-year-net-wealth/', views.save_previous_year_net_wealth, name='save-previous-year-net-wealth'),
     path('previous-year-net-wealth-delete/<int:pk>/', views.previous_year_net_wealth_delete,
-         name='previous-year-net-wealth-delete')
+         name='previous-year-net-wealth-delete'),
+    path('liabilities/', views.liabilities, name='liabilities')
 ]

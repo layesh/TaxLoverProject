@@ -3,7 +3,8 @@ from django.forms import TextInput
 
 from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, \
-    ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth
+    ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Mortgage, UnsecuredLoan, \
+    BankLoan, OtherLiability
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -279,3 +280,54 @@ class PreviousYearNetWealthForm(forms.ModelForm):
             'wealth_value': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
         }
+
+
+class MortgageForm(forms.ModelForm):
+    class Meta:
+        model = Mortgage
+        fields = ['mortgage_description', 'mortgage_value']
+        widgets = {
+            'mortgage_description': TextInput(
+                attrs={'class': 'form-control'}),
+            'mortgage_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class UnsecuredLoanForm(forms.ModelForm):
+    class Meta:
+        model = UnsecuredLoan
+        fields = ['unsecured_loan_description', 'unsecured_loan_value']
+        widgets = {
+            'unsecured_loan_description': TextInput(
+                attrs={'class': 'form-control'}),
+            'unsecured_loan_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class BankLoanForm(forms.ModelForm):
+    class Meta:
+        model = BankLoan
+        fields = ['bank_loan_description', 'bank_loan_value']
+        widgets = {
+            'bank_loan_description': TextInput(
+                attrs={'class': 'form-control'}),
+            'bank_loan_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+class OtherLiabilityForm(forms.ModelForm):
+    class Meta:
+        model = OtherLiability
+        fields = ['other_liability_description', 'other_liability_value']
+        widgets = {
+            'other_liability_description': TextInput(
+                attrs={'class': 'form-control'}),
+            'other_liability_value': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'})
+        }
+
+
+
