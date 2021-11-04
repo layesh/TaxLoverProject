@@ -261,37 +261,37 @@
             <div class="col">
                 <div class="accordion" id="accordionRightLiabilities">
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingEight">
+                        <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                                {% if liabilities_dto.has_jewellery or liabilities_dto.has_no_jewellery %}
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                {% if liabilities_dto.has_bank_loans or liabilities_dto.has_no_bank_loans %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Jewellery
+                                Bank Loans
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="This refers the quantity and value of jewellery at purchase cost. As like: Gold, Silver or Diamond Jewellery."></i>
+                                       title="This refers to the total amount of bank loan liabilities on June 30."></i>
                                 </sup>
                             </button>
                         </h2>
-                        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight"
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                              data-bs-parent="#accordionRightLiabilities">
                             <div class="accordion-body hor-align-center">
-                                <strong>Do you have any jewellery?</strong>
+                                <strong>Did you have any bank loan liabilities?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
-                                    <input type="checkbox" class="btn-check" id="jewelleryYesBtn"
+                                    <input type="checkbox" class="btn-check" id="bankLoanYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-liabilities-data" "jewellery" "yes" %}'" {{ liabilities_dto.has_jewellery }}>
-                                    <label class="btn btn-outline-success" for="jewelleryYesBtn">Yes</label>
-                                    <input type="checkbox" class="btn-check" id="jewelleryNoBtn"
+                                           onclick="location.href='{% url "save-liabilities-data" "bank_loans" "yes" %}'" {{ liabilities_dto.has_bank_loans }}>
+                                    <label class="btn btn-outline-success" for="bankLoanYesBtn">Yes</label>
+                                    <input type="checkbox" class="btn-check" id="bankLoanNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-liabilities-data" "jewellery" "no" %}'" {{ liabilities_dto.has_no_jewellery }}>
-                                    <label class="btn btn-outline-success" for="jewelleryNoBtn">No</label>
+                                           onclick="location.href='{% url "save-liabilities-data" "bank_loans" "no" %}'" {{ liabilities_dto.has_no_bank_loans }}>
+                                    <label class="btn btn-outline-success" for="bankLoanNoBtn">No</label>
                                 </div>
-                                {% if liabilities_dto.has_jewellery %}
+                                {% if liabilities_dto.has_bank_loans %}
                                     <div style="padding-top: 20px">
                                         <table class="table table-striped table-bordered">
                                             <thead>
@@ -303,23 +303,23 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for jewellery in liabilities_dto.jewelleries %}
+                                            {% for bank_loan in liabilities_dto.bank_loans %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ jewellery.get_jewellery_description }}</td>
-                                                    <td>{{ jewellery.get_jewellery_value|format_decimal }}</td>
+                                                    <td>{{ bank_loan.get_bank_loan_description }}</td>
+                                                    <td>{{ bank_loan.get_bank_loan_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
-                                                           onclick="getDataForEdit('jewellery', '{{ jewellery.id }}')">
+                                                           onclick="getDataForEdit('bank_loan', '{{ bank_loan.id }}')">
                                                             <i class="bi bi-pencil-square"
                                                                style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
                                                         <a href="#" data-bs-toggle="modal"
-                                                           onclick="getDataForDelete('jewellery', '{{ jewellery.id }}')"
-                                                           data-bs-target="#jewelleryStaticBackdrop">
+                                                           onclick="getDataForDelete('bank_loan', '{{ bank_loan.id }}')"
+                                                           data-bs-target="#bankLoanStaticBackdrop">
                                                             <i class="bi bi-trash"
                                                                style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="jewelleryStaticBackdrop"
+                                                        <div class="modal fade" id="bankLoanStaticBackdrop"
                                                              data-bs-backdrop="static"
                                                              data-bs-keyboard="false" tabindex="-1"
                                                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -328,21 +328,21 @@
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title"
                                                                             id="staticBackdropLabel">Delete
-                                                                            Jewellery</h5>
+                                                                            Bank Loan</h5>
                                                                         <button type="button" class="btn-close"
                                                                                 data-bs-dismiss="modal"
                                                                                 aria-label="Close"></button>
                                                                     </div>
-                                                                    <form action="{% url 'jewellery-delete' %}"
+                                                                    <form action="{% url 'bank-loan-delete' %}"
                                                                           method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden"
-                                                                               id="jewellery_id_for_delete"
-                                                                               name="jewellery_id_for_delete">
+                                                                               id="bank_loan_id_for_delete"
+                                                                               name="bank_loan_id_for_delete">
                                                                         <div class="modal-body"
                                                                              style="text-align: left">
                                                                             Are you sure you want to delete the
-                                                                            jewellery?
+                                                                            bank loan?
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
@@ -363,16 +363,16 @@
                                             {% endfor %}
                                             <tr>
                                                 <form method="post"
-                                                      action="{% url 'save-jewellery' %}">
+                                                      action="{% url 'save-bank-loan' %}">
                                                     {% csrf_token %}
-                                                    <input type="hidden" id="jewellery_id"
-                                                           name="jewellery_id">
+                                                    <input type="hidden" id="bank_loan_id"
+                                                           name="bank_loan_id">
                                                     <td></td>
-                                                    <td>{{ j_form.jewellery_description }}</td>
-                                                    <td>{{ j_form.jewellery_value }}</td>
+                                                    <td>{{ bl_form.bank_loan_description }}</td>
+                                                    <td>{{ bl_form.bank_loan_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
-                                                                id="jewellerySaveBtn">Save
+                                                                id="bankLoanSaveBtn">Save
                                                         </button>
                                                     </td>
                                                 </form>
@@ -385,37 +385,37 @@
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingNine">
+                        <h2 class="accordion-header" id="headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                                {% if liabilities_dto.has_electronic_equipment or liabilities_dto.has_no_electronic_equipment %}
+                                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                {% if liabilities_dto.has_other_liabilities or liabilities_dto.has_no_other_liabilities %}
                                     <span><i class="bi bi-check-circle-fill"
                                              style="color: #2ca01c; padding-right: 7px"></i></span>
                                 {% endif %}
-                                Electronic Equipment
+                                Other Liabilities
                                 <sup style="padding-left: 5px;">
                                     <i class="bi bi-info-circle" style="color: red; font-size: 14px"
                                        data-bs-toggle="tooltip" data-bs-placement="right"
-                                       title="This refers all kinds residential and family use electric equipment in purchase cost. As like : TV, Freeze, AC, Personal Computer etc."></i>
+                                       title="The amount of money for any other liabilities of taxpayer."></i>
                                 </sup>
                             </button>
                         </h2>
-                        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine"
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                              data-bs-parent="#accordionRightLiabilities">
                             <div class="accordion-body hor-align-center">
-                                <strong>Do you have any electronic equipment?</strong>
+                                <strong>Did you have any other liabilities?</strong>
                                 <br/>
                                 <div class="btn-group padding-top-8" role="group" aria-label="Yes No Buttons">
                                     <input type="checkbox" class="btn-check" id="otherSourcesYesBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-liabilities-data" "electronic_equipment" "yes" %}'" {{ liabilities_dto.has_electronic_equipment }}>
+                                           onclick="location.href='{% url "save-liabilities-data" "other_liabilities" "yes" %}'" {{ liabilities_dto.has_other_liabilities }}>
                                     <label class="btn btn-outline-success" for="otherSourcesYesBtn">Yes</label>
                                     <input type="checkbox" class="btn-check" id="otherSourcesNoBtn"
                                            autocomplete="off"
-                                           onclick="location.href='{% url "save-liabilities-data" "electronic_equipment" "no" %}'" {{ liabilities_dto.has_no_electronic_equipment }}>
+                                           onclick="location.href='{% url "save-liabilities-data" "other_liabilities" "no" %}'" {{ liabilities_dto.has_no_other_liabilities }}>
                                     <label class="btn btn-outline-success" for="otherSourcesNoBtn">No</label>
                                 </div>
-                                {% if liabilities_dto.has_electronic_equipment %}
+                                {% if liabilities_dto.has_other_liabilities %}
                                     <div style="padding-top: 20px">
                                         <table class="table table-striped table-bordered">
                                             <thead>
@@ -427,23 +427,23 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for electronic_equipment in liabilities_dto.electronic_equipments %}
+                                            {% for other_liability in liabilities_dto.other_liabilities %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ electronic_equipment.get_equipment_description }}</td>
-                                                    <td>{{ electronic_equipment.get_equipment_value|format_decimal }}</td>
+                                                    <td>{{ other_liability.get_other_liability_description }}</td>
+                                                    <td>{{ other_liability.get_other_liability_value|format_decimal }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)"
-                                                           onclick="getDataForEdit('electronic_equipment', '{{ electronic_equipment.id }}')">
+                                                           onclick="getDataForEdit('other_liability', '{{ other_liability.id }}')">
                                                             <i class="bi bi-pencil-square"
                                                                style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
                                                         <a href="#" data-bs-toggle="modal"
-                                                           onclick="getDataForDelete('electronic_equipment', '{{ electronic_equipment.id }}')"
-                                                           data-bs-target="#electronicEquipmentStaticBackdrop">
+                                                           onclick="getDataForDelete('other_liability', '{{ other_liability.id }}')"
+                                                           data-bs-target="#otherLiabilityStaticBackdrop">
                                                             <i class="bi bi-trash"
                                                                style="color: red; padding-left: 5px; font-size: 1.2rem"></i></a>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="electronicEquipmentStaticBackdrop"
+                                                        <div class="modal fade" id="otherLiabilityStaticBackdrop"
                                                              data-bs-backdrop="static"
                                                              data-bs-keyboard="false" tabindex="-1"
                                                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -452,21 +452,21 @@
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title"
                                                                             id="staticBackdropLabel">Delete
-                                                                            Electronic Equipment</h5>
+                                                                            Other Liability</h5>
                                                                         <button type="button" class="btn-close"
                                                                                 data-bs-dismiss="modal"
                                                                                 aria-label="Close"></button>
                                                                     </div>
-                                                                    <form action="{% url 'electronic-equipment-delete' %}"
+                                                                    <form action="{% url 'other-liability-delete' %}"
                                                                           method="POST">
                                                                         {% csrf_token %}
                                                                         <input type="hidden"
-                                                                               id="electronic_equipment_id_for_delete"
-                                                                               name="electronic_equipment_id_for_delete">
+                                                                               id="other_liability_id_for_delete"
+                                                                               name="other_liability_id_for_delete">
                                                                         <div class="modal-body"
                                                                              style="text-align: left">
                                                                             Are you sure you want to delete the
-                                                                            electronic equipment?
+                                                                            other liability?
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
@@ -487,16 +487,16 @@
                                             {% endfor %}
                                             <tr>
                                                 <form method="post"
-                                                      action="{% url 'save-electronic-equipment' %}">
+                                                      action="{% url 'save-other-liability' %}">
                                                     {% csrf_token %}
-                                                    <input type="hidden" id="electronic_equipment_id"
-                                                           name="electronic_equipment_id">
+                                                    <input type="hidden" id="other_liability_id"
+                                                           name="other_liability_id">
                                                     <td></td>
-                                                    <td>{{ ee_form.equipment_description }}</td>
-                                                    <td>{{ ee_form.equipment_value }}</td>
+                                                    <td>{{ ol_form.other_liability_description }}</td>
+                                                    <td>{{ ol_form.other_liability_value }}</td>
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
-                                                                id="electronicEquipmentSaveBtn">Save
+                                                                id="otherLiabilitySaveBtn">Save
                                                         </button>
                                                     </td>
                                                 </form>
