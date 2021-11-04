@@ -78,5 +78,14 @@ urlpatterns = [
     path('save-previous-year-net-wealth/', views.save_previous_year_net_wealth, name='save-previous-year-net-wealth'),
     path('previous-year-net-wealth-delete/<int:pk>/', views.previous_year_net_wealth_delete,
          name='previous-year-net-wealth-delete'),
-    path('liabilities/', views.liabilities, name='liabilities')
+    path('liabilities/', views.liabilities, name='liabilities'),
+    path('save-liabilities-data/<str:source>/<str:answer>/', views.save_liabilities_data, name='save-liabilities-data'),
+    path('mortgage-delete/', views.mortgage_delete, name='mortgage-delete'),
+    path('save-mortgage/', views.save_mortgage, name='save-mortgage'),
+    path('unsecured-loan-delete/', views.unsecured_loan_delete, name='unsecured-loan-delete'),
+    path('save-unsecured-loan/', views.save_unsecured_loan, name='save-unsecured-loan'),
+    path('bank-loan-delete/', views.bank_loan_delete, name='bank-loan-delete'),
+    path('save-bank-loan/', views.save_bank_loan, name='save-bank-loan'),
+    path('other-liability-delete/', views.other_liability_delete, name='other-liability-delete'),
+    path('save-other-liability/', views.save_other_liability, name='save-other-liability'),
 ]

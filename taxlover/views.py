@@ -20,18 +20,20 @@ from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeFor
     CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
-    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt
+    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_cash_assets_by_payer, \
     get_current_financial_year_previous_year_net_wealth_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
+from taxlover.services.liabilities_service import save_liabilities
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma, has_other_income, \
-    set_form_validation_errors, set_form_initial_value, copy_request, create_or_get_current_assets_obj
+    set_form_validation_errors, set_form_initial_value, copy_request, create_or_get_current_assets_obj, \
+    create_or_get_current_liabilities_obj
 
 import os
 from django.conf import settings
@@ -519,6 +521,94 @@ def previous_year_net_wealth_delete(request, pk):
         latest_assets.save()
 
     return redirect('assets')
+
+
+@login_required
+def mortgage_delete(request):
+    if request.method == 'POST':
+        mortgage_id = 0
+        if request.POST['mortgage_id_for_delete'] != '':
+            mortgage_id = int(request.POST['mortgage_id_for_delete'])
+        if mortgage_id > 0:
+            Mortgage.objects.filter(id=mortgage_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = Mortgage.objects.filter(tax_payer_id=request.user.id,
+                                            financial_year_beg=financial_year_beg,
+                                            financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities.mortgages = None
+                latest_liabilities.save()
+
+    return redirect('liabilities')
+
+
+@login_required
+def unsecured_loan_delete(request):
+    if request.method == 'POST':
+        unsecured_loan_id = 0
+        if request.POST['unsecured_loan_id_for_delete'] != '':
+            unsecured_loan_id = int(request.POST['unsecured_loan_id_for_delete'])
+        if unsecured_loan_id > 0:
+            UnsecuredLoan.objects.filter(id=unsecured_loan_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = UnsecuredLoan.objects.filter(tax_payer_id=request.user.id,
+                                                 financial_year_beg=financial_year_beg,
+                                                 financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities.unsecured_loans = None
+                latest_liabilities.save()
+
+    return redirect('liabilities')
+
+
+@login_required
+def bank_loan_delete(request):
+    if request.method == 'POST':
+        bank_loan_id = 0
+        if request.POST['bank_loan_id_for_delete'] != '':
+            bank_loan_id = int(request.POST['bank_loan_id_for_delete'])
+        if bank_loan_id > 0:
+            BankLoan.objects.filter(id=bank_loan_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = BankLoan.objects.filter(tax_payer_id=request.user.id,
+                                            financial_year_beg=financial_year_beg,
+                                            financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities.bank_loans = None
+                latest_liabilities.save()
+
+    return redirect('liabilities')
+
+
+@login_required
+def other_liability_delete(request):
+    if request.method == 'POST':
+        other_liability_id = 0
+        if request.POST['other_liability_id_for_delete'] != '':
+            other_liability_id = int(request.POST['other_liability_id_for_delete'])
+        if other_liability_id > 0:
+            OtherLiability.objects.filter(id=other_liability_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = OtherLiability.objects.filter(tax_payer_id=request.user.id,
+                                                  financial_year_beg=financial_year_beg,
+                                                  financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities.other_liabilities = None
+                latest_liabilities.save()
+
+    return redirect('liabilities')
 
 
 @login_required
@@ -1156,6 +1246,190 @@ def save_previous_year_net_wealth(request):
 
 
 @login_required
+def save_mortgage(request):
+    if request.method == 'POST':
+        message = f'Mortgage added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        mortgage_id = 0
+        if request.POST['mortgage_id'] != '':
+            mortgage_id = int(request.POST['mortgage_id'])
+
+        if mortgage_id > 0:
+            mortgage = Mortgage.objects.get(pk=mortgage_id)
+            message = f'Mortgage updated!'
+        else:
+            mortgage = Mortgage(tax_payer_id=request.user.id,
+                                financial_year_beg=financial_year_beg,
+                                financial_year_end=financial_year_end)
+        m_form = MortgageForm(copy_request(request), instance=mortgage)
+
+        if m_form.is_valid():
+            m_form.save()
+            messages.success(request, message)
+            return redirect('liabilities')
+        else:
+            error_dictionary = m_form.errors
+            m_form = MortgageForm(request.POST)
+            set_form_validation_errors(error_dictionary, m_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        liabilities_dto = LiabilitiesDTO(request.user.id, has_error)
+        ul_form = UnsecuredLoanForm(request.POST)
+        bl_form = BankLoanForm(request.POST)
+        ol_form = OtherLiabilityForm(request.POST)
+
+        context = {
+            'liabilities_dto': liabilities_dto,
+            'title': 'Liabilities',
+            'm_form': m_form,
+            'ul_form': ul_form,
+            'bl_form': bl_form,
+            'ol_form': ol_form
+        }
+
+        return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
+def save_unsecured_loan(request):
+    if request.method == 'POST':
+        message = f'Unsecured loan added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        unsecured_loan_id = 0
+        if request.POST['unsecured_loan_id'] != '':
+            unsecured_loan_id = int(request.POST['unsecured_loan_id'])
+
+        if unsecured_loan_id > 0:
+            unsecured_loan = UnsecuredLoan.objects.get(pk=unsecured_loan_id)
+            message = f'Unsecured loan updated!'
+        else:
+            unsecured_loan = UnsecuredLoan(tax_payer_id=request.user.id,
+                                           financial_year_beg=financial_year_beg,
+                                           financial_year_end=financial_year_end)
+        ul_form = UnsecuredLoanForm(copy_request(request), instance=unsecured_loan)
+
+        if ul_form.is_valid():
+            ul_form.save()
+            messages.success(request, message)
+            return redirect('liabilities')
+        else:
+            error_dictionary = ul_form.errors
+            ul_form = UnsecuredLoanForm(request.POST)
+            set_form_validation_errors(error_dictionary, ul_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        liabilities_dto = LiabilitiesDTO(request.user.id, has_error)
+        m_form = MortgageForm(request.POST)
+        bl_form = BankLoanForm(request.POST)
+        ol_form = OtherLiabilityForm(request.POST)
+
+        context = {
+            'liabilities_dto': liabilities_dto,
+            'title': 'Liabilities',
+            'm_form': m_form,
+            'ul_form': ul_form,
+            'bl_form': bl_form,
+            'ol_form': ol_form
+        }
+
+        return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
+def save_bank_loan(request):
+    if request.method == 'POST':
+        message = f'Bank loan added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        bank_loan_id = 0
+        if request.POST['bank_loan_id'] != '':
+            bank_loan_id = int(request.POST['bank_loan_id'])
+
+        if bank_loan_id > 0:
+            bank_loan_id = BankLoan.objects.get(pk=bank_loan_id)
+            message = f'Bank loan updated!'
+        else:
+            bank_loan_id = BankLoan(tax_payer_id=request.user.id,
+                                    financial_year_beg=financial_year_beg,
+                                    financial_year_end=financial_year_end)
+        bl_form = BankLoanForm(copy_request(request), instance=bank_loan_id)
+
+        if bl_form.is_valid():
+            bl_form.save()
+            messages.success(request, message)
+            return redirect('liabilities')
+        else:
+            error_dictionary = bl_form.errors
+            bl_form = BankLoanForm(request.POST)
+            set_form_validation_errors(error_dictionary, bl_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        liabilities_dto = LiabilitiesDTO(request.user.id, has_error)
+        m_form = MortgageForm(request.POST)
+        ul_form = UnsecuredLoanForm(request.POST)
+        ol_form = OtherLiabilityForm(request.POST)
+
+        context = {
+            'liabilities_dto': liabilities_dto,
+            'title': 'Liabilities',
+            'm_form': m_form,
+            'ul_form': ul_form,
+            'bl_form': bl_form,
+            'ol_form': ol_form
+        }
+
+        return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
+def save_other_liability(request):
+    if request.method == 'POST':
+        message = f'Other liability added!'
+        financial_year_beg, financial_year_end = get_income_years()
+        other_liability_id = 0
+        if request.POST['other_liability_id'] != '':
+            other_liability_id = int(request.POST['other_liability_id'])
+
+        if other_liability_id > 0:
+            other_liability = OtherLiability.objects.get(pk=other_liability_id)
+            message = f'Other liability updated!'
+        else:
+            other_liability = OtherLiability(tax_payer_id=request.user.id,
+                                             financial_year_beg=financial_year_beg,
+                                             financial_year_end=financial_year_end)
+        ol_form = OtherLiabilityForm(copy_request(request), instance=other_liability)
+
+        if ol_form.is_valid():
+            ol_form.save()
+            messages.success(request, message)
+            return redirect('liabilities')
+        else:
+            error_dictionary = ol_form.errors
+            ol_form = OtherLiabilityForm(request.POST)
+            set_form_validation_errors(error_dictionary, ol_form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_error = True
+
+        liabilities_dto = LiabilitiesDTO(request.user.id, has_error)
+        m_form = MortgageForm(request.POST)
+        ul_form = UnsecuredLoanForm(request.POST)
+        bl_form = BankLoanForm(request.POST)
+
+        context = {
+            'liabilities_dto': liabilities_dto,
+            'title': 'Liabilities',
+            'm_form': m_form,
+            'ul_form': ul_form,
+            'bl_form': bl_form,
+            'ol_form': ol_form
+        }
+
+        return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
 def assets(request):
     assets_dto = AssetsDTO(request.user.id, False)
 
@@ -1356,6 +1630,24 @@ def liabilities(request):
     }
 
     return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
+def save_liabilities_data(request, source, answer):
+    latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+    show_success_message = save_liabilities(latest_liabilities, source, answer, request)
+
+    if show_success_message:
+        messages.success(request, f'Data updated successfully!')
+
+    context = {
+        'latest_liabilities': latest_liabilities,
+        'title': 'Liabilities'
+    }
+
+    if source == 'mortgages' or source == 'unsecured_loans' or \
+            source == 'bank_loans' or source == 'other_liabilities':
+        return redirect('liabilities')
 
 
 def index(request):
@@ -1638,6 +1930,34 @@ def get_data_for_edit(request):
                 'id': other_assets_receipt.id,
                 'other_asset_description': other_assets_receipt.other_asset_description,
                 'other_asset_value': other_assets_receipt.other_asset_value
+            }
+        elif section == 'mortgage':
+            mortgage = Mortgage.objects.get(pk=data_id)
+            data = {
+                'id': mortgage.id,
+                'mortgage_description': mortgage.mortgage_description,
+                'mortgage_value': mortgage.mortgage_value
+            }
+        elif section == 'unsecured_loan':
+            unsecured_loan = UnsecuredLoan.objects.get(pk=data_id)
+            data = {
+                'id': unsecured_loan.id,
+                'unsecured_loan_description': unsecured_loan.unsecured_loan_description,
+                'unsecured_loan_value': unsecured_loan.unsecured_loan_value
+            }
+        elif section == 'bank_loan':
+            bank_loan = BankLoan.objects.get(pk=data_id)
+            data = {
+                'id': bank_loan.id,
+                'bank_loan_description': bank_loan.bank_loan_description,
+                'bank_loan_value': bank_loan.bank_loan_value
+            }
+        elif section == 'other_liability':
+            other_liability = OtherLiability.objects.get(pk=data_id)
+            data = {
+                'id': other_liability.id,
+                'other_liability_description': other_liability.other_liability_description,
+                'other_liability_value': other_liability.other_liability_value
             }
 
         return JsonResponse(data)
