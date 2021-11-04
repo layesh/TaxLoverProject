@@ -50,32 +50,48 @@
                             <a class="nav-link {% if title == 'Personal Info' %}active{% endif %}"
                                href="{% url 'personal-info' %}">Personal Info</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {% if title in 'Income, Assets' %}active{% endif %}"
-                               href="#" id="navbarScrollingDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Income & Expenses
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item {% if title == 'Income' %}active{% endif %}"
-                                       href="{% url 'income' %}">Income</a></li>
-                                <li><a class="dropdown-item {% if title == 'Assets' %}active{% endif %}"
-                                       href="{% url 'assets' %}">Assets</a></li>
-                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"
-                                       href="{% url 'liabilities' %}">Liabilities</a>
-                                </li>
-                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"
-                                       href="{% url 'expenses' %}">Expenses</a></li>
-                            </ul>
+{#                        <li class="nav-item dropdown">#}
+{#                            <a class="nav-link dropdown-toggle {% if title in 'Income, Assets' %}active{% endif %}"#}
+{#                               href="#" id="navbarScrollingDropdown" role="button"#}
+{#                               data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                                Income & Expenses#}
+{#                            </a>#}
+{#                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">#}
+{#                                <li><a class="dropdown-item {% if title == 'Income' %}active{% endif %}"#}
+{#                                       href="{% url 'income' %}">Income</a></li>#}
+{#                                <li><a class="dropdown-item {% if title == 'Assets' %}active{% endif %}"#}
+{#                                       href="{% url 'assets' %}">Assets</a></li>#}
+{#                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"#}
+{#                                       href="{% url 'liabilities' %}">Liabilities</a>#}
+{#                                </li>#}
+{#                                <li><a class="dropdown-item {% if title == 'expenses' %}active{% endif %}"#}
+{#                                       href="{% url 'expenses' %}">Expenses</a></li>#}
+{#                            </ul>#}
+{#                        </li>#}
+                        <li class="nav-item">
+                            <a class="nav-link {% if title in 'Income, Salary, Tax Rebate' %}active{% endif %}"#}
+                               href="{% url 'income' %}">Income</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if title == 'review' %}active{% endif %}"#}
-                               href="{% url 'personal-info' %}">Review</a>
+                            <a class="nav-link {% if title in 'Assets, Investment, Motor Vehicle, Cash Assets' %}active{% endif %}"#}
+                               href="{% url 'assets' %}">Assets</a>
                         </li>
-                        <li>
-                            <a class="nav-link {% if title == 'Download Return' %}active{% endif %}"#}
-                               href="{% url 'download-return' %}">Download</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if title == 'Liabilities' %}active{% endif %}"#}
+                               href="{% url 'liabilities' %}">Liabilities</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if title == 'Expenses' %}active{% endif %}"#}
+                               href="{% url 'expenses' %}">Expenses</a>
+                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link {% if title == 'review' %}active{% endif %}"#}
+{#                               href="{% url 'personal-info' %}">Review</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a class="nav-link {% if title == 'Download Return' %}active{% endif %}"#}
+{#                               href="{% url 'download-return' %}">Download</a>#}
+{#                        </li>#}
                     </ul>
                 {% endif %}
             </div>

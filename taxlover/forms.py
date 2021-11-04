@@ -333,9 +333,81 @@ class OtherLiabilityForm(forms.ModelForm):
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ['food_expense', 'food_expense_comment']
+        fields = ['food_expense', 'food_expense_comment',
+                  'accommodation_expense', 'accommodation_expense_comment',
+                  'transportation_expense', 'transportation_expense_comment',
+                  'other_transportation_expense', 'other_transportation_expense_comment',
+                  'electricity_expense', 'electricity_expense_comment',
+                  'gas_expense', 'gas_expense_comment',
+                  'water_expense', 'water_expense_comment',
+                  'telephone_expense', 'telephone_expense_comment',
+                  'other_household_expense', 'other_household_expense_comment',
+                  'children_education_expense', 'children_education_expense_comment',
+                  'travel_expense', 'travel_expense_comment',
+                  'festival_expense', 'festival_expense_comment',
+                  'donation_expense', 'donation_expense_comment',
+                  'other_special_expense', 'other_special_expense_comment',
+                  'other_expense', 'other_expense_comment',
+                  'tax_at_source_expense', 'tax_at_source_expense_comment',
+                  'last_year_paid_tax_expense', 'last_year_paid_tax_expense_comment',
+                  'loss_expense', 'loss_expense_comment',
+                  'gift_expense', 'gift_expense_comment']
         widgets = {
             'food_expense': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
             'food_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'accommodation_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'accommodation_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'transportation_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'transportation_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'other_transportation_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'other_transportation_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'electricity_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'electricity_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'gas_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'gas_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'water_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'water_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'telephone_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'telephone_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'other_household_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'other_household_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'children_education_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'children_education_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'travel_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'travel_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'festival_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'festival_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'donation_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'donation_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'other_special_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'other_special_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'other_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'other_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'tax_at_source_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'tax_at_source_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'last_year_paid_tax_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'last_year_paid_tax_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'loss_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'loss_expense_comment': TextInput(attrs={'class': 'form-control'}),
+            'gift_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'gift_expense_comment': TextInput(attrs={'class': 'form-control'})
         }

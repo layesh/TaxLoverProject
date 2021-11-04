@@ -20,7 +20,7 @@ from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeFor
     CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm, ExpenseForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
-    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability
+    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_cash_assets_by_payer, \
     get_current_financial_year_previous_year_net_wealth_by_payer
@@ -1638,8 +1638,8 @@ def expenses(request):
     expense = get_current_financial_year_expense_by_payer(request.user.id)
     if not expense:
         financial_year_beg, financial_year_end = get_income_years()
-        expense = Salary(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
-                         financial_year_end=financial_year_end)
+        expense = Expense(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                          financial_year_end=financial_year_end)
 
     if request.method == 'POST':
         form = ExpenseForm(copy_request(request), instance=expense)

@@ -103,7 +103,7 @@ def set_form_validation_errors(error_dictionary, fields_dictionary):
 
 def set_form_initial_value(initial_dictionary):
     for key in initial_dictionary:
-        if initial_dictionary[key]:
+        if initial_dictionary[key] and not isinstance(initial_dictionary[key], str):
             initial_dictionary[key] = add_comma(initial_dictionary[key])
 
 

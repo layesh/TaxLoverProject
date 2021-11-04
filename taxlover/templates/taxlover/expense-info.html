@@ -8,7 +8,7 @@
                 <thead>
                     <tr>
                         <th scope="col" class="col-6"></th>
-                        <th scope="col" class="text-align-right">Amount</th>
+                        <th scope="col" class="text-align-right">Yearly Expenses</th>
                         <th scope="col">Comment</th>
                     </tr>
                 </thead>
@@ -27,8 +27,313 @@
                             {{ form.food_expense }}
                         </td>
                         <td>
-                            <input id="id_basic_exempted" class="form-control text-align-right" type="text" placeholder=""
-                                   aria-label="Disabled input example" disabled>
+                            {{ form.food_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.accommodation_expense.id_for_label }}"
+                                   class="col-form-label">Accommodation Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding accommodation during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.accommodation_expense }}
+                        </td>
+                        <td>
+                            {{ form.accommodation_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.transportation_expense.id_for_label }}"
+                                   class="col-form-label">Transport Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding transportation during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.transportation_expense }}
+                        </td>
+                        <td>
+                            {{ form.transportation_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.other_transportation_expense.id_for_label }}"
+                                   class="col-form-label">Other Transport Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.12"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.other_transportation_expense }}
+                        </td>
+                        <td>
+                            {{ form.other_transportation_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.electricity_expense.id_for_label }}"
+                                   class="col-form-label">Electricity Bill</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding electricity for residence during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.electricity_expense }}
+                        </td>
+                        <td>
+                            {{ form.electricity_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.gas_expense.id_for_label }}"
+                                   class="col-form-label">Gas Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding gas for residence during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.gas_expense }}
+                        </td>
+                        <td>
+                            {{ form.gas_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.water_expense.id_for_label }}"
+                                   class="col-form-label">Water Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding water for residence during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.water_expense }}
+                        </td>
+                        <td>
+                            {{ form.water_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.telephone_expense.id_for_label }}"
+                                   class="col-form-label">Telephone Bill</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding telephone service for residence during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.telephone_expense }}
+                        </td>
+                        <td>
+                            {{ form.telephone_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.other_household_expense.id_for_label }}"
+                                   class="col-form-label">Other House Hold</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.13"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.other_household_expense }}
+                        </td>
+                        <td>
+                            {{ form.other_household_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.children_education_expense.id_for_label }}"
+                                   class="col-form-label">Education Expenses For Children</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding children's education during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.children_education_expense }}
+                        </td>
+                        <td>
+                            {{ form.children_education_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.travel_expense.id_for_label }}"
+                                   class="col-form-label">Personal Foreign/Domestic Travel Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total personal expenses regarding foreign travel during the income tax year."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.travel_expense }}
+                        </td>
+                        <td>
+                            {{ form.travel_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.festival_expense.id_for_label }}"
+                                   class="col-form-label">Festival Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total expenses regarding festivals and other special expenses during the income tax year. As like: Eid festivals, Wedding and Birthday Gift expense etc."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.festival_expense }}
+                        </td>
+                        <td>
+                            {{ form.festival_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.donation_expense.id_for_label }}"
+                                   class="col-form-label">Donation Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.16"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.donation_expense }}
+                        </td>
+                        <td>
+                            {{ form.donation_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.other_special_expense.id_for_label }}"
+                                   class="col-form-label">Other Special Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.17"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.other_special_expense }}
+                        </td>
+                        <td>
+                            {{ form.other_special_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.other_expense.id_for_label }}"
+                                   class="col-form-label">Other Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.17"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.other_expense }}
+                        </td>
+                        <td>
+                            {{ form.other_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.tax_at_source_expense.id_for_label }}"
+                                   class="col-form-label">Tax At Source Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.17"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.tax_at_source_expense }}
+                        </td>
+                        <td>
+                            {{ form.tax_at_source_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.last_year_paid_tax_expense.id_for_label }}"
+                                   class="col-form-label">Tax Paid Last Year, Surcharge And Others Expenses</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.18"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.last_year_paid_tax_expense }}
+                        </td>
+                        <td>
+                            {{ form.last_year_paid_tax_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.loss_expense.id_for_label }}"
+                                   class="col-form-label">Loss, Deductions, Expenses, Etc.</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.18"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.loss_expense }}
+                        </td>
+                        <td>
+                            {{ form.loss_expense_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.gift_expense.id_for_label }}"
+                                   class="col-form-label">Gift, Donation And Contribution</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="4.18"></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.gift_expense }}
+                        </td>
+                        <td>
+                            {{ form.gift_expense_comment }}
                         </td>
                     </tr>
                 </tbody>
@@ -39,31 +344,42 @@
                 </tfoot>
             </table>
             <div style="text-align: center;padding-top: 20px">
-                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
-                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToExpenseHome()">Cancel</button>
+                <button type="submit" class="btn btn-primary" style="width: 100px">Update</button>
             </div>
         </form>
     </div>
     <script type="application/javascript">
-        function goToExpenseHome() {
-            location.href='{% url "expenses" %}';
-        }
+        $(function () {
+            setTotalRow();
+        });
 
-        function setAllTotalRow() {
-            setYearlyIncomeTotalRow();
-        }
+        function setTotalRow() {
+            let foodExpense = parseDecimalInputValue('id_food_expense');
+            let accommodationExpense = parseDecimalInputValue('id_accommodation_expense');
+            let transportationExpense = parseDecimalInputValue('id_transportation_expense');
+            let otherTransportationExpense = parseDecimalInputValue('id_other_transportation_expense');
+            let electricityExpense = parseDecimalInputValue('id_electricity_expense');
+            let gasExpense = parseDecimalInputValue('id_gas_expense');
+            let waterExpense = parseDecimalInputValue('id_water_expense');
+            let telephoneExpense = parseDecimalInputValue('id_telephone_expense');
+            let otherHouseholdExpense = parseDecimalInputValue('id_other_household_expense');
+            let childrenEducationExpense = parseDecimalInputValue('id_children_education_expense');
+            let travelExpense = parseDecimalInputValue('id_travel_expense');
+            let festivalExpense = parseDecimalInputValue('id_festival_expense');
+            let donationExpense = parseDecimalInputValue('id_donation_expense');
+            let otherSpecialExpense = parseDecimalInputValue('id_other_special_expense');
+            let otherExpense = parseDecimalInputValue('id_other_expense');
+            let taxAtSourceExpense = parseDecimalInputValue('id_tax_at_source_expense');
+            let lastYearPaidTaxExpense = parseDecimalInputValue('id_last_year_paid_tax_expense');
+            let lossExpense = parseDecimalInputValue('id_loss_expense');
+            let giftExpense = parseDecimalInputValue('id_gift_expense');
 
-        function setYearlyIncomeTotalRow() {
-            let basic = parseDecimalInputValue('id_basic');
-            let houseRent = parseDecimalInputValue('id_house_rent');
-            let medical = parseDecimalInputValue('id_medical');
-            let conveyance = parseDecimalInputValue('id_conveyance');
-            let lfa = parseDecimalInputValue('id_lfa');
-            let total_bonus = parseDecimalInputValue('id_total_bonus');
-            let employers_contribution_to_pf = parseDecimalInputValue('id_employers_contribution_to_pf');
-            let totalIncome = basic + houseRent + medical + conveyance + lfa + total_bonus + employers_contribution_to_pf;
+            let totalExpense = foodExpense + accommodationExpense + transportationExpense + otherTransportationExpense +
+                electricityExpense + gasExpense + waterExpense + telephoneExpense + otherHouseholdExpense +
+                childrenEducationExpense + travelExpense + festivalExpense + donationExpense + otherSpecialExpense +
+                otherExpense + taxAtSourceExpense + lastYearPaidTaxExpense + lossExpense + giftExpense;
 
-            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
+            setLabelValue('total_expense', addCommas(formatToTwoDecimalPlaces(totalExpense.toString())));
         }
 
         function checkAndSet(shouldSet, inputId, inputValue) {
