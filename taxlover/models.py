@@ -1889,12 +1889,45 @@ class Expense(models.Model):
     financial_year_end = models.IntegerField(default=0)
     food_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
     food_expense_comment = models.CharField(max_length=20, null=True)
+    accommodation_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    accommodation_expense_comment = models.CharField(max_length=20, null=True)
+    transportation_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    transportation_expense_comment = models.CharField(max_length=20, null=True)
+    other_transportation_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    other_transportation_expense_comment = models.CharField(max_length=20, null=True)
+    electricity_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    electricity_expense_comment = models.CharField(max_length=20, null=True)
+    gas_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    gas_expense_comment = models.CharField(max_length=20, null=True)
+    water_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    water_expense_comment = models.CharField(max_length=20, null=True)
+    telephone_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    telephone_expense_comment = models.CharField(max_length=20, null=True)
+    other_household_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    other_household_expense_comment = models.CharField(max_length=20, null=True)
+    children_education_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    children_education_expense_comment = models.CharField(max_length=20, null=True)
+    travel_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    travel_expense_comment = models.CharField(max_length=20, null=True)
+    festival_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    festival_expense_comment = models.CharField(max_length=20, null=True)
+    donation_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    donation_expense_comment = models.CharField(max_length=20, null=True)
+    other_special_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    other_special_expense_comment = models.CharField(max_length=20, null=True)
+    other_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    other_expense_comment = models.CharField(max_length=20, null=True)
+    tax_at_source_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    tax_at_source_expense_comment = models.CharField(max_length=20, null=True)
+    last_year_paid_tax_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    last_year_paid_tax_expense_comment = models.CharField(max_length=20, null=True)
+    loss_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    loss_expense_comment = models.CharField(max_length=20, null=True)
+    gift_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    gift_expense_comment = models.CharField(max_length=20, null=True)
 
     def __str__(self):
         return f'{self.tax_payer.name} Expense'
-
-    def get_absolute_url(self):
-        return reverse('salary-detail', kwargs={'pk': self.pk})
 
     @property
     def get_food_expense(self):
@@ -1909,3 +1942,256 @@ class Expense(models.Model):
             return self.food_expense_comment
         else:
             return ""
+
+    @property
+    def get_accommodation_expense(self):
+        if self.accommodation_expense:
+            return self.accommodation_expense
+        else:
+            return 0
+
+    @property
+    def get_accommodation_expense_comment(self):
+        if self.accommodation_expense_comment:
+            return self.accommodation_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_transportation_expense(self):
+        if self.transportation_expense:
+            return self.transportation_expense
+        else:
+            return 0
+
+    @property
+    def get_transportation_expense_comment(self):
+        if self.transportation_expense_comment:
+            return self.transportation_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_other_transportation_expense(self):
+        if self.other_transportation_expense:
+            return self.other_transportation_expense
+        else:
+            return 0
+
+    @property
+    def get_other_transportation_expense_comment(self):
+        if self.other_transportation_expense_comment:
+            return self.other_transportation_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_electricity_expense(self):
+        if self.electricity_expense:
+            return self.electricity_expense
+        else:
+            return 0
+
+    @property
+    def get_electricity_expense_comment(self):
+        if self.electricity_expense_comment:
+            return self.electricity_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_gas_expense(self):
+        if self.gas_expense:
+            return self.gas_expense
+        else:
+            return 0
+
+    @property
+    def get_gas_expense_comment(self):
+        if self.gas_expense_comment:
+            return self.gas_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_water_expense(self):
+        if self.water_expense:
+            return self.water_expense
+        else:
+            return 0
+
+    @property
+    def get_water_expense_comment(self):
+        if self.water_expense_comment:
+            return self.water_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_telephone_expense(self):
+        if self.telephone_expense:
+            return self.telephone_expense
+        else:
+            return 0
+
+    @property
+    def get_telephone_expense_comment(self):
+        if self.telephone_expense_comment:
+            return self.telephone_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_other_household_expense(self):
+        if self.other_household_expense:
+            return self.other_household_expense
+        else:
+            return 0
+
+    @property
+    def get_other_household_expense_comment(self):
+        if self.other_household_expense_comment:
+            return self.other_household_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_children_education_expense(self):
+        if self.children_education_expense:
+            return self.children_education_expense
+        else:
+            return 0
+
+    @property
+    def get_children_education_expense_comment(self):
+        if self.children_education_expense_comment:
+            return self.children_education_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_travel_expense(self):
+        if self.travel_expense:
+            return self.travel_expense
+        else:
+            return 0
+
+    @property
+    def get_travel_expense_comment(self):
+        if self.travel_expense_comment:
+            return self.travel_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_festival_expense(self):
+        if self.festival_expense:
+            return self.festival_expense
+        else:
+            return 0
+
+    @property
+    def get_festival_expense_comment(self):
+        if self.festival_expense_comment:
+            return self.festival_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_donation_expense(self):
+        if self.donation_expense:
+            return self.donation_expense
+        else:
+            return 0
+
+    @property
+    def get_donation_expense_comment(self):
+        if self.donation_expense_comment:
+            return self.donation_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_other_special_expense(self):
+        if self.other_special_expense:
+            return self.other_special_expense
+        else:
+            return 0
+
+    @property
+    def get_other_special_expense_comment(self):
+        if self.other_special_expense_comment:
+            return self.other_special_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_other_expense(self):
+        if self.other_expense:
+            return self.other_expense
+        else:
+            return 0
+
+    @property
+    def get_other_expense_comment(self):
+        if self.other_expense_comment:
+            return self.other_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_tax_at_source_expense(self):
+        if self.tax_at_source_expense:
+            return self.tax_at_source_expense
+        else:
+            return 0
+
+    @property
+    def get_tax_at_source_expense_comment(self):
+        if self.tax_at_source_expense_comment:
+            return self.tax_at_source_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_last_year_paid_tax_expense(self):
+        if self.last_year_paid_tax_expense:
+            return self.last_year_paid_tax_expense
+        else:
+            return 0
+
+    @property
+    def get_last_year_paid_tax_expense_comment(self):
+        if self.last_year_paid_tax_expense_comment:
+            return self.last_year_paid_tax_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_loss_expense(self):
+        if self.loss_expense:
+            return self.loss_expense
+        else:
+            return 0
+
+    @property
+    def get_loss_expense_comment(self):
+        if self.loss_expense_comment:
+            return self.loss_expense_comment
+        else:
+            return ""
+
+    @property
+    def get_gift_expense(self):
+        if self.gift_expense:
+            return self.gift_expense
+        else:
+            return 0
+
+    @property
+    def get_gift_expense_comment(self):
+        if self.gift_expense_comment:
+            return self.gift_expense_comment
+        else:
+            return ""
+        

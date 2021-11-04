@@ -4,8 +4,7 @@ from ExtractTable import ExtractTable
 from taxlover.constants import EXTRACT_TABLE_API_KEY, HOUSE_RENT_MONTHLY_EXEMPTED_RATE, MEDICAL_YEARLY_EXEMPTED_RATE, \
     CONVEYANCE_YEARLY_EXEMPTED_RATE
 from taxlover.models import Salary
-from taxlover.services.html_parser import strip_tags
-from taxlover.utils import parse_data, get_income_years, add_comma
+from taxlover.utils import parse_data, get_income_years
 
 
 def get_current_financial_year_salary_by_payer(payer_id):

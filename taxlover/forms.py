@@ -4,7 +4,7 @@ from django.forms import TextInput
 from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, \
     ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Mortgage, UnsecuredLoan, \
-    BankLoan, OtherLiability
+    BankLoan, OtherLiability, Expense
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -330,4 +330,12 @@ class OtherLiabilityForm(forms.ModelForm):
         }
 
 
-
+class ExpenseForm(forms.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ['food_expense', 'food_expense_comment']
+        widgets = {
+            'food_expense': TextInput(
+                attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+            'food_expense_comment': TextInput(attrs={'class': 'form-control'}),
+        }

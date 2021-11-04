@@ -1,6 +1,4 @@
-from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
-    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Mortgage, OtherLiability, BankLoan, \
-    UnsecuredLoan
+from taxlover.models import Mortgage, OtherLiability, BankLoan, UnsecuredLoan
 from taxlover.utils import get_income_years
 
 

@@ -17,13 +17,14 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
     AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm, FurnitureForm, \
     JewelleryForm, ElectronicEquipmentForm, OtherAssetsForm, OtherAssetsReceiptForm, PreviousYearNetWealthForm, \
-    CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm
+    CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm, ExpenseForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability
 from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_cash_assets_by_payer, \
     get_current_financial_year_previous_year_net_wealth_by_payer
+from taxlover.services.expense_service import get_current_financial_year_expense_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -1634,35 +1635,33 @@ def liabilities(request):
 
 @login_required
 def expenses(request):
-    info = request.GET.get('info', '')
-    salary = get_current_financial_year_salary_by_payer(request.user.id)
-    if not salary:
+    expense = get_current_financial_year_expense_by_payer(request.user.id)
+    if not expense:
         financial_year_beg, financial_year_end = get_income_years()
-        salary = Salary(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
-                        financial_year_end=financial_year_end)
+        expense = Salary(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                         financial_year_end=financial_year_end)
 
     if request.method == 'POST':
-        form = SalaryForm(copy_request(request), instance=salary)
+        form = ExpenseForm(copy_request(request), instance=expense)
 
         if form.is_valid():
             form.save()
-            messages.success(request, f'Your salary income has been updated!')
-            return redirect('income')
+            messages.success(request, f'Your expense has been updated!')
+            return redirect('expenses')
         else:
             error_dictionary = form.errors
-            form = SalaryForm(request.POST)
+            form = ExpenseForm(request.POST)
             set_form_validation_errors(error_dictionary, form.fields)
             messages.error(request, f'Please correct the errors below, and try again.')
 
     else:
-        form = SalaryForm(instance=salary)
+        form = ExpenseForm(instance=expense)
 
     set_form_initial_value(form.initial)
 
     context = {
-        'title': 'Salary',
-        'form': form,
-        'info': True if info == 'True' else False
+        'title': 'Expenses',
+        'form': form
     }
 
     return render(request, 'taxlover/expense-info.html', context)
