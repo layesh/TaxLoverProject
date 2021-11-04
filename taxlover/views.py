@@ -1633,6 +1633,42 @@ def liabilities(request):
 
 
 @login_required
+def expenses(request):
+    info = request.GET.get('info', '')
+    salary = get_current_financial_year_salary_by_payer(request.user.id)
+    if not salary:
+        financial_year_beg, financial_year_end = get_income_years()
+        salary = Salary(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                        financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = SalaryForm(copy_request(request), instance=salary)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your salary income has been updated!')
+            return redirect('income')
+        else:
+            error_dictionary = form.errors
+            form = SalaryForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+
+    else:
+        form = SalaryForm(instance=salary)
+
+    set_form_initial_value(form.initial)
+
+    context = {
+        'title': 'Salary',
+        'form': form,
+        'info': True if info == 'True' else False
+    }
+
+    return render(request, 'taxlover/expense-info.html', context)
+
+
+@login_required
 def save_liabilities_data(request, source, answer):
     latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
     show_success_message = save_liabilities(latest_liabilities, source, answer, request)

@@ -1881,3 +1881,31 @@ class OtherLiability(models.Model):
             return self.other_liability_value
         else:
             return 0
+
+
+class Expense(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    food_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    food_expense_comment = models.CharField(max_length=20, null=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} Expense'
+
+    def get_absolute_url(self):
+        return reverse('salary-detail', kwargs={'pk': self.pk})
+
+    @property
+    def get_food_expense(self):
+        if self.food_expense:
+            return self.food_expense
+        else:
+            return 0
+
+    @property
+    def get_food_expense_comment(self):
+        if self.food_expense_comment:
+            return self.food_expense_comment
+        else:
+            return ""

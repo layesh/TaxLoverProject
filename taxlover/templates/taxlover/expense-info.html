@@ -1,0 +1,335 @@
+{% extends "taxlover/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if info %}
+        <div style="text-align: center; font-size: 3rem; padding-bottom: 10px">
+            <i class="bi bi-bag-check-fill" style="color: #2ca01c"></i>
+        </div>
+        <h2 style="text-align: center">
+            Congratulations! We got your salary info and it's ready for review.
+        </h2>
+    {% endif %}
+
+    <div class="input-form-main">
+        <form method="post">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-6"></th>
+                        <th scope="col" class="text-align-right">Yearly Income</th>
+                        <th scope="col" class="text-align-right">Exempted Income</th>
+                        <th scope="col" class="text-align-right">Taxable Income</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.basic.id_for_label }}"
+                                   class="col-form-label required">Basic Salary</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Basic pay is the annual amount of money that the taxpayer earned as an employee. Basic pay does not include benefits, bonuses, or other compensation mentioned in the sections below."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.basic }}
+                        </td>
+                        <td>
+                            <input id="id_basic_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_basic_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.basic.id_for_label }}"
+                                   class="col-form-label">House Rent Allowance</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="House Rent Allowance refers to the annual compensation the taxpayer received that is connected with rent or accommodation."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.house_rent }}
+                        </td>
+                        <td>
+                            <input id="id_house_rent_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_house_rent_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.basic.id_for_label }}"
+                                   class="col-form-label">Medical Allowance</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Medical Allowance refers to the annual compensation the taxpayer received that is connected with medical purposes."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.medical }}
+                        </td>
+                        <td>
+                            <input id="id_medical_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_medical_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.conveyance.id_for_label }}"
+                                   class="col-form-label">Conveyance Allowance</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Conveyance allowance is a type of allowance which is received for transportation costs."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.conveyance }}
+                        </td>
+                        <td>
+                            <input id="id_conveyance_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_conveyance_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.lfa.id_for_label }}"
+                                   class="col-form-label">Leave Fair Assistance (LFA)</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Leave Fair Allowance / LFA refers to the annual compensation the taxpayer received that is connected to paid time off or vacation."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.lfa }}
+                        </td>
+                        <td>
+                            <input id="id_lfa_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_lfa_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.total_bonus.id_for_label }}"
+                                   class="col-form-label">Bonus</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Bonus / Ex-gratia refers to the annual income the taxpayer received for a sum of money paid when there was no obligation or liability to pay it. For example, a holiday bonus or a lump sum payment over and above the pension benefits of a retiring employee."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.total_bonus }}
+                        </td>
+                        <td>
+                            <input id="id_total_bonus_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_total_bonus_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.employers_contribution_to_pf.id_for_label }}"
+                                   class="col-form-label">Employers Contribution To Provident Fund</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="This refers to the total annual contribution to a provident fund which has been recognised by the Commissioner."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.employers_contribution_to_pf }}
+                        </td>
+                        <td>
+                            <input id="id_employers_contribution_to_pf_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_employers_contribution_to_pf_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <th scope="col" class="col-6">Total</th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_income"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_exempted"></th>
+                        <th scope="col" class="text-align-right" style="padding-right: 20px" id="total_taxable"></th>
+                </tfoot>
+            </table>
+            <div style="text-align: center;padding-top: 20px">
+                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script type="application/javascript">
+        function goToIncomeHome() {
+            location.href='{% url "income" %}';
+        }
+
+        $(function () {
+            setExemptedAndTaxableColumns();
+            setAllTotalRow();
+        });
+
+        function setAllTotalRow() {
+            setYearlyIncomeTotalRow();
+            setExemptedTotalRow();
+            setTaxableTotalRow();
+        }
+
+        function setYearlyIncomeTotalRow() {
+            let basic = parseDecimalInputValue('id_basic');
+            let houseRent = parseDecimalInputValue('id_house_rent');
+            let medical = parseDecimalInputValue('id_medical');
+            let conveyance = parseDecimalInputValue('id_conveyance');
+            let lfa = parseDecimalInputValue('id_lfa');
+            let total_bonus = parseDecimalInputValue('id_total_bonus');
+            let employers_contribution_to_pf = parseDecimalInputValue('id_employers_contribution_to_pf');
+            let totalIncome = basic + houseRent + medical + conveyance + lfa + total_bonus + employers_contribution_to_pf;
+
+            setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
+        }
+
+        function setExemptedTotalRow() {
+            let basicE = parseDecimalInputValue('id_basic_exempted');
+            let houseRentE = parseDecimalInputValue('id_house_rent_exempted');
+            let medicalE = parseDecimalInputValue('id_medical_exempted');
+            let conveyanceE = parseDecimalInputValue('id_conveyance_exempted');
+            let lfaE = parseDecimalInputValue('id_lfa_exempted');
+            let totalBonusE = parseDecimalInputValue('id_total_bonus_exempted');
+            let employersContributionToPfE = parseDecimalInputValue('id_employers_contribution_to_pf_exempted');
+            let totalExempted = basicE + houseRentE + medicalE + conveyanceE + lfaE + totalBonusE + employersContributionToPfE;
+
+            setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
+        }
+
+        function setTaxableTotalRow() {
+            let basicT = parseDecimalInputValue('id_basic_taxable');
+            let houseRentT = parseDecimalInputValue('id_house_rent_taxable');
+            let medicalT = parseDecimalInputValue('id_medical_taxable');
+            let conveyanceT = parseDecimalInputValue('id_conveyance_taxable');
+            let lfaT = parseDecimalInputValue('id_lfa_taxable');
+            let totalBonusT = parseDecimalInputValue('id_total_bonus_taxable');
+            let employersContributionToPfET = parseDecimalInputValue('id_employers_contribution_to_pf_taxable');
+            let totalTaxable = basicT + houseRentT + medicalT + conveyanceT + lfaT + totalBonusT + employersContributionToPfET;
+
+            setLabelValue('total_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
+        }
+
+        function setExemptedAndTaxableColumns() {
+            let hasBasicInputValue = hasInputValue('id_basic');
+            let hasHouseRentInputValue = hasInputValue('id_house_rent');
+            let hasMedicalInputValue = hasInputValue('id_medical');
+            let hasConveyanceInputValue = hasInputValue('id_conveyance');
+            let hasLFAInputValue = hasInputValue('id_lfa');
+            let hasBonusInputValue = hasInputValue('id_total_bonus');
+            let hasPFInputValue = hasInputValue('id_employers_contribution_to_pf');
+
+            let basic = parseDecimalInputValue('id_basic');
+            let lfa = parseDecimalInputValue('id_lfa');
+            let bonus = parseDecimalInputValue('id_total_bonus');
+            let pf = parseDecimalInputValue('id_employers_contribution_to_pf');
+
+            checkAndSet(hasBasicInputValue, 'id_basic_exempted', 0);
+            checkAndSet(hasBasicInputValue, 'id_basic_taxable', basic);
+            setExemptedAndTaxableAjax(hasHouseRentInputValue, 'house_rent');
+            setExemptedAndTaxableAjax(hasMedicalInputValue, 'medical');
+            setExemptedAndTaxableAjax(hasConveyanceInputValue, 'conveyance');
+            checkAndSet(hasLFAInputValue, 'id_lfa_exempted', lfa);
+            checkAndSet(hasLFAInputValue, 'id_lfa_taxable', 0);
+            checkAndSet(hasBonusInputValue, 'id_total_bonus_exempted', 0);
+            checkAndSet(hasBonusInputValue, 'id_total_bonus_taxable', bonus);
+            checkAndSet(hasPFInputValue, 'id_employers_contribution_to_pf_exempted', 0);
+            checkAndSet(hasPFInputValue, 'id_employers_contribution_to_pf_taxable', pf);
+        }
+
+        function checkAndSet(shouldSet, inputId, inputValue) {
+            if (shouldSet) {
+                setInputValue(inputId, addCommas(formatToTwoDecimalPlaces(inputValue.toString())));
+            } else {
+                setInputValue(inputId, '');
+            }
+        }
+
+        function onInputBlurred(textBoxObject) {
+            if (!isNaN(removeCommas(textBoxObject.value))) {
+                textBoxObject.value = removeCommas(textBoxObject.value);
+                textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
+                setExemptedAndTaxableColumns();
+                setAllTotalRow();
+            }
+        }
+
+        function setExemptedAndTaxableAjax(shouldSet, category) {
+            if (shouldSet) {
+                let url = '{% url "get_category_wise_exempted_value" %}';
+                let data = {};
+
+                if (category === 'house_rent') {
+                    data = {
+                        'basic': parseDecimalInputValue('id_basic'),
+                        'house_rent': parseDecimalInputValue('id_house_rent'),
+                        'category': category
+                    };
+                } else if (category === 'medical') {
+                    data = {
+                        'basic': parseDecimalInputValue('id_basic'),
+                        'medical': parseDecimalInputValue('id_medical'),
+                        'category': category
+                    };
+                } else if (category === 'conveyance') {
+                    data = {
+                        'conveyance': parseDecimalInputValue('id_conveyance'),
+                        'category': category
+                    };
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        setInputValue('id_' + category + '_exempted', addCommas(formatToTwoDecimalPlaces(data[category + '_exempted'])));
+                        let taxableAmount = parseDecimalInputValue('id_' + category) - parseFloat(data[category + '_exempted']);
+                        setInputValue('id_' + category + '_taxable', addCommas(formatToTwoDecimalPlaces(taxableAmount)));
+                        setExemptedTotalRow();
+                        setTaxableTotalRow();
+                    }
+                });
+            } else {
+                setInputValue('id_' + category + '_exempted', '');
+                setInputValue('id_' + category + '_taxable', '');
+            }
+        }
+    </script>
+{% endblock content %}
