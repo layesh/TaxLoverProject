@@ -1814,7 +1814,7 @@ def generate(request):
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="return.pdf"'
     # find the template and render it.
     template = get_template('taxlover/return-form.html')
     html = template.render(context)

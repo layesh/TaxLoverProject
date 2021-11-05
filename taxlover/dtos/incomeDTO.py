@@ -3,7 +3,7 @@ from taxlover.services.income_service import get_total_other_income_taxable, get
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
     get_current_financial_year_tax_refund_by_payer
 from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer
-from taxlover.utils import get_income_years, create_or_get_current_income_obj
+from taxlover.utils import get_income_years, create_or_get_current_income_obj, get_gross_tax_before_tax_rebate
 
 
 class IncomeDTO:
@@ -74,4 +74,9 @@ class IncomeDTO:
 
         self.total_income = (self.total_salary_income if salary else 0) + \
                             (self.total_other_income if other_income else 0)
+
+        self.total_taxable = (self.total_salary_taxable if salary else 0) + \
+                            (self.total_other_income_taxable if other_income else 0)
+
+        self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(self.total_taxable)
 

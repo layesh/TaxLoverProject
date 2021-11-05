@@ -928,7 +928,7 @@
             <td width="520px" colspan="3" class="table-td-vertical-align-top">
                 Tax Computation and Payment
             </td>
-            <td class="table-td-vertical-align-top" style="text-align: center">
+            <td class="table-td-vertical-align-top text-align-right">
                 Amount (Tk)
             </td>
         </tr>
@@ -942,8 +942,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Gross tax before tax rebate
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.gross_tax_before_tax_rebate|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">

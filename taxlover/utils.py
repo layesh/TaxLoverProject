@@ -1,6 +1,12 @@
 import re
 from decimal import Decimal
 
+from taxlover.constants import INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT, \
+    INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT, \
+    INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_FIRST_SLAB_TAX_RATE, \
+    INDIVIDUAL_TAX_PAYER_SECOND_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_THIRD_SLAB_TAX_RATE, \
+    INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_TAX_RATE, \
+    INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE
 from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities
 import datetime
 
@@ -87,6 +93,13 @@ def add_comma(value):
         return value
 
 
+def add_comma_whole(value):
+    if value:
+        return f'{value:,.0f}'
+    else:
+        return value
+
+
 def has_other_income(user_id):
     financial_year_beg, financial_year_end = get_income_years()
 
@@ -140,3 +153,32 @@ def create_or_get_current_liabilities_obj(user_id):
         latest_liabilities = Liabilities.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
                                                         income_year_end=income_year_end)
     return latest_liabilities
+
+
+def get_gross_tax_before_tax_rebate(total_taxable):
+    first_slab_amount = INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT
+    second_slab_amount = max(min(
+        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT), 0)
+    third_slab_amount = max(min(
+        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT,
+        INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT), 0)
+    fourth_slab_amount = max(min(
+        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT), 0)
+    fifth_slab_amount = max(min(
+        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT,
+        INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT), 0)
+    sixth_slab_amount = max(
+        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT -
+        INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT, 0)
+
+    gross_tax_before_tax_rebate = first_slab_amount * INDIVIDUAL_TAX_PAYER_FIRST_SLAB_TAX_RATE + \
+                                  second_slab_amount * INDIVIDUAL_TAX_PAYER_SECOND_SLAB_TAX_RATE + \
+                                  third_slab_amount * INDIVIDUAL_TAX_PAYER_THIRD_SLAB_TAX_RATE + \
+                                  fourth_slab_amount * INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_TAX_RATE + \
+                                  fifth_slab_amount * INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_TAX_RATE + \
+                                  sixth_slab_amount * INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE
+
+    return gross_tax_before_tax_rebate
