@@ -72,3 +72,6 @@ class IncomeDTO:
 
         self.has_form_error = has_form_error
 
+        self.total_income = (self.total_salary_income if salary else 0) + \
+                            (self.total_other_income if other_income else 0)
+

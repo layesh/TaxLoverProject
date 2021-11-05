@@ -197,8 +197,14 @@
         vertical-align: middle;
     }
 
+    .text-align-right {
+        text-align: right;
+    }
+
 </style>
 <body>
+    {% load tax_extras %}
+
     {#    Page 01 #}
 
     <table>
@@ -750,7 +756,7 @@
             <td width="520px" colspan="3" class="table-td-vertical-align-top">
                 Particulars of Total Income
             </td>
-            <td class="table-td-vertical-align-top" style="text-align: center">
+            <td class="table-td-vertical-align-top text-align-right">
                 Amount (Tk)
             </td>
         </tr>
@@ -767,8 +773,10 @@
             <td width="60px" class="table-td-vertical-align-top">
                 S.21
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {% if income_dto.has_salary_income %}
+                    {{ income_dto.total_salary_income|format_decimal }}
+                {% endif %}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -851,8 +859,10 @@
             <td width="60px" class="table-td-vertical-align-top">
                 S.33
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {% if income_dto.has_other_sources %}
+                    {{ income_dto.total_other_income|format_decimal }}
+                {% endif %}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -907,8 +917,8 @@
             <td width="60px" class="table-td-vertical-align-top">
 
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_income|format_decimal }}
             </td>
         </tr>
     </table>

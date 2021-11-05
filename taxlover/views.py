@@ -1807,8 +1807,10 @@ def link_callback(uri, rel):
 def generate(request):
     tax_payer = TaxPayer.objects.get(user_id=request.user.id)
     tax_payer_dto = TaxPayerDTO(tax_payer)
+    income_dto = IncomeDTO(tax_payer, False)
     context = {
         'tax_payer': tax_payer_dto,
+        'income_dto': income_dto
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
