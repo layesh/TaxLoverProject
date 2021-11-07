@@ -6,7 +6,7 @@ from taxlover.services.salary_service import get_total_taxable, get_current_fina
     get_current_financial_year_total_tax_deducted_at_source_by_payer, \
     get_current_financial_year_total_advance_tax_paid_by_payer
 from taxlover.utils import get_income_years, create_or_get_current_income_obj, get_gross_tax_before_tax_rebate, \
-    get_tax_rebate, get_net_tax_after_rebate
+    get_tax_rebate, get_net_tax_after_rebate, get_max_investment_amount
 
 
 class IncomeDTO:
@@ -83,7 +83,10 @@ class IncomeDTO:
 
         self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(self.total_taxable)
 
-        self.tax_rebate = get_tax_rebate(self.total_taxable, self.total_invested_amount if tax_rebate else 0)
+        max_investment_amount = get_max_investment_amount(self.total_invested_amount if tax_rebate else 0,
+                                                          self.total_taxable)
+
+        self.tax_rebate = get_tax_rebate(self.total_taxable, max_investment_amount)
 
         self.net_tax_after_rebate = get_net_tax_after_rebate(self.gross_tax_before_tax_rebate,
                                                              self.tax_rebate)

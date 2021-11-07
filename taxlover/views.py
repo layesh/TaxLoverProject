@@ -56,12 +56,14 @@ from django.views.generic import (
 @login_required
 def home(request):
     tax_year_beg, tax_year_end = get_assessment_years()
+    income_dto = IncomeDTO(request.user.id, False)
 
     context = {
         'salaries': Salary.objects.all(),
         'title': 'Dashboard',
         'tax_year_beg': tax_year_beg,
-        'tax_year_end': tax_year_end
+        'tax_year_end': tax_year_end,
+        'income_dto': income_dto
     }
     return render(request, 'taxlover/home.html', context)
 
