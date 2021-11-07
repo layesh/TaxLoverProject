@@ -2,8 +2,11 @@ from taxlover.services.income_service import get_total_other_income_taxable, get
     get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
     get_current_financial_year_tax_refund_by_payer
-from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer
-from taxlover.utils import get_income_years, create_or_get_current_income_obj, get_gross_tax_before_tax_rebate
+from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer, \
+    get_current_financial_year_total_tax_deducted_at_source_by_payer, \
+    get_current_financial_year_total_advance_tax_paid_by_payer
+from taxlover.utils import get_income_years, create_or_get_current_income_obj, get_gross_tax_before_tax_rebate, \
+    get_tax_rebate, get_net_tax_after_rebate
 
 
 class IncomeDTO:
@@ -80,3 +83,25 @@ class IncomeDTO:
 
         self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(self.total_taxable)
 
+        self.tax_rebate = get_tax_rebate(self.total_taxable, self.total_invested_amount if tax_rebate else 0)
+
+        self.net_tax_after_rebate = get_net_tax_after_rebate(self.gross_tax_before_tax_rebate,
+                                                             self.tax_rebate)
+
+        self.total_tax_deducted_at_source = get_current_financial_year_total_tax_deducted_at_source_by_payer(
+            tax_payer_id)
+
+        self.total_advance_tax = get_current_financial_year_total_advance_tax_paid_by_payer(
+            tax_payer_id)
+
+        self.tax_refund = tax_refund.get_refund if tax_refund else 0
+
+        self.paid_with_return = self.net_tax_after_rebate - self.total_tax_deducted_at_source - \
+                                self.total_advance_tax - self.tax_refund
+
+        self.total_paid_and_adjusted = self.total_tax_deducted_at_source + self.total_advance_tax + self.tax_refund + \
+                                       self.paid_with_return
+
+        self.deficit = self.net_tax_after_rebate - self.total_paid_and_adjusted
+
+        self.exempted_income = (self.total_salary_income - self.total_salary_taxable) if salary else 0

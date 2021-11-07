@@ -953,8 +953,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Tax rebate (annex Schedule 24D)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.tax_rebate|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -964,8 +964,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Net tax after tax rebate
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.net_tax_after_rebate|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1008,8 +1008,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Total amount payable
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.net_tax_after_rebate|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1019,8 +1019,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Tax deducted or collected at source <u>(attach proof)</u>
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_tax_deducted_at_source|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1030,8 +1030,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Advance tax paid <u>(attach proof)</u>
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_advance_tax|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 18px">
@@ -1041,8 +1041,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Adjustment of tax refund [mention assessment year(s) of refund]
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.tax_refund|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1052,8 +1052,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Amount paid with return <u>(attach proof)</u>
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.paid_with_return|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1063,8 +1063,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Total amount paid and adjusted (42+43+44+45)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_paid_and_adjusted|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1074,8 +1074,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Deficit or excess (refundable) (41-46)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.deficit|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1085,8 +1085,8 @@
             <td width="460px" class="table-td-vertical-align-top">
                 Tax exempted income
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.exempted_income|format_decimal_to_whole }}
             </td>
         </tr>
     </table>
@@ -1112,30 +1112,54 @@
             <td align="center" style="font-size: 17px;">
                 <table style="padding: 5px 2px 2px 3px">
                     <tr>
-                        <td style="width: 170px; text-align: right;padding-right: 12px;vertical-align: middle">TIN:</td>
-                        <td class="assessment-year-inner-td-even-3"><b>2</b></td>
+                        <td class="tin-label">TIN:</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_4 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_5 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_6 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_7 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_8 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_9 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_10 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_11 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-2"></td>
-                        <td class="assessment-year-inner-td-even-3">2</td>
+                        <td class="assessment-year-inner-td-even-3">
+                            <span class="filled-text">{{ tax_payer.tin_digit_12 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>

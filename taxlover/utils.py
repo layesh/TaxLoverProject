@@ -6,7 +6,8 @@ from taxlover.constants import INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL
     INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_FIRST_SLAB_TAX_RATE, \
     INDIVIDUAL_TAX_PAYER_SECOND_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_THIRD_SLAB_TAX_RATE, \
     INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_TAX_RATE, \
-    INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE
+    INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_01, \
+    INDIVIDUAL_TAX_PAYER_TAX_REBATE_TAXABLE_AMOUNT_SLAB, INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_02
 from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities
 import datetime
 
@@ -182,3 +183,17 @@ def get_gross_tax_before_tax_rebate(total_taxable):
                                   sixth_slab_amount * INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE
 
     return gross_tax_before_tax_rebate
+
+
+def get_tax_rebate(total_taxable, total_investment):
+    tax_rebate = (total_investment * INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_01) \
+        if (total_taxable < INDIVIDUAL_TAX_PAYER_TAX_REBATE_TAXABLE_AMOUNT_SLAB) \
+        else (total_investment * INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_02)
+
+    return tax_rebate
+
+
+def get_net_tax_after_rebate(gross_tax_before_tax_rebate, tax_rebate):
+    return min(gross_tax_before_tax_rebate - tax_rebate, gross_tax_before_tax_rebate)
+
+

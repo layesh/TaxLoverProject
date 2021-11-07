@@ -7,9 +7,15 @@ register = template.Library()
 
 @register.filter
 def format_decimal(value):
-    return add_comma(value)
+    if value == 0:
+        return 0
+    else:
+        return add_comma(value)
 
 
 @register.filter
 def format_decimal_to_whole(value):
-    return add_comma_whole(value)
+    if value == 0:
+        return 0
+    else:
+        return add_comma_whole(value)

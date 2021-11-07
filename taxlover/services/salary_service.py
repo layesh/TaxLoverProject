@@ -1,9 +1,10 @@
 from decimal import Decimal
 from ExtractTable import ExtractTable
+from django.db.models import Sum
 
 from taxlover.constants import EXTRACT_TABLE_API_KEY, HOUSE_RENT_MONTHLY_EXEMPTED_RATE, MEDICAL_YEARLY_EXEMPTED_RATE, \
     CONVEYANCE_YEARLY_EXEMPTED_RATE
-from taxlover.models import Salary
+from taxlover.models import Salary, DeductionAtSource, AdvanceTax
 from taxlover.utils import parse_data, get_income_years
 
 
@@ -84,3 +85,29 @@ def get_total_taxable(salary):
            salary.get_conveyance - get_conveyance_exempted(salary.get_conveyance) + \
            salary.get_total_bonus + \
            salary.get_employers_contribution_to_pf
+
+
+def get_current_financial_year_total_tax_deducted_at_source_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    total_deduction_at_source = DeductionAtSource.objects.filter(tax_payer_id=payer_id,
+                                                                 financial_year_beg=financial_year_beg,
+                                                                 financial_year_end=financial_year_end).aggregate(
+        Sum('tax_deducted_at_source'))
+
+    return total_deduction_at_source['tax_deducted_at_source__sum'] if total_deduction_at_source[
+                                                                           'tax_deducted_at_source__sum'] is not None \
+        else 0
+
+
+def get_current_financial_year_total_advance_tax_paid_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    total_advance_paid_tax = AdvanceTax.objects.filter(tax_payer_id=payer_id,
+                                                       financial_year_beg=financial_year_beg,
+                                                       financial_year_end=financial_year_end).aggregate(
+        Sum('advance_paid_tax'))
+
+    return total_advance_paid_tax['advance_paid_tax__sum'] if total_advance_paid_tax[
+                                                                  'advance_paid_tax__sum'] is not None \
+        else 0
