@@ -1215,7 +1215,11 @@
                 <table>
                     <tr>
                         <td style="padding: 0 0 0 2px; vertical-align: top">Yes</td>
-                        <td class="assessment-year-inner-td-even"></td>
+                        <td class="assessment-year-inner-td-even padding-04">
+                            {% if not income_dto.eligible_for_one_page_return %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -1223,7 +1227,11 @@
                 <table>
                     <tr>
                         <td style="padding: 0 0 0 2px; vertical-align: top">No</td>
-                        <td class="assessment-year-inner-td-even"></td>
+                        <td class="assessment-year-inner-td-even padding-04">
+                            {% if income_dto.eligible_for_one_page_return %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -1240,16 +1248,32 @@
                     <tr>
                         <td width="25px"></td>
                         <td class="assessment-year-inner-td-even-4" style="padding: 4px">24A</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if income_dto.has_salary_income %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                         <td width="20px"></td>
                         <td class="assessment-year-inner-td-even-4" style="padding: 4px">24B</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if income_dto.has_rental_property %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                         <td width="20px"></td>
                         <td class="assessment-year-inner-td-even-4" style="padding: 4px">24C</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if income_dto.has_business %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                         <td width="20px"></td>
                         <td class="assessment-year-inner-td-even-4" style="padding: 4px">24D</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if income_dto.has_tax_rebate %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -1266,10 +1290,18 @@
                     <tr>
                         <td width="22px"></td>
                         <td class="assessment-year-inner-td-even-2" style="padding: 4px">IT-10B2016</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if not income_dto.eligible_for_one_page_return %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                         <td width="20px"></td>
                         <td class="assessment-year-inner-td-even-2" style="padding: 4px">IT-10BB2016</td>
-                        <td class="assessment-year-inner-td-even" style="padding: 4px"></td>
+                        <td class="assessment-year-inner-td-even" style="padding: 4px">
+                            {% if not income_dto.eligible_for_one_page_return %}
+                                <span class="tick">&#10003;</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -1306,6 +1338,8 @@
         <tr style="padding-bottom: 18px">
             <td class="table-td-vertical-align-top">
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 Signature
@@ -1317,16 +1351,20 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                     </tr>
                 </table>
             </td>
@@ -1356,16 +1394,20 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1"></td>
+                        <td class="assessment-year-inner-td-even-1"></td>
                     </tr>
                 </table>
             </td>

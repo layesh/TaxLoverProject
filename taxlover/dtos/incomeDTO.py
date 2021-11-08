@@ -1,3 +1,4 @@
+from taxlover.constants import INDIVIDUAL_TAX_PAYER_ONE_PAGE_TAXABLE_LIMIT
 from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
     get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
@@ -108,3 +109,8 @@ class IncomeDTO:
         self.deficit = self.net_tax_after_rebate - self.total_paid_and_adjusted
 
         self.exempted_income = (self.total_salary_income - self.total_salary_taxable) if salary else 0
+
+        self.eligible_for_one_page_return = True if self.total_taxable < INDIVIDUAL_TAX_PAYER_ONE_PAGE_TAXABLE_LIMIT \
+            else False
+
+
