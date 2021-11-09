@@ -1064,7 +1064,7 @@
                 Total amount paid and adjusted (42+43+44+45)
             </td>
             <td class="table-td-vertical-align-top text-align-right">
-                {{ income_dto.total_paid_and_adjusted|format_decimal }}
+                {{ income_dto.total_paid_and_adjusted|format_decimal_to_whole }}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">
@@ -1736,14 +1736,14 @@
             <td width="255px" class="table-td-vertical-align-top">
                 Basic pay
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.basic|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.basic_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.basic_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">

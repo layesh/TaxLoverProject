@@ -8,7 +8,7 @@ register = template.Library()
 @register.filter
 def format_decimal(value):
     if value == 0:
-        return 0
+        return '0.00'
     else:
         return add_comma(value)
 

@@ -55,6 +55,8 @@ class IncomeDTO:
             self.total_salary_taxable = get_total_taxable(salary)
             self.total_salary_income = salary.get_total
             self.basic = salary.get_basic
+            self.basic_exempted = 0
+            self.basic_taxable = self.basic - self.basic_exempted
 
         if other_income:
             self.otherIncomeId = other_income.id
