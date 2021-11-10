@@ -198,6 +198,13 @@ def get_net_tax_after_rebate(gross_tax_before_tax_rebate, tax_rebate):
     return min(gross_tax_before_tax_rebate - tax_rebate, gross_tax_before_tax_rebate)
 
 
-def get_max_investment_amount(total_invested_amount, total_taxable_amount):
-    return min(total_taxable_amount * INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT, total_invested_amount,
+def get_total_rebate_on_taxable_income(total_taxable_amount):
+    return total_taxable_amount * INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT
+
+
+def get_eligible_amount_of_investment_for_rebate(total_invested_amount, total_taxable_amount):
+    return min(get_total_rebate_on_taxable_income(total_taxable_amount), total_invested_amount,
                INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT)
+
+
+

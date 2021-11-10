@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
     CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth
 from taxlover.utils import get_income_years
@@ -125,12 +127,30 @@ def get_current_financial_year_agricultural_property_by_payer(payer_id):
                                                financial_year_end=financial_year_end)
 
 
+def get_total_agricultural_property_value(agricultural_properties):
+    total = agricultural_properties.aggregate(Sum('property_value'))
+
+    return total['property_value__sum'] if total['property_value__sum'] is not None else 0
+
+
 def get_current_financial_year_investments_by_payer(payer_id):
     financial_year_beg, financial_year_end = get_income_years()
 
     return Investment.objects.filter(tax_payer_id=payer_id,
                                      financial_year_beg=financial_year_beg,
                                      financial_year_end=financial_year_end)
+
+
+def get_total_investment_value(investments):
+    total = investments.aggregate(Sum('value'))
+
+    return total['value__sum'] if total['value__sum'] is not None else 0
+
+
+def get_total_investment_value_by_type(investments, investment_type):
+    total = investments.filter(type=investment_type).aggregate(Sum('value'))
+
+    return total['value__sum'] if total['value__sum'] is not None else 0
 
 
 def get_current_financial_year_motor_vehicle_by_payer(payer_id):
@@ -157,12 +177,28 @@ def get_current_financial_year_jewellery_by_payer(payer_id):
                                     financial_year_end=financial_year_end)
 
 
+def get_total_jewellery_value(jewelleries):
+    total = jewelleries.aggregate(Sum('jewellery_value'))
+
+    return total['jewellery_value__sum'] if total['jewellery_value__sum'] is not None else 0
+
+
 def get_current_financial_year_electronic_equipment_by_payer(payer_id):
     financial_year_beg, financial_year_end = get_income_years()
 
     return ElectronicEquipment.objects.filter(tax_payer_id=payer_id,
                                               financial_year_beg=financial_year_beg,
                                               financial_year_end=financial_year_end)
+
+
+def get_total_furniture_and_electronic_items_value(furnitures, electronic_equipments):
+    total_furniture_value = furnitures.aggregate(Sum('furniture_value'))
+    total_electronic_equipments_value = electronic_equipments.aggregate(Sum('equipment_value'))
+
+    total_value = (total_furniture_value['furniture_value__sum'] if total_furniture_value['furniture_value__sum'] is not None else 0) + \
+                  (total_electronic_equipments_value['equipment_value__sum'] if total_electronic_equipments_value['equipment_value__sum'] is not None else 0)
+
+    return total_value
 
 
 def get_current_financial_year_cash_assets_by_payer(payer_id):
@@ -189,9 +225,20 @@ def get_current_financial_year_other_assets_receipt_by_payer(payer_id):
                                              financial_year_end=financial_year_end)
 
 
+def get_total_other_asset_value(other_assets, other_assets_receipt):
+    total_other_asset_value = other_assets.aggregate(Sum('asset_value'))
+    total_other_assets_receipt_value = other_assets_receipt.aggregate(Sum('other_asset_value'))
+
+    total_value = (total_other_asset_value['asset_value__sum'] if total_other_asset_value['asset_value__sum'] is not None else 0) + \
+                  (total_other_assets_receipt_value['other_asset_value__sum'] if total_other_assets_receipt_value['other_asset_value__sum'] is not None else 0)
+
+    return total_value
+
+
 def get_current_financial_year_previous_year_net_wealth_by_payer(payer_id):
     financial_year_beg, financial_year_end = get_income_years()
 
     return PreviousYearNetWealth.objects.filter(tax_payer_id=payer_id,
                                                 financial_year_beg=financial_year_beg,
                                                 financial_year_end=financial_year_end).first()
+

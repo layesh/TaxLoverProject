@@ -1804,14 +1804,14 @@
             <td class="table-td-vertical-align-top">
                 House rent allowance
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.house_rent|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.house_rent_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.house_rent_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1821,14 +1821,14 @@
             <td class="table-td-vertical-align-top">
                 Medical allowance
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.medical|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.medical_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.medical_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1838,14 +1838,14 @@
             <td class="table-td-vertical-align-top">
                 Conveyance allowance
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.conveyance|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.conveyance_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.conveyance_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1889,14 +1889,14 @@
             <td class="table-td-vertical-align-top">
                 Leave allowance
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.lfa|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.lfa_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.lfa_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1940,14 +1940,14 @@
             <td class="table-td-vertical-align-top">
                 Bonus / Ex-gratia
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.bonus|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.bonus_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.bonus_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1974,14 +1974,14 @@
             <td class="table-td-vertical-align-top">
                 Employer’s contribution to a recognized provident fund
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.employers_contribution_to_pf|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.employers_contribution_to_pf_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.employers_contribution_to_pf_taxable|format_decimal }}
             </td>
         </tr>
         <tr>
@@ -2059,14 +2059,14 @@
             <td class="table-td-vertical-align-top">
                 Total
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_salary_income|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_salary_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_salary_taxable|format_decimal }}
             </td>
         </tr>
     </table>
@@ -2126,18 +2126,30 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
                         <td class="assessment-year-inner-td-hyphen">-</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_3 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -2146,6 +2158,8 @@
             </td>
             <td class="table-td-vertical-align-top">
                 TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
             </td>
         </tr>
     </table>
@@ -2435,18 +2449,30 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
                         <td class="assessment-year-inner-td-hyphen">-</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_3 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -2455,6 +2481,8 @@
             </td>
             <td class="table-td-vertical-align-top">
                 TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
             </td>
         </tr>
     </table>
@@ -2745,18 +2773,30 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
                         <td class="assessment-year-inner-td-hyphen">-</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_3 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -2765,6 +2805,8 @@
             </td>
             <td class="table-td-vertical-align-top">
                 TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
             </td>
         </tr>
     </table>
@@ -2774,7 +2816,7 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Particulars of rebatable investment, contribution, etc.
             </td>
-            <td width="135px" class="table-td-vertical-align-top" style="text-align: center">
+            <td width="135px" class="table-td-vertical-align-top text-align-right">
                 Amount (Tk)
             </td>
         </tr>
@@ -2788,8 +2830,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Life insurance premium
             </td>
-            <td width="135px" class="table-td-vertical-align-top">
-
+            <td width="135px" class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.life_insurance_premium_allowed|format_investment_amount }}
             </td>
         </tr>
         <tr>
@@ -2799,8 +2841,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Contribution to deposit pension scheme (not exceeding allowable limit)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.contribution_to_dps_allowed|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2810,8 +2852,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Investment in approved savings certificate
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.investment_in_savings_certificates_sanchaypatra|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2821,8 +2863,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Investment in approved debenture or debenture stock, Stock or Shares
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.investment_in_approved_debenture_or_stock_or_shares|format_investment_amount }}
             </td>
         </tr>
         <tr>
@@ -2832,8 +2874,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Contribution to provident fund to which Provident Fund Act, 1925 applies
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.contribution_to_pf_as_per_act_1925|format_investment_amount }}
             </td>
         </tr>
         <tr>
@@ -2843,8 +2885,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Self contribution and employer’s contribution to Recognized Provident Fund
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.self_and_employers_contribution_to_pf|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2854,8 +2896,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Contribution to Super Annuation Fund
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.contribution_to_super_annuation_fund|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2865,8 +2907,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Contribution to Benevolent Fund and Group Insurance Premium
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.contribution_to_benevolent_fund_and_group_insurance_premium|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2876,8 +2918,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Contribution to Zakat Fund
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.contribution_to_zakat_fund|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2887,8 +2929,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Others, if any ( give details )
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.others_allowable_investment|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2898,8 +2940,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Total allowable investment, contribution etc.
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_allowed_amount|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px">
@@ -2909,8 +2951,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Eligible amount for rebate (the lesser of 14A, 14B or 14C)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.eligible_amount_of_investment_for_rebate|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px;font-size: 15px">
@@ -2920,8 +2962,8 @@
             <td class="table-td-vertical-align-top">
                 Total allowable investment, contribution, etc. (as in 13)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_allowed_amount|format_decimal }}
             </td>
         </tr>
         <tr style="font-size: 15px">
@@ -2929,10 +2971,10 @@
                 14B
             </td>
             <td class="table-td-vertical-align-top">
-                ........ % of the total income [excluding any income for which a tax exemption or a reduced rate is applicable under sub-section (4) of section 44 or any income from any source or sources mentioned in clause (a) of sub-section (2) of section 82C.]
+                {{ income_dto.investment_rate_on_taxable_amount|format_decimal_to_whole }}% of the total income [excluding any income for which a tax exemption or a reduced rate is applicable under sub-section (4) of section 44 or any income from any source or sources mentioned in clause (a) of sub-section (2) of section 82C.]
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_rebate_on_taxable_income|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 7px; font-size: 15px">
@@ -2942,8 +2984,8 @@
             <td class="table-td-vertical-align-top">
                 1.5 crore
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.investment_max_limit|format_decimal }}
             </td>
         </tr>
         <tr>
@@ -2953,8 +2995,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Amount of tax rebate calculated on eligible amount (Serial14) under section 44(2)(b)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.tax_rebate|format_decimal }}
             </td>
         </tr>
     </table>
@@ -2969,6 +3011,8 @@
         <tr style="padding-bottom: 20px;">
             <td>
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td>
                 Signature & Date
@@ -3037,18 +3081,30 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
                         <td class="assessment-year-inner-td-hyphen">-</td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_2 }}</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd"></td>
-                        <td class="assessment-year-inner-td-even">2</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_3 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -3065,16 +3121,32 @@
                 <table class="assessment-year-inner">
                     <tr>
                         <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">3</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">0</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">0</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">6</span>
+                        </td>
                         <td class="assessment-year-inner-td-odd-1"></td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
-                        <td class="assessment-year-inner-td-even-1">2</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -3085,12 +3157,16 @@
             </td>
             <td class="table-td-vertical-align-top">
                 Name of the Assessee
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td width="38px" class="table-td-vertical-align-top">
                 04
             </td>
             <td class="table-td-vertical-align-top">
                 TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
             </td>
         </tr>
     </table>
@@ -3106,7 +3182,7 @@
             <td colspan="5" class="table-td-vertical-align-top">
                 Particulars
             </td>
-            <td width="140px" class="table-td-vertical-align-top" style="text-align: center">
+            <td width="140px" class="table-td-vertical-align-top text-align-right">
                 Amount (Tk)
             </td>
         </tr>
@@ -3175,8 +3251,8 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Agricultural property <u>(as in Schedule 25)</u>
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_agricultural_properties_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3186,8 +3262,8 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Financial assets value (08A+08B+08C+08D+08E)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3197,8 +3273,8 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Share, debentures etc.
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_shares_debentures_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3208,8 +3284,8 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Savings certificate, bonds and other government securities
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_saving_cert_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3219,8 +3295,8 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Fixed deposit, Term deposits and DPS
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_saving_scheme_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 30px">
@@ -3230,8 +3306,8 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Loans given to others <u>(mention name and TIN)</u>
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_loans_given_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3241,8 +3317,8 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Other financial assets (give details)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_other_investment_investment_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3252,7 +3328,7 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Motor car (s) (use additional papers if more than two cars)
             </td>
-            <td class="table-td-vertical-align-top">
+            <td class="table-td-vertical-align-top" rowspan="2">
 
             </td>
         </tr>
@@ -3263,14 +3339,11 @@
             <td class="table-td-vertical-align-top">
                 Brand name
             </td>
-            <td class="table-td-vertical-align-top" style="text-align: center" width="120px">
+            <td class="table-td-vertical-align-top" style="text-align: center" width="95px">
                 Engine (CC)
             </td>
-            <td class="table-td-vertical-align-top" width="160px">
+            <td class="table-td-vertical-align-top" width="230px">
                 Registration No.
-            </td>
-            <td class="table-td-vertical-align-top">
-
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3278,16 +3351,16 @@
                 1
             </td>
             <td class="table-td-vertical-align-top">
-
+                {{ asset_dto.motor_vehicles_01.get_brand_or_type }}
+            </td>
+            <td class="table-td-vertical-align-top" style="text-align: center">
+                {{ asset_dto.motor_vehicles_01.get_engine_capacity }}
             </td>
             <td class="table-td-vertical-align-top">
-
+                {{ asset_dto.motor_vehicles_01.get_reg_no }}
             </td>
-            <td class="table-td-vertical-align-top">
-
-            </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.motor_vehicles_01.get_value|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3295,16 +3368,16 @@
                 2
             </td>
             <td class="table-td-vertical-align-top">
-
+                {{ asset_dto.motor_vehicles_02.get_brand_or_type }}
+            </td>
+            <td class="table-td-vertical-align-top" style="text-align: center">
+                {{ asset_dto.motor_vehicles_02.get_engine_capacity }}
             </td>
             <td class="table-td-vertical-align-top">
-
+                {{ asset_dto.motor_vehicles_02.get_reg_no }}
             </td>
-            <td class="table-td-vertical-align-top">
-
-            </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.motor_vehicles_02.get_value|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3314,8 +3387,8 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Gold, diamond, gems and other items (mention quantity)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_jewellery_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3325,8 +3398,8 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Furniture, equipment and electronic items
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_furniture_and_electronic_items_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3336,8 +3409,8 @@
             <td colspan="4" class="table-td-vertical-align-top">
                 Other assets of significant value
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_other_asset_value|format_investment_amount }}
             </td>
         </tr>
     </table>

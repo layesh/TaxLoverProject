@@ -19,3 +19,12 @@ def format_decimal_to_whole(value):
         return 0
     else:
         return add_comma_whole(value)
+
+
+@register.filter
+def format_investment_amount(value):
+    if value == 0:
+        return ''
+    else:
+        return add_comma(value)
+
