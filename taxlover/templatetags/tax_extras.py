@@ -28,3 +28,11 @@ def format_investment_amount(value):
     else:
         return add_comma(value)
 
+
+@register.filter
+def format_cash_asset_outside_business(value):
+    if value == 0:
+        return '-'
+    else:
+        return add_comma(value)
+

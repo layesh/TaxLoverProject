@@ -15,7 +15,7 @@ class AssetsDTO:
     def __init__(self, tax_payer_id, has_form_error):
         assets = create_or_get_current_assets_obj(tax_payer_id)
         cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
-        previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
+        self.previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
 
         self.has_business_capital = assets.has_business_capital
         self.has_no_business_capital = assets.has_no_business_capital
@@ -61,10 +61,16 @@ class AssetsDTO:
         self.total_other_investment_investment_value = get_total_investment_value_by_type(self.investments,
                                                                                            'Other Investment')
         self.motor_vehicles = get_current_financial_year_motor_vehicle_by_payer(tax_payer_id)
+
+        total_motor_vehicle_value = 0
+
         if self.motor_vehicles.count() > 0:
             self.motor_vehicles_01 = self.motor_vehicles[0]
+            total_motor_vehicle_value += self.motor_vehicles_01.get_value
         if self.motor_vehicles.count() > 1:
             self.motor_vehicles_02 = self.motor_vehicles[1]
+            total_motor_vehicle_value += self.motor_vehicles_02.get_value
+
         self.furnitures = get_current_financial_year_furniture_by_payer(tax_payer_id)
         self.jewelleries = get_current_financial_year_jewellery_by_payer(tax_payer_id)
         self.total_jewellery_value = get_total_jewellery_value(self.jewelleries)
@@ -81,10 +87,16 @@ class AssetsDTO:
             self.cash_at_bank = cash_assets.get_cash_at_bank
             self.other_fund = cash_assets.get_other_fund
             self.other_deposits = cash_assets.get_other_deposits
+            self.total_cash_assets = self.cash_in_hand + self.cash_at_bank + self.other_fund + self.other_deposits
 
-        if previous_year_net_wealth:
-            self.previousYearNetWealthId = previous_year_net_wealth.id
-            self.previous_year_net_wealth_value = previous_year_net_wealth.wealth_value
+        if self.previous_year_net_wealth:
+            self.previousYearNetWealthId = self.previous_year_net_wealth.id
+            self.previous_year_net_wealth_value = self.previous_year_net_wealth.wealth_value
 
         self.has_form_error = has_form_error
+
+        self.gross_wealth = self.total_agricultural_properties_value + self.total_investment_value + \
+                            total_motor_vehicle_value + self.total_jewellery_value + \
+                            self.total_furniture_and_electronic_items_value + self.total_other_asset_value + \
+                            self.total_cash_assets if cash_assets else 0
 

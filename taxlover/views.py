@@ -10,7 +10,6 @@ import datetime
 from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
-from taxlover.constants import EXTRACT_TABLE_API_KEY
 from taxlover.dtos.assetsDTO import AssetsDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.liabilitiesDTO import LiabilitiesDTO
@@ -22,8 +21,7 @@ from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeFor
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
-from taxlover.services.assets_service import save_assets, get_current_financial_year_agricultural_property_by_payer, \
-    get_current_financial_year_cash_assets_by_payer, \
+from taxlover.services.assets_service import save_assets, get_current_financial_year_cash_assets_by_payer, \
     get_current_financial_year_previous_year_net_wealth_by_payer
 from taxlover.services.expense_service import get_current_financial_year_expense_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
@@ -33,9 +31,8 @@ from taxlover.services.liabilities_service import save_liabilities
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
-    get_assessment_years, get_income_years, has_salary_data, remove_comma, add_comma, has_other_income, \
-    set_form_validation_errors, set_form_initial_value, copy_request, create_or_get_current_assets_obj, \
-    create_or_get_current_liabilities_obj
+    get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
+    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj
 
 import os
 from django.conf import settings
@@ -1812,11 +1809,17 @@ def generate(request):
     tax_payer_dto = TaxPayerDTO(tax_payer)
     income_dto = IncomeDTO(tax_payer, False)
     asset_dto = AssetsDTO(tax_payer, False)
+    liabilities_dto = LiabilitiesDTO(tax_payer, False)
+    net_wealth = asset_dto.gross_wealth - liabilities_dto.total_liabilities
+    change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0
 
     context = {
         'tax_payer': tax_payer_dto,
         'income_dto': income_dto,
-        'asset_dto': asset_dto
+        'asset_dto': asset_dto,
+        'liabilities_dto': liabilities_dto,
+        'net_wealth': net_wealth,
+        'change_in_net_wealth': change_in_net_wealth
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')

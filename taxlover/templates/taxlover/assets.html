@@ -895,10 +895,10 @@
                                             <tbody>
                                             <tr>
                                                 <th scope="row">1</th>
-                                                <td>{{ assets_dto.cash_in_hand|format_decimal }}</td>
-                                                <td>{{ assets_dto.cash_at_bank|format_decimal }}</td>
-                                                <td>{{ assets_dto.other_fund|format_decimal }}</td>
-                                                <td>{{ assets_dto.other_deposits|format_decimal }}</td>
+                                                <td>{{ assets_dto.cash_in_hand|format_cash_asset_outside_business }}</td>
+                                                <td>{{ assets_dto.cash_at_bank|format_cash_asset_outside_business }}</td>
+                                                <td>{{ assets_dto.other_fund|format_cash_asset_outside_business }}</td>
+                                                <td>{{ assets_dto.other_deposits|format_cash_asset_outside_business }}</td>
                                                 <td>
                                                     <a href="{% url 'cash-assets' %}">
                                                         <i class="bi bi-pencil-square"

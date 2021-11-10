@@ -2085,6 +2085,8 @@
         <tr style="padding-bottom: 35px">
             <td>
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td>
                 Signature & Date
@@ -2408,6 +2410,8 @@
         <tr style="padding-bottom: 20px;">
             <td>
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td>
                 Signature & Date
@@ -2727,6 +2731,8 @@
         <tr style="padding-bottom: 20px;">
             <td>
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td>
                 Signature & Date
@@ -3437,8 +3443,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Cash and fund outside business (13A+13B+13C+13D)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.total_cash_assets|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3448,8 +3454,8 @@
             <td class="table-td-vertical-align-top">
                 Notes and currencies
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.cash_in_hand|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3459,8 +3465,8 @@
             <td class="table-td-vertical-align-top">
                 Banks, cards and other electronic cash
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.cash_at_bank|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3470,8 +3476,8 @@
             <td class="table-td-vertical-align-top">
                 Provident fund and other fund
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.other_fund|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3481,8 +3487,8 @@
             <td class="table-td-vertical-align-top">
                 Other deposits, balance and advance (other than 08)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.other_deposits|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3492,8 +3498,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Gross wealth (aggregate of 05 to 13)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.gross_wealth|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3503,8 +3509,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Liabilities outside business (15A+15B+15C)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ liabilities_dto.total_liabilities|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3514,8 +3520,8 @@
             <td class="table-td-vertical-align-top">
                 Borrowings from banks and other financial institutions
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ liabilities_dto.total_mortgage_and_bank_loan_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 25px">
@@ -3525,8 +3531,8 @@
             <td class="table-td-vertical-align-top">
                 Unsecured loan (mention name and TIN)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ liabilities_dto.total_unsecured_loans_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3536,8 +3542,8 @@
             <td class="table-td-vertical-align-top">
                 Other loans or overdrafts
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ liabilities_dto.total_other_liabilities_value|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3547,8 +3553,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Net wealth (14-15)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ net_wealth|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3558,8 +3564,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Net wealth at the last date of the previous income year
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ asset_dto.previous_year_net_wealth_value|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3569,8 +3575,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Change in net wealth (16-17)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ change_in_net_wealth|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">

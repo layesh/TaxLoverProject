@@ -6,7 +6,8 @@ from taxlover.services.assets_service import get_current_financial_year_agricult
     get_current_financial_year_previous_year_net_wealth_by_payer
 from taxlover.services.liabilities_service import get_current_financial_year_unsecured_loans_by_payer, \
     get_current_financial_year_other_liabilities_by_payer, get_current_financial_year_bank_loans_by_payer, \
-    get_current_financial_year_mortgages_by_payer
+    get_current_financial_year_mortgages_by_payer, get_total_unsecured_loans_value, get_total_other_liabilities_value, \
+    get_total_mortgage_and_bank_loan_value
 from taxlover.utils import get_income_years, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj
 
 
@@ -30,6 +31,12 @@ class LiabilitiesDTO:
         self.unsecured_loans = get_current_financial_year_unsecured_loans_by_payer(tax_payer_id)
         self.bank_loans = get_current_financial_year_bank_loans_by_payer(tax_payer_id)
         self.other_liabilities = get_current_financial_year_other_liabilities_by_payer(tax_payer_id)
+
+        self.total_unsecured_loans_value = get_total_unsecured_loans_value(self.unsecured_loans)
+        self.total_mortgage_and_bank_loan_value = get_total_mortgage_and_bank_loan_value(self.mortgages, self.bank_loans)
+        self.total_other_liabilities_value = get_total_other_liabilities_value(self.other_liabilities)
+
+        self.total_liabilities = self.total_unsecured_loans_value + self.total_mortgage_and_bank_loan_value + self.total_other_liabilities_value
 
         self.has_form_error = has_form_error
 
