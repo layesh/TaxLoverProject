@@ -1689,7 +1689,17 @@ def save_liabilities_data(request, source, answer):
 @login_required
 def adjust_cash_in_hand(request):
     if request.method == 'POST':
-        s = ''
+        asset_dto = AssetsDTO(request.user.id, False)
+        income_dto = IncomeDTO(request.user.id, False)
+        expense_dto = ExpenseDTO(request.user.id)
+        liabilities_dto = LiabilitiesDTO(request.user.id, False)
+
+        adjusted_amount = income_dto.total_income - expense_dto.total_expenses + asset_dto.previous_year_net_wealth_value + \
+                          liabilities_dto.total_liabilities - asset_dto.gross_wealth_without_cash_in_hand
+
+        if asset_dto.cash_assets.cash_in_hand != adjusted_amount:
+            asset_dto.cash_assets.cash_in_hand = adjusted_amount
+            asset_dto.cash_assets.save()
 
     return redirect('assets')
 

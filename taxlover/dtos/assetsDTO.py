@@ -1,4 +1,3 @@
-from taxlover.models import INVESTMENT_TYPE
 from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer, \
     get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
@@ -14,7 +13,7 @@ class AssetsDTO:
 
     def __init__(self, tax_payer_id, has_form_error):
         assets = create_or_get_current_assets_obj(tax_payer_id)
-        cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
+        self.cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
         self.previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
 
         self.has_business_capital = assets.has_business_capital
@@ -81,13 +80,14 @@ class AssetsDTO:
         self.other_assets_receipts = get_current_financial_year_other_assets_receipt_by_payer(tax_payer_id)
         self.total_other_asset_value = get_total_other_asset_value(self.other_assets, self.other_assets_receipts)
 
-        if cash_assets:
-            self.cashAssetsId = cash_assets.id
-            self.cash_in_hand = cash_assets.get_cash_in_hand
-            self.cash_at_bank = cash_assets.get_cash_at_bank
-            self.other_fund = cash_assets.get_other_fund
-            self.other_deposits = cash_assets.get_other_deposits
+        if self.cash_assets:
+            self.cashAssetsId = self.cash_assets.id
+            self.cash_in_hand = self.cash_assets.get_cash_in_hand
+            self.cash_at_bank = self.cash_assets.get_cash_at_bank
+            self.other_fund = self.cash_assets.get_other_fund
+            self.other_deposits = self.cash_assets.get_other_deposits
             self.total_cash_assets = self.cash_in_hand + self.cash_at_bank + self.other_fund + self.other_deposits
+            self.total_cash_assets_without_cash_in_hand = self.cash_at_bank + self.other_fund + self.other_deposits
 
         if self.previous_year_net_wealth:
             self.previousYearNetWealthId = self.previous_year_net_wealth.id
@@ -98,5 +98,10 @@ class AssetsDTO:
         self.gross_wealth = self.total_agricultural_properties_value + self.total_investment_value + \
                             total_motor_vehicle_value + self.total_jewellery_value + \
                             self.total_furniture_and_electronic_items_value + self.total_other_asset_value + \
-                            self.total_cash_assets if cash_assets else 0
+                            self.total_cash_assets if self.cash_assets else 0
+
+        self.gross_wealth_without_cash_in_hand = self.total_agricultural_properties_value + self.total_investment_value + \
+                            total_motor_vehicle_value + self.total_jewellery_value + \
+                            self.total_furniture_and_electronic_items_value + self.total_other_asset_value + \
+                            self.total_cash_assets_without_cash_in_hand if self.cash_assets else 0
 
