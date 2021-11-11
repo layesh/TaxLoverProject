@@ -1584,7 +1584,7 @@
             <td class="table-td-vertical-align-top">
                 Amount of net wealth shown in IT10B2016
                 <br/>
-                <b>Tk </b>
+                <b>Tk {{ net_wealth|format_decimal }}</b>
             </td>
             <td colspan="2" class="table-td-vertical-align-top">
                 Amount of net wealth surcharge paid
@@ -3586,8 +3586,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Other fund outflow during the income year (19A+19B+19C)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_expenses|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3597,8 +3597,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Annual living expenditure and tax payments (as IT-10BB2016)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.annual_living_expenditure_and_tax_payments|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3608,8 +3608,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Loss, deductions, expenses, etc. not mentioned in IT-10BB2016
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.loss_expense|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3619,8 +3619,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Gift, donation and contribution (mention name of recipient)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.gift_expense|format_investment_amount }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3630,8 +3630,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Total fund outflow in the income year (18+19)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ total_fund_outflow|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3641,8 +3641,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Sources of fund (21A+21B+21C)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_income|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3652,8 +3652,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Income shown in the return
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.total_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3663,8 +3663,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Tax exempted income and allowance
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.exempted_income|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3674,8 +3674,8 @@
             <td class="table-td-vertical-align-top" style="font-size: 15px">
                 Other receipts and sources
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                0.00
             </td>
         </tr>
         <tr style="padding-bottom: 5px">
@@ -3685,8 +3685,8 @@
             <td colspan="2" class="table-td-vertical-align-top">
                 Shortage of fund, if any (21-20)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ shortage_of_fund|format_decimal }}
             </td>
         </tr>
     </table>
@@ -3713,6 +3713,8 @@
         <tr style="padding-bottom: 30px">
             <td class="table-td-vertical-align-top">
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 Signature & date

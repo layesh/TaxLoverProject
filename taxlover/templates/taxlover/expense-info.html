@@ -394,8 +394,7 @@
             if (!isNaN(removeCommas(textBoxObject.value))) {
                 textBoxObject.value = removeCommas(textBoxObject.value);
                 textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
-                setExemptedAndTaxableColumns();
-                setAllTotalRow();
+                setTotalRow();
             }
         }
     </script>

@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 from enum import Enum
 
 from django.contrib.auth.models import User
@@ -2194,4 +2195,14 @@ class Expense(models.Model):
             return self.gift_expense_comment
         else:
             return ""
+
+    @property
+    def get_total(self):
+        total = 0
+
+        for attr, value in self.__dict__.items():
+            if isinstance(value, Decimal):
+                total += value
+
+        return total
         

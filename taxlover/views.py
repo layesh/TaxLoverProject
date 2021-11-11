@@ -11,6 +11,7 @@ from ExtractTable import ExtractTable
 from django.contrib.auth.decorators import login_required
 
 from taxlover.dtos.assetsDTO import AssetsDTO
+from taxlover.dtos.expenseDTO import ExpenseDTO
 from taxlover.dtos.incomeDTO import IncomeDTO
 from taxlover.dtos.liabilitiesDTO import LiabilitiesDTO
 from taxlover.dtos.taxPayerDTO import TaxPayerDTO
@@ -1812,6 +1813,9 @@ def generate(request):
     liabilities_dto = LiabilitiesDTO(tax_payer, False)
     net_wealth = asset_dto.gross_wealth - liabilities_dto.total_liabilities
     change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0
+    expense_dto = ExpenseDTO(tax_payer)
+    total_fund_outflow = change_in_net_wealth + expense_dto.total_expenses if expense_dto.expense else 0
+    shortage_of_fund = income_dto.total_income - total_fund_outflow
 
     context = {
         'tax_payer': tax_payer_dto,
@@ -1819,7 +1823,10 @@ def generate(request):
         'asset_dto': asset_dto,
         'liabilities_dto': liabilities_dto,
         'net_wealth': net_wealth,
-        'change_in_net_wealth': change_in_net_wealth
+        'change_in_net_wealth': change_in_net_wealth,
+        'expense_dto': expense_dto,
+        'total_fund_outflow': total_fund_outflow,
+        'shortage_of_fund': shortage_of_fund
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
