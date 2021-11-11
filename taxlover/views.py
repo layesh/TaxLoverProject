@@ -1686,6 +1686,14 @@ def save_liabilities_data(request, source, answer):
         return redirect('liabilities')
 
 
+@login_required
+def adjust_cash_in_hand(request):
+    if request.method == 'POST':
+        s = ''
+
+    return redirect('assets')
+
+
 def index(request):
     et_sess = ExtractTable(api_key='qAm4mcOR3p5qZsMk2IM9m3hXk0BF7IbR5WheMLIK')  # Replace your VALID API Key here
     print(et_sess.check_usage())  # Checks the API Key validity as well as shows associated plan usage

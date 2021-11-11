@@ -88,5 +88,7 @@ urlpatterns = [
     path('save-bank-loan/', views.save_bank_loan, name='save-bank-loan'),
     path('other-liability-delete/', views.other_liability_delete, name='other-liability-delete'),
     path('save-other-liability/', views.save_other_liability, name='save-other-liability'),
-    path('expenses/', views.expenses, name='expenses')
+    path('expenses/', views.expenses, name='expenses'),
+    path('adjust-cash-in-hand/', views.adjust_cash_in_hand,
+         name='adjust-cash-in-hand'),
 ]

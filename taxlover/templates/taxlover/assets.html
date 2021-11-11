@@ -941,6 +941,51 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <a class="btn btn-outline-success btn-sm"
+                                                       href="#" data-bs-toggle="modal"
+                                                       data-bs-target="#adjustCashInHandStaticBackdrop"
+                                                       role="button">
+                                                        <i class="bi bi-plus-circle"></i>
+                                                        &nbsp;Adjust Cash In Hand&nbsp;
+                                                    </a>
+                                                    <div class="modal fade" id="adjustCashInHandStaticBackdrop"
+                                                         data-bs-backdrop="static"
+                                                         data-bs-keyboard="false" tabindex="-1"
+                                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                                                        Adjust Cash In Hand</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                </div>
+                                                                <form action="{% url 'adjust-cash-in-hand' %}"
+                                                                      method="POST">
+                                                                    {% csrf_token %}
+                                                                    <div class="modal-body" style="text-align: justify">
+                                                                        Are you sure you want to adjust the cash in hand amount? Note
+                                                                        that current "Cash In Hand" value will be changed to an amount
+                                                                        so that <b>"Shortage of fund"</b> in return form will be calculated to 0.
+                                                                        You can still edit the row by yourself after adjusting the amount.
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Cancel
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            Adjust
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
