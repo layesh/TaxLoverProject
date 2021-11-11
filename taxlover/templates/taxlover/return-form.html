@@ -3754,12 +3754,17 @@
             </td>
             <td class="table-td-vertical-align-top">
                 Assessment Year
+                <br/>
+                <span class="filled-text">{{ tax_payer.assessment_year_beg }}</span>-<span
+                    class="filled-text">{{ tax_payer.assessment_year_end }}</span>
             </td>
             <td width="38px" class="table-td-vertical-align-top">
                 02
             </td>
             <td class="table-td-vertical-align-top">
                 TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
             </td>
         </tr>
     </table>
@@ -4045,6 +4050,8 @@
         <tr style="padding-bottom: 28px">
             <td class="table-td-vertical-align-top">
                 Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
             </td>
             <td class="table-td-vertical-align-top">
                 Signature & date

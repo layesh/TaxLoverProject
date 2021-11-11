@@ -4,10 +4,10 @@ from taxlover.utils import get_assessment_years
 class TaxPayerDTO:
 
     def __init__(self, payer):
-        assessment_year_beg, assessment_year_end = get_assessment_years()
+        self.assessment_year_beg, self.assessment_year_end = get_assessment_years()
 
-        assessment_year_beg_str = str(assessment_year_beg)
-        assessment_year_end_str = str(assessment_year_end)
+        assessment_year_beg_str = str(self.assessment_year_beg)
+        assessment_year_end_str = str(self.assessment_year_end)
 
         self.assessment_year_beg_digit_0 = assessment_year_beg_str[0]
         self.assessment_year_beg_digit_1 = assessment_year_beg_str[1]
@@ -49,8 +49,8 @@ class TaxPayerDTO:
         self.dob_year_digit_3 = payer.get_dob[8] if payer.get_dob else ""
         self.dob_year_digit_4 = payer.get_dob[9] if payer.get_dob else ""
 
-        self.income_year_beg = assessment_year_beg - 1
-        self.income_year_end = assessment_year_beg
+        self.income_year_beg = self.assessment_year_beg - 1
+        self.income_year_end = self.assessment_year_beg
 
         self.employer_name = payer.get_employer_name
 
