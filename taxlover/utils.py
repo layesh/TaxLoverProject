@@ -46,6 +46,10 @@ def create_or_get_tax_payer_obj(user_id):
     return tax_payer
 
 
+def has_tax_payer_data(user_id):
+    return TaxPayer.objects.filter(user_id=user_id).exists()
+
+
 def create_or_get_current_income_obj(user_id):
     income_year_beg, income_year_end = get_income_years()
 

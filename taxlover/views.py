@@ -33,7 +33,8 @@ from taxlover.services.salary_service import process_and_save_salary, get_house_
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
-    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj
+    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj, \
+    has_tax_payer_data
 
 import os
 from django.conf import settings
@@ -55,14 +56,13 @@ from django.views.generic import (
 @login_required
 def home(request):
     tax_year_beg, tax_year_end = get_assessment_years()
-    income_dto = IncomeDTO(request.user.id, False)
 
     context = {
         'salaries': Salary.objects.all(),
         'title': 'Dashboard',
         'tax_year_beg': tax_year_beg,
         'tax_year_end': tax_year_end,
-        'income_dto': income_dto
+        'income_dto': IncomeDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
     }
     return render(request, 'taxlover/home.html', context)
 
