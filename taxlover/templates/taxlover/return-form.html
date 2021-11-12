@@ -4058,5 +4058,501 @@
             </td>
         </tr>
     </table>
+
+    <div>
+        <pdf:nextpage />
+    </div>
+
+{#        Page 12 : STATEMENT OF EXPENSES RELATING TO LIFESTYLE#}
+
+    <table>
+        <tr style="padding-bottom: 10px">
+            <td style="font-size: 13px;">
+                National Board of Revenue<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;www.nbr.gov.bd
+            </td>
+            <td></td>
+            <td align="right" style="font-size: 16px; vertical-align: top">
+                <b>IT-10BB2016</b>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td align="center" style="font-size: 17px;">
+                <b>STATEMENT OF EXPENSES RELATING TO LIFESTYLE</b>
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td align="center" style="font-size: 16px;">
+                under section 80(2) of the Income Tax Ordinance, 1984 (XXXVI of 1984)
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr style="padding-bottom: 4px">
+            <td></td>
+        </tr>
+    </table>
+
+    <table class="table-04">
+        <tr style="padding-bottom: 5px">
+            <td width="38px" class="table-td-vertical-align-top">
+                01
+            </td>
+            <td class="table-td-vertical-align-top">
+                Assessment Year
+                <table class="assessment-year-inner">
+                    <tr>
+                        <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd"></td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd"></td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd"></td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd"></td>
+                        <td class="assessment-year-inner-td-hyphen">-</td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_2 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd"></td>
+                        <td class="assessment-year-inner-td-even">
+                            <span class="filled-text">{{ tax_payer.assessment_year_end_digit_3 }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="38px" class="table-td-vertical-align-top">
+                02
+            </td>
+            <td class="table-td-vertical-align-top">
+                Statement as on <span style="font-size: 12px">(DD-MM-YYYY)</span>
+                <table>
+                    <tr style="padding-bottom: 1.5px">
+                        <td></td>
+                    </tr>
+                </table>
+                <table class="assessment-year-inner">
+                    <tr>
+                        <td class="assessment-year-inner-td-1">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">3</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">0</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd-1"></td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">0</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">6</span>
+                        </td>
+                        <td class="assessment-year-inner-td-odd-1"></td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_0 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_1 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_2 }}</span>
+                        </td>
+                        <td class="assessment-year-inner-td-even-1">
+                            <span class="filled-text">{{ tax_payer.assessment_year_beg_digit_3 }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td width="38px" class="table-td-vertical-align-top">
+                03
+            </td>
+            <td class="table-td-vertical-align-top">
+                Name of the Assessee
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
+            </td>
+            <td width="38px" class="table-td-vertical-align-top">
+                04
+            </td>
+            <td class="table-td-vertical-align-top">
+                TIN
+                <br/>
+                <span class="filled-text">{{ tax_payer.tin }}</span>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr style="padding-bottom: 18px">
+            <td></td>
+        </tr>
+    </table>
+
+    <table class="table-04">
+        <tr style="padding-bottom: 4px">
+            <td colspan="3" class="table-td-vertical-align-top">
+                Particulars
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                Amount (Tk)
+            </td>
+            <td class="table-td-vertical-align-top">
+                Comment
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td width="38px" class="table-td-vertical-align-top">
+                05
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Expenses for food, clothing and other essentials
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_food_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_food_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                06
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Housing expense
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_accommodation_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_accommodation_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top" rowspan="3">
+                07
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Auto and transportation expenses (07A+07B)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_transport_expense|format_decimal }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td width="40px" class="table-td-vertical-align-top">
+                07A
+            </td>
+            <td width="285px" class="table-td-vertical-align-top">
+                Driver’s salary, fuel and maintenance
+            </td>
+            <td width="135px" class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_transportation_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_transportation_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                07B
+            </td>
+            <td class="table-td-vertical-align-top">
+                Other transportation
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_other_transportation_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_other_transportation_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top" rowspan="5">
+                08
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Household and utility expenses (08A+08B+08C+08D)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_household_and_utility_expense|format_decimal }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                08A
+            </td>
+            <td class="table-td-vertical-align-top">
+                Electricity
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_electricity_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_electricity_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                08B
+            </td>
+            <td class="table-td-vertical-align-top">
+                Gas, water, sewer and garbage
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_gas_and_water_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.total_gas_or_water_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                08C
+            </td>
+            <td class="table-td-vertical-align-top">
+                Phone, internet, TV channels subscription
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_telephone_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_telephone_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                08D
+            </td>
+            <td class="table-td-vertical-align-top">
+                Home-support staff and other expenses
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_other_household_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_other_household_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                09
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Children’s education expenses
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_children_education_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_children_education_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top" rowspan="5">
+                10
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Special expenses (10A+10B+10C+10D)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_special_expense|format_decimal }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                10A
+            </td>
+            <td class="table-td-vertical-align-top">
+                Festival, party, events
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_festival_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_festival_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                10B
+            </td>
+            <td class="table-td-vertical-align-top">
+                Domestic and overseas tour, holiday, etc.
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_travel_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_travel_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                10C
+            </td>
+            <td class="table-td-vertical-align-top">
+                Philanthropy, etc.
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_donation_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_donation_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                10D
+            </td>
+            <td class="table-td-vertical-align-top">
+                Other special expenses
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_other_special_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_other_special_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                11
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Any other expenses
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_other_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_other_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 4px">
+            <td class="table-td-vertical-align-top">
+                12
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Total expense relating to lifestyle (05+06+07+08+09+10+11)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_lifestyle_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+        <tr style="padding-bottom: 3px">
+            <td class="table-td-vertical-align-top" rowspan="3">
+                13
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Payment of tax, charges, etc. (13A+13B)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.total_payment_of_tax_charges|format_decimal }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+        <tr style="padding-bottom: 3px">
+            <td class="table-td-vertical-align-top">
+                13A
+            </td>
+            <td class="table-td-vertical-align-top">
+                Payment of tax at source
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_tax_at_source_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_tax_at_source_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 3px">
+            <td class="table-td-vertical-align-top">
+                13B
+            </td>
+            <td class="table-td-vertical-align-top">
+                Payment of tax, surcharge or other amount
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.expense.get_last_year_paid_tax_expense|format_investment_amount }}
+            </td>
+            <td class="table-td-vertical-align-top">
+                {{ expense_dto.expense.get_last_year_paid_tax_expense_comment }}
+            </td>
+        </tr>
+        <tr style="padding-bottom: 3px">
+            <td class="table-td-vertical-align-top">
+                14
+            </td>
+            <td class="table-td-vertical-align-top" colspan="2">
+                Total amount of expense and tax (12+13)
+            </td>
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ expense_dto.annual_living_expenditure_and_tax_payments|format_decimal }}
+            </td>
+            <td class="table-td-vertical-align-top">
+
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td align="center" style="font-size: 17px;padding-top: 4px; padding-bottom: 2px">
+                <b>Verification and signature</b>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table-04">
+        <tr style="padding-bottom: 2px">
+            <td width="38px" rowspan="2" class="table-td-vertical-align-top">
+                15
+            </td>
+            <td colspan="2" class="table-td-vertical-align-top" style="text-align: justify">
+                <b>Verification</b>
+                <br/>
+                I solemnly declare that to the best of my knowledge and belief the information given in this statement is correct and complete.
+            </td>
+        </tr>
+        <tr style="padding-bottom: 5px">
+            <td class="table-td-vertical-align-top">
+                Name
+                <br/>
+                <span class="filled-text">{{ tax_payer.name }}</span>
+            </td>
+            <td class="table-td-vertical-align-top">
+                Signature & date
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
