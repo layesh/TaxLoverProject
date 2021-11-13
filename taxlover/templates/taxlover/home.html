@@ -54,7 +54,7 @@
     <script type="application/javascript">
         function generate() {
             let value = $('#flexCheckDefault').is(":checked")
-            let url = ''
+
             if (value) {
                 location.href = '{% url "generate" 'yes' %}';
             } else {

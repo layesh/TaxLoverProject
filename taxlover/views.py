@@ -1845,7 +1845,7 @@ def generate(request, submit_under_82bb):
         'expense_dto': expense_dto,
         'total_fund_outflow': total_fund_outflow,
         'shortage_of_fund': shortage_of_fund,
-        'submit_under_82bb': submit_under_82bb
+        'submit_under_82bb': True if submit_under_82bb == 'yes' else False
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
