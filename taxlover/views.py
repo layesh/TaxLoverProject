@@ -1823,7 +1823,7 @@ def link_callback(uri, rel):
 
 
 @login_required(login_url='/admin/login/')
-def generate(request):
+def generate(request, submit_under_82bb):
     tax_payer = TaxPayer.objects.get(user_id=request.user.id)
     tax_payer_dto = TaxPayerDTO(tax_payer)
     income_dto = IncomeDTO(tax_payer, False)
@@ -1844,7 +1844,8 @@ def generate(request):
         'change_in_net_wealth': change_in_net_wealth,
         'expense_dto': expense_dto,
         'total_fund_outflow': total_fund_outflow,
-        'shortage_of_fund': shortage_of_fund
+        'shortage_of_fund': shortage_of_fund,
+        'submit_under_82bb': submit_under_82bb
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')

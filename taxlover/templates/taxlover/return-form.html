@@ -309,7 +309,7 @@
                     <tr>
                         <td class="basic-info-row1-yes-no-td">Yes</td>
                         <td class="assessment-year-inner-td-even">
-                            {% if tax_payer.section_82bb %}
+                            {% if submit_under_82bb %}
                                 <span class="tick">&#10003;</span>
                             {% endif %}
                         </td>
@@ -321,7 +321,7 @@
                     <tr>
                         <td class="basic-info-row1-yes-no-td">No</td>
                         <td class="assessment-year-inner-td-even">
-                            {% if not tax_payer.section_82bb %}
+                            {% if not submit_under_82bb %}
                                 <span class="tick">&#10003;</span>
                             {% endif %}
                         </td>
@@ -1504,7 +1504,7 @@
                     <tr>
                         <td style="padding: 0 0 0 2px; vertical-align: top">Yes</td>
                         <td class="assessment-year-inner-td-even">
-                            {% if tax_payer.section_82bb %}
+                            {% if submit_under_82bb %}
                                 <span class="tick">&#10003;</span>
                             {% endif %}
                         </td>
@@ -1516,7 +1516,7 @@
                     <tr>
                         <td style="padding: 0 0 0 2px; vertical-align: top">No</td>
                         <td class="assessment-year-inner-td-even">
-                            {% if not tax_payer.section_82bb %}
+                            {% if not submit_under_82bb %}
                                 <span class="tick">&#10003;</span>
                             {% endif %}
                         </td>
