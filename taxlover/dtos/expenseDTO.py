@@ -26,6 +26,6 @@ class ExpenseDTO:
             self.total_gas_or_water_expense_comment = self.expense.get_gas_expense_comment if \
                 self.expense.get_gas_expense_comment != '' else self.expense.get_water_expense_comment
             self.total_household_and_utility_expense = self.expense.get_electricity_expense + self.total_gas_and_water_expense + \
-                                                       self.expense.get_telephone_expense + self.expense.other_household_expense
+                                                       self.expense.get_telephone_expense + self.expense.get_other_household_expense
             self.total_special_expense = self.expense.get_travel_expense + self.expense.get_festival_expense + \
                                          self.expense.get_donation_expense + self.expense.get_other_special_expense

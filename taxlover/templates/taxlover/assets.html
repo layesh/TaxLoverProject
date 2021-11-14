@@ -158,7 +158,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ property.get_property_description }}</td>
                                                     <td>{{ property.get_property_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('agricultural_property', '{{ property.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -284,7 +284,7 @@
                                                     <td>{{ investment.get_type }}</td>
                                                     <td>{{ investment.get_description }}</td>
                                                     <td>{{ investment.get_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="{% url "investment-info" investment.id %}">
                                                             <i class="bi bi-pencil-square"
                                                                style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
@@ -404,7 +404,7 @@
                                                     <td>{{ motor_vehicle.get_reg_no }}</td>
                                                     <td>{{ motor_vehicle.get_engine_capacity }}</td>
                                                     <td>{{ motor_vehicle.get_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="{% url "motor-vehicle-info" motor_vehicle.id %}">
                                                             <i class="bi bi-pencil-square"
                                                                style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
@@ -520,7 +520,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ furniture.get_furniture_description }}</td>
                                                     <td>{{ furniture.get_furniture_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('furniture', '{{ furniture.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -648,7 +648,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ jewellery.get_jewellery_description }}</td>
                                                     <td>{{ jewellery.get_jewellery_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('jewellery', '{{ jewellery.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -772,7 +772,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ electronic_equipment.get_equipment_description }}</td>
                                                     <td>{{ electronic_equipment.get_equipment_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('electronic_equipment', '{{ electronic_equipment.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -899,7 +899,7 @@
                                                 <td>{{ assets_dto.cash_at_bank|format_cash_asset_outside_business }}</td>
                                                 <td>{{ assets_dto.other_fund|format_cash_asset_outside_business }}</td>
                                                 <td>{{ assets_dto.other_deposits|format_cash_asset_outside_business }}</td>
-                                                <td>
+                                                <td style="white-space: nowrap">
                                                     <a href="{% url 'cash-assets' %}">
                                                         <i class="bi bi-pencil-square"
                                                            style="color: #2ca01c; padding-right: 5px; font-size: 1.2rem"></i></a>
@@ -1042,7 +1042,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ other_asset.get_asset_description }}</td>
                                                     <td>{{ other_asset.get_asset_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('other_assets', '{{ other_asset.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -1167,7 +1167,7 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ other_assets_receipt.get_other_asset_description }}</td>
                                                     <td>{{ other_assets_receipt.get_other_asset_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="getDataForEdit('other_assets_receipt', '{{ other_assets_receipt.id }}')">
                                                             <i class="bi bi-pencil-square"
@@ -1290,7 +1290,7 @@
                                                 <tr>
                                                     <th scope="row">1</th>
                                                     <td id="netWealthData">{{ assets_dto.previous_year_net_wealth_value|format_decimal }}</td>
-                                                    <td>
+                                                    <td style="white-space: nowrap">
                                                         <a href="javascript:void(0)"
                                                            onclick="populateNetWealthData()">
                                                             <i class="bi bi-pencil-square"
