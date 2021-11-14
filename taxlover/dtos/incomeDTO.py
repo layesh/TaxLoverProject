@@ -148,6 +148,8 @@ class IncomeDTO:
         self.paid_with_return = self.net_tax_after_rebate - self.total_tax_deducted_at_source - \
                                 self.total_advance_tax - self.tax_refund
 
+        self.total_tax_paid = self.total_tax_deducted_at_source + self.total_advance_tax + self.tax_refund
+
         self.total_paid_and_adjusted = self.total_tax_deducted_at_source + self.total_advance_tax + self.tax_refund + \
                                        self.paid_with_return
 

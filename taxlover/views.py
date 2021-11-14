@@ -56,13 +56,23 @@ from django.views.generic import (
 @login_required
 def home(request):
     tax_year_beg, tax_year_end = get_assessment_years()
+    income_dto = IncomeDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
+    asset_dto = AssetsDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
+    liabilities_dto = LiabilitiesDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
+    expense_dto = ExpenseDTO(request.user.id) if has_tax_payer_data(request.user.id) else None
+    net_wealth = asset_dto.gross_wealth - liabilities_dto.total_liabilities
+    change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0
 
     context = {
         'salaries': Salary.objects.all(),
         'title': 'Dashboard',
         'tax_year_beg': tax_year_beg,
         'tax_year_end': tax_year_end,
-        'income_dto': IncomeDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
+        'income_dto': income_dto,
+        'asset_dto': asset_dto,
+        'expense_dto': expense_dto,
+        'change_in_net_wealth': change_in_net_wealth
+
     }
     return render(request, 'taxlover/home.html', context)
 
