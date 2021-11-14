@@ -61,7 +61,7 @@ def home(request):
     liabilities_dto = LiabilitiesDTO(request.user.id, False) if has_tax_payer_data(request.user.id) else None
     expense_dto = ExpenseDTO(request.user.id) if has_tax_payer_data(request.user.id) else None
     net_wealth = asset_dto.gross_wealth if asset_dto else 0 - liabilities_dto.total_liabilities if liabilities_dto else 0
-    change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0
+    change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if (asset_dto and asset_dto.previous_year_net_wealth) else 0
 
     context = {
         'salaries': Salary.objects.all(),
