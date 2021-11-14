@@ -1704,7 +1704,8 @@ def adjust_cash_in_hand(request):
         expense_dto = ExpenseDTO(request.user.id)
         liabilities_dto = LiabilitiesDTO(request.user.id, False)
 
-        adjusted_amount = income_dto.total_income - expense_dto.total_expenses + asset_dto.previous_year_net_wealth_value + \
+        adjusted_amount = income_dto.total_income - (expense_dto.total_expenses if expense_dto.expense else 0) + \
+                          (asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0) + \
                           liabilities_dto.total_liabilities - asset_dto.gross_wealth_without_cash_in_hand
 
         if asset_dto.cash_assets.cash_in_hand != adjusted_amount:
