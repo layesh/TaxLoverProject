@@ -125,7 +125,7 @@ class IncomeDTO:
         self.total_taxable = (self.total_salary_taxable if salary else 0) + \
                             (self.total_other_income_taxable if other_income else 0)
 
-        self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(self.total_taxable)
+        self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(tax_payer_id, self.total_taxable)
 
         self.total_rebate_on_taxable_income = get_total_rebate_on_taxable_income(self.total_taxable)
 

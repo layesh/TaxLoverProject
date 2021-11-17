@@ -8,7 +8,8 @@ from taxlover.constants import INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL
     INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_TAX_RATE, \
     INDIVIDUAL_TAX_PAYER_SIXTH_SLAB_TAX_RATE, INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_01, \
     INDIVIDUAL_TAX_PAYER_TAX_REBATE_TAXABLE_AMOUNT_SLAB, INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_02, \
-    INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT, INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT
+    INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT, INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT, \
+    INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT_FOR_WOMEN_THIRD_SEX_AND_65_OR_UP_AGED
 from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities
 import datetime
 
@@ -161,22 +162,27 @@ def create_or_get_current_liabilities_obj(user_id):
     return latest_liabilities
 
 
-def get_gross_tax_before_tax_rebate(total_taxable):
-    first_slab_amount = INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT
+def get_gross_tax_before_tax_rebate(tax_payer_id, total_taxable):
+    tax_payer = create_or_get_tax_payer_obj(tax_payer_id)
+    if tax_payer.is_female or tax_payer.is_aged_65_years_or_more:
+        first_slab_amount = INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT_FOR_WOMEN_THIRD_SEX_AND_65_OR_UP_AGED
+    else:
+        first_slab_amount = INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT
+
     second_slab_amount = max(min(
-        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT), 0)
+        total_taxable - first_slab_amount, INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT), 0)
     third_slab_amount = max(min(
-        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT,
+        total_taxable - first_slab_amount - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT,
         INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT), 0)
     fourth_slab_amount = max(min(
-        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        total_taxable - first_slab_amount - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
         INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT, INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT), 0)
     fifth_slab_amount = max(min(
-        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        total_taxable - first_slab_amount - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
         INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT,
         INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT), 0)
     sixth_slab_amount = max(
-        total_taxable - INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
+        total_taxable - first_slab_amount - INDIVIDUAL_TAX_PAYER_SECOND_SLAB_LIMIT -
         INDIVIDUAL_TAX_PAYER_THIRD_SLAB_LIMIT - INDIVIDUAL_TAX_PAYER_FOURTH_SLAB_LIMIT -
         INDIVIDUAL_TAX_PAYER_FIFTH_SLAB_LIMIT, 0)
 
