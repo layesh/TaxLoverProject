@@ -1841,12 +1841,12 @@ def link_callback(uri, rel):
 def generate(request, submit_under_82bb):
     tax_payer = TaxPayer.objects.get(user_id=request.user.id)
     tax_payer_dto = TaxPayerDTO(tax_payer)
-    income_dto = IncomeDTO(tax_payer, False)
-    asset_dto = AssetsDTO(tax_payer, False)
-    liabilities_dto = LiabilitiesDTO(tax_payer, False)
+    income_dto = IncomeDTO(tax_payer.id, False)
+    asset_dto = AssetsDTO(tax_payer.id, False)
+    liabilities_dto = LiabilitiesDTO(tax_payer.id, False)
     net_wealth = asset_dto.gross_wealth - liabilities_dto.total_liabilities
     change_in_net_wealth = net_wealth - asset_dto.previous_year_net_wealth_value if asset_dto.previous_year_net_wealth else 0
-    expense_dto = ExpenseDTO(tax_payer)
+    expense_dto = ExpenseDTO(tax_payer.id)
     total_fund_outflow = change_in_net_wealth + expense_dto.total_expenses if expense_dto.expense else 0
     shortage_of_fund = income_dto.total_income - total_fund_outflow
 
