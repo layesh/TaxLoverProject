@@ -775,7 +775,7 @@
             </td>
             <td class="table-td-vertical-align-top text-align-right">
                 {% if income_dto.has_salary_income %}
-                    {{ income_dto.total_salary_income|format_decimal }}
+                    {{ income_dto.total_salary_taxable|format_decimal }}
                 {% endif %}
             </td>
         </tr>
@@ -918,7 +918,7 @@
 
             </td>
             <td class="table-td-vertical-align-top text-align-right">
-                {{ income_dto.total_income|format_decimal }}
+                {{ income_dto.total_taxable|format_decimal }}
             </td>
         </tr>
     </table>
@@ -1563,7 +1563,7 @@
             <td colspan="3" class="table-td-vertical-align-top">
                 Total income shown (serial 34)
                 <br/>
-                <b>Tk {{ income_dto.total_income|format_decimal }}</b>
+                <b>Tk {{ income_dto.total_taxable|format_decimal }}</b>
             </td>
         </tr>
 
