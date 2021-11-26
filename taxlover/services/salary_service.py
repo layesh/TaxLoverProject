@@ -25,6 +25,7 @@ def process_and_save_salary(salary_statement_document, payer_id):
     salary_table_data = extract_table_session.process_file(filepath=file_path,
                                                            output_format="df")
 
+    # TODO: check if table has data
     table_column_length = len(salary_table_data[0].columns)
 
     salary = Salary()

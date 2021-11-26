@@ -656,6 +656,7 @@ def upload_salary_statement(request):
                         income_year_end)
                     salary_statement_document.save()
 
+                    # TODO: error check on process_and_save_salary
                     total_annual_payment = process_and_save_salary(salary_statement_document, request.user.id)
                     has_total_annual_payment = False
                     if total_annual_payment > 0:
