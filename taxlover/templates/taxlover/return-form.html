@@ -1890,13 +1890,13 @@
                 Leave allowance
             </td>
             <td class="table-td-vertical-align-top text-align-right">
-                {{ income_dto.lfa|format_decimal }}
+{#                {{ income_dto.lfa|format_decimal }}#}
             </td>
             <td class="table-td-vertical-align-top text-align-right">
-                {{ income_dto.lfa_exempted|format_decimal }}
+{#                {{ income_dto.lfa_exempted|format_decimal }}#}
             </td>
             <td class="table-td-vertical-align-top text-align-right">
-                {{ income_dto.lfa_taxable|format_decimal }}
+{#                {{ income_dto.lfa_taxable|format_decimal }}#}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">
@@ -1957,14 +1957,14 @@
             <td class="table-td-vertical-align-top">
                 Other allowances
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.other_allowances|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.other_allowances_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.other_allowances_taxable|format_decimal }}
             </td>
         </tr>
         <tr>

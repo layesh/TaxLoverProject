@@ -33,7 +33,11 @@ def process_and_save_salary(salary_statement_document, payer_id):
     salary.financial_year_beg, salary.financial_year_end = get_income_years()
 
     for row_index, row in salary_table_data[0].iterrows():
-        salary_category = str(row[0]).lower()
+        # For Nilavo Tech 2021
+        # salary_category = str(row[0]).lower()
+        # For Nilavo Tech 2022
+        salary_category = str(row[1]).lower()
+
         if 'basic' in salary_category:
             salary.basic = parse_data(row, table_column_length)
         elif 'house rent' in salary_category:
@@ -44,6 +48,8 @@ def process_and_save_salary(salary_statement_document, payer_id):
             salary.conveyance = parse_data(row, table_column_length)
         elif 'leave fare assistance' in salary_category:
             salary.lfa = parse_data(row, table_column_length)
+        elif 'other allowances' in salary_category:
+            salary.other_allowances = parse_data(row, table_column_length)
         elif 'festival bonus' in salary_category:
             salary.festival_bonus = parse_data(row, table_column_length)
         elif 'other bonus' in salary_category:
@@ -57,8 +63,22 @@ def process_and_save_salary(salary_statement_document, payer_id):
         elif 'advance income tax' in salary_category:
             salary.ait = parse_data(row, table_column_length)
 
+    # For Nilavo Tech 2022
+    table_column_length = len(salary_table_data[1].columns)
+
+    for row_index, row in salary_table_data[1].iterrows():
+        salary_category = str(row[0]).lower()
+
+        if 'company contribution' in salary_category:
+            salary.employers_contribution_to_pf = parse_data(row, table_column_length)
+        elif 'own contribution' in salary_category:
+            salary.employees_contribution_to_pf = parse_data(row, table_column_length)
+
+    if salary.total_bonus == 0:
+        salary.total_bonus = salary.festival_bonus + salary.other_bonus
+
     total_annual_payment = salary.get_basic + salary.get_house_rent + salary.get_medical + salary.get_conveyance + \
-        salary.get_lfa + salary.get_total_bonus + salary.get_employers_contribution_to_pf
+        salary.get_lfa + salary.other_allowances + salary.get_total_bonus + salary.get_employers_contribution_to_pf
 
     if total_annual_payment > 0:
         salary.save()
@@ -84,6 +104,7 @@ def get_total_taxable(salary):
            salary.get_house_rent - get_house_rent_exempted(salary.get_basic, salary.get_house_rent) + \
            salary.get_medical - get_medical_exempted(salary.get_basic, salary.get_medical) + \
            salary.get_conveyance - get_conveyance_exempted(salary.get_conveyance) + \
+           salary.get_other_allowances + \
            salary.get_total_bonus + \
            salary.get_employers_contribution_to_pf
 

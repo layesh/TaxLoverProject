@@ -19,21 +19,32 @@ from taxlover.services.html_parser import strip_tags
 def parse_data(row, total_columns):
     parsed_data = 0.0
 
-    for i in range(0, total_columns):
-        if i == 0:
-            regex_matches = re.findall("(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$",
-                                       row[i])  # simpler: [0-9]{1,3}(,[0-9]{3})*\.[0-9]+$
-            if len(regex_matches) > 0:
-                parsed_data = Decimal(remove_comma(regex_matches[0][0]))
-                if parsed_data > 0.0:
-                    return parsed_data
-        else:
-            try:
-                parsed_data = Decimal(remove_comma(row[i]))
-                if parsed_data > 0.0:
-                    return parsed_data
-            except Exception:
-                parsed_data = 0.0
+    # For Nilavo Tech 2021
+    # for i in range(0, total_columns):
+    #     if i == 0:
+    #         regex_matches = re.findall("(\d*\.?\d+|\d{1,3}(,\d{3})*(\.\d+)?)$",
+    #                                    row[i])  # simpler: [0-9]{1,3}(,[0-9]{3})*\.[0-9]+$
+    #         if len(regex_matches) > 0:
+    #             parsed_data = Decimal(remove_comma(regex_matches[0][0]))
+    #             if parsed_data > 0.0:
+    #                 return parsed_data
+    #     else:
+    #         try:
+    #             parsed_data = Decimal(remove_comma(row[i]))
+    #             if parsed_data > 0.0:
+    #                 return parsed_data
+    #         except Exception:
+    #             parsed_data = 0.0
+
+    # For Nilavo Tech 2022
+    for i in range(2, total_columns):
+        try:
+            parsed_data = Decimal(remove_comma(row[i]))
+            if parsed_data > 0.0:
+                return parsed_data
+        except Exception:
+            parsed_data = 0.0
+
 
     return parsed_data
 

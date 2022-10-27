@@ -73,6 +73,9 @@ class IncomeDTO:
             self.lfa = salary.get_lfa
             self.lfa_exempted = salary.get_lfa
             self.lfa_taxable = 0
+            self.other_allowances = salary.get_other_allowances
+            self.other_allowances_exempted = 0
+            self.other_allowances_taxable = salary.get_other_allowances
             self.bonus = salary.get_total_bonus
             self.bonus_exempted = 0
             self.bonus_taxable = salary.get_total_bonus

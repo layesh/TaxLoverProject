@@ -111,7 +111,7 @@
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none">
                         <th scope="row">
                             <label for="{{ form.lfa.id_for_label }}"
                                    class="col-form-label">Leave Fair Assistance (LFA)</label>
@@ -130,6 +130,28 @@
                         </td>
                         <td>
                             <input id="id_lfa_taxable" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="{{ form.other_allowances.id_for_label }}"
+                                   class="col-form-label">Other Allowances</label>
+                            <sup style="padding-left: 2px;">
+                                <i class="bi bi-info-circle" style="color: red; font-size: 14px"
+                                   data-bs-toggle="tooltip" data-bs-placement="right"
+                                   title="Other Allowances refers to the annual compensation the taxpayer received that is connected to any other allowance they received including examples like residential security, gardener, chef, etc."></i>
+                            </sup>
+                        </th>
+                        <td>
+                            {{ form.other_allowances }}
+                        </td>
+                        <td>
+                            <input id="id_other_allowances_exempted" class="form-control text-align-right" type="text" placeholder=""
+                                   aria-label="Disabled input example" disabled>
+                        </td>
+                        <td>
+                            <input id="id_other_allowances_taxable" class="form-control text-align-right" type="text" placeholder=""
                                    aria-label="Disabled input example" disabled>
                         </td>
                     </tr>
@@ -213,9 +235,10 @@
             let medical = parseDecimalInputValue('id_medical');
             let conveyance = parseDecimalInputValue('id_conveyance');
             let lfa = parseDecimalInputValue('id_lfa');
+            let other_allowances = parseDecimalInputValue('id_other_allowances');
             let total_bonus = parseDecimalInputValue('id_total_bonus');
             let employers_contribution_to_pf = parseDecimalInputValue('id_employers_contribution_to_pf');
-            let totalIncome = basic + houseRent + medical + conveyance + lfa + total_bonus + employers_contribution_to_pf;
+            let totalIncome = basic + houseRent + medical + conveyance + lfa + other_allowances + total_bonus + employers_contribution_to_pf;
 
             setLabelValue('total_income', addCommas(formatToTwoDecimalPlaces(totalIncome.toString())));
         }
@@ -226,9 +249,10 @@
             let medicalE = parseDecimalInputValue('id_medical_exempted');
             let conveyanceE = parseDecimalInputValue('id_conveyance_exempted');
             let lfaE = parseDecimalInputValue('id_lfa_exempted');
+            let otherAllowancesE = parseDecimalInputValue('id_other_allowances_exempted');
             let totalBonusE = parseDecimalInputValue('id_total_bonus_exempted');
             let employersContributionToPfE = parseDecimalInputValue('id_employers_contribution_to_pf_exempted');
-            let totalExempted = basicE + houseRentE + medicalE + conveyanceE + lfaE + totalBonusE + employersContributionToPfE;
+            let totalExempted = basicE + houseRentE + medicalE + conveyanceE + lfaE + otherAllowancesE + totalBonusE + employersContributionToPfE;
 
             setLabelValue('total_exempted', addCommas(formatToTwoDecimalPlaces(totalExempted.toString())));
         }
@@ -239,9 +263,10 @@
             let medicalT = parseDecimalInputValue('id_medical_taxable');
             let conveyanceT = parseDecimalInputValue('id_conveyance_taxable');
             let lfaT = parseDecimalInputValue('id_lfa_taxable');
+            let otherAllowancesT = parseDecimalInputValue('id_other_allowances_taxable');
             let totalBonusT = parseDecimalInputValue('id_total_bonus_taxable');
             let employersContributionToPfET = parseDecimalInputValue('id_employers_contribution_to_pf_taxable');
-            let totalTaxable = basicT + houseRentT + medicalT + conveyanceT + lfaT + totalBonusT + employersContributionToPfET;
+            let totalTaxable = basicT + houseRentT + medicalT + conveyanceT + lfaT + otherAllowancesT + totalBonusT + employersContributionToPfET;
 
             setLabelValue('total_taxable', addCommas(formatToTwoDecimalPlaces(totalTaxable.toString())));
         }
@@ -251,12 +276,15 @@
             let hasHouseRentInputValue = hasInputValue('id_house_rent');
             let hasMedicalInputValue = hasInputValue('id_medical');
             let hasConveyanceInputValue = hasInputValue('id_conveyance');
+
             let hasLFAInputValue = hasInputValue('id_lfa');
+            let hasOtherAllowancesInputValue = hasInputValue('id_other_allowances');
             let hasBonusInputValue = hasInputValue('id_total_bonus');
             let hasPFInputValue = hasInputValue('id_employers_contribution_to_pf');
 
             let basic = parseDecimalInputValue('id_basic');
             let lfa = parseDecimalInputValue('id_lfa');
+            let other_allowances = parseDecimalInputValue('id_other_allowances');
             let bonus = parseDecimalInputValue('id_total_bonus');
             let pf = parseDecimalInputValue('id_employers_contribution_to_pf');
 
@@ -267,6 +295,8 @@
             setExemptedAndTaxableAjax(hasConveyanceInputValue, 'conveyance');
             checkAndSet(hasLFAInputValue, 'id_lfa_exempted', lfa);
             checkAndSet(hasLFAInputValue, 'id_lfa_taxable', 0);
+            checkAndSet(hasOtherAllowancesInputValue, 'id_other_allowances_exempted', 0);
+            checkAndSet(hasOtherAllowancesInputValue, 'id_other_allowances_taxable', other_allowances);
             checkAndSet(hasBonusInputValue, 'id_total_bonus_exempted', 0);
             checkAndSet(hasBonusInputValue, 'id_total_bonus_taxable', bonus);
             checkAndSet(hasPFInputValue, 'id_employers_contribution_to_pf_exempted', 0);
