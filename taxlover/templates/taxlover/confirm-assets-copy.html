@@ -2,8 +2,18 @@
 {% load tax_extras %}
 {% block content %}
     <div class="container px-0">
-        <div class="row gx-3">
-
+{#        <br/>#}
+        <div class="card border-info mb-3 shadow-sm" style="max-width: 50rem; margin: auto;">
+            <div class="card-header dashboard-tax-year-header">Copy Assets From the Previous Year</div>
+            <div class="card-body copy-previous-year-body">
+                <p class="card-text" style="text-align: center">You can copy the assets from the previous year. Later you can add/edit them to meet your needs. You can fill fresh for this year too.
+                    Please select the appropriate one for you from the below.</p>
+                <br/>
+                <div class="col-md-12 text-center">
+                    <a href="{% url 'generate-assets-data' %}" type="button" class="btn btn-info">I Will Fill Up Again</a>
+                    <a href="{% url 'copy-assets-data' %}" type="button" class="btn btn-warning">Copy From Previous Year</a>
+                </div>
+            </div>
         </div>
     </div>
     <script>

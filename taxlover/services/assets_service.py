@@ -1,8 +1,8 @@
 from django.db.models import Sum
 
 from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
-    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth
-from taxlover.utils import get_income_years
+    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Assets
+from taxlover.utils import get_income_years, get_previous_income_years
 
 
 def save_assets(latest_assets, source, answer, request):
@@ -242,3 +242,17 @@ def get_current_financial_year_previous_year_net_wealth_by_payer(payer_id):
                                                 financial_year_beg=financial_year_beg,
                                                 financial_year_end=financial_year_end).first()
 
+
+def copy_assets_data_from_previous_year(payer_id):
+    previous_income_year_beg, previous_income_year_end = get_previous_income_years()
+
+    prev_year_asset = Assets.objects.get(tax_payer_id=payer_id, income_year_beg=previous_income_year_beg,
+                                         income_year_end=previous_income_year_end)
+
+    copy_asset = prev_year_asset
+    income_year_beg, income_year_end = get_income_years()
+    copy_asset.income_year_beg = income_year_beg
+    copy_asset.income_year_end = income_year_end
+    copy_asset.id = None
+
+    copy_asset.save()

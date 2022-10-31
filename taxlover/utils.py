@@ -158,7 +158,7 @@ def copy_request(request):
     return request_copy
 
 
-def create_or_get_current_assets_obj(user_id, do_not_save_object):
+def create_or_get_current_assets_obj(user_id, do_not_save_object=None):
     income_year_beg, income_year_end = get_income_years()
 
     try:

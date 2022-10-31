@@ -92,4 +92,8 @@ urlpatterns = [
     path('expenses/', views.expenses, name='expenses'),
     path('adjust-cash-in-hand/', views.adjust_cash_in_hand,
          name='adjust-cash-in-hand'),
+    path('generate-assets-data', views.generate_assets_data,
+         name='generate-assets-data'),
+    path('copy-assets-data', views.copy_assets_data,
+         name='copy-assets-data'),
 ]

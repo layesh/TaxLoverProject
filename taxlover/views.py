@@ -23,7 +23,7 @@ from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, 
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
 from taxlover.services.assets_service import save_assets, get_current_financial_year_cash_assets_by_payer, \
-    get_current_financial_year_previous_year_net_wealth_by_payer
+    get_current_financial_year_previous_year_net_wealth_by_payer, copy_assets_data_from_previous_year
 from taxlover.services.expense_service import get_current_financial_year_expense_by_payer
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
@@ -2059,3 +2059,18 @@ def get_data_for_edit(request):
             }
 
         return JsonResponse(data)
+
+
+@login_required
+def generate_assets_data(request):
+    create_or_get_current_assets_obj(request.user.id, False)
+
+    return redirect('assets')
+
+
+@login_required
+def copy_assets_data(request):
+    copy_assets_data_from_previous_year(request.user.id)
+
+    return redirect('assets')
+
