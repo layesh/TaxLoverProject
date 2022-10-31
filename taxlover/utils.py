@@ -74,6 +74,15 @@ def create_or_get_current_income_obj(user_id):
     return latest_income
 
 
+def get_previous_income_years():
+    current_month = datetime.date.today().month
+    current_year = datetime.date.today().year
+    previous_income_year_beg = current_year - 2 if current_month > 6 else current_year - 3
+    previous_income_year_end = previous_income_year_beg + 1
+
+    return previous_income_year_beg, previous_income_year_end
+
+
 def get_income_years():
     current_month = datetime.date.today().month
     current_year = datetime.date.today().year
@@ -149,15 +158,19 @@ def copy_request(request):
     return request_copy
 
 
-def create_or_get_current_assets_obj(user_id):
+def create_or_get_current_assets_obj(user_id, do_not_save_object):
     income_year_beg, income_year_end = get_income_years()
 
     try:
         latest_assets = Assets.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
                                            income_year_end=income_year_end)
     except Assets.DoesNotExist:
-        latest_assets = Assets.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
-                                              income_year_end=income_year_end)
+        if do_not_save_object:
+            latest_assets = Assets()
+        else:
+            latest_assets = Assets.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                                  income_year_end=income_year_end)
+
     return latest_assets
 
 
@@ -228,4 +241,19 @@ def get_eligible_amount_of_investment_for_rebate(total_invested_amount, total_ta
                INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT)
 
 
+def show_copy_view_from_previous_year(user_id):
+    income_year_beg, income_year_end = get_income_years()
+    previous_income_year_beg, previous_income_year_end = get_previous_income_years()
 
+    try:
+        Assets.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                           income_year_end=income_year_end)
+    except Assets.DoesNotExist:
+        try:
+            Assets.objects.get(tax_payer_id=user_id, income_year_beg=previous_income_year_beg,
+                               income_year_end=previous_income_year_end)
+            return True
+        except Assets.DoesNotExist:
+            return False
+
+    return False

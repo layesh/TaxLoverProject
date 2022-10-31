@@ -24,6 +24,7 @@ urlpatterns = [
     path('personal-info/', views.personal_info, name='personal-info'),
     path('income/', views.income, name='income'),
     path('assets/', views.assets, name='assets'),
+    path('confirm-assets-copy/', views.confirm_assets_copy, name='confirm-assets-copy'),
     path('generate/<str:submit_under_82bb>', views.generate, name='generate'),
     path('download-return/', views.download_return, name='download-return'),
     path('save-income-data/<str:source>/<str:answer>/', views.save_income_data, name='save-income-data'),

@@ -1,3 +1,4 @@
+from taxlover.models import Assets
 from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer, \
     get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer, \
     get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
@@ -12,7 +13,7 @@ from taxlover.utils import get_income_years, create_or_get_current_assets_obj
 class AssetsDTO:
 
     def __init__(self, tax_payer_id, has_form_error):
-        assets = create_or_get_current_assets_obj(tax_payer_id)
+        assets = create_or_get_current_assets_obj(tax_payer_id, True)
         self.cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
         self.previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
 

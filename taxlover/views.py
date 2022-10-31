@@ -34,7 +34,7 @@ from taxlover.services.salary_service import process_and_save_salary, get_house_
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
     set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj, \
-    has_tax_payer_data
+    has_tax_payer_data, show_copy_view_from_previous_year
 
 import os
 from django.conf import settings
@@ -1448,29 +1448,39 @@ def save_other_liability(request):
 
 @login_required
 def assets(request):
+    show_copy_view = show_copy_view_from_previous_year(request.user.id)
+
     assets_dto = AssetsDTO(request.user.id, False)
 
-    ap_form = AgriculturalPropertyForm(request.POST)
-    f_form = FurnitureForm(request.POST)
-    j_form = JewelleryForm(request.POST)
-    ee_form = ElectronicEquipmentForm(request.POST)
-    oa_form = OtherAssetsForm(request.POST)
-    oar_form = OtherAssetsReceiptForm(request.POST)
-    pynw_form = PreviousYearNetWealthForm(request.POST)
+    if show_copy_view:
+        return redirect('confirm-assets-copy')
+    else:
+        ap_form = AgriculturalPropertyForm(request.POST)
+        f_form = FurnitureForm(request.POST)
+        j_form = JewelleryForm(request.POST)
+        ee_form = ElectronicEquipmentForm(request.POST)
+        oa_form = OtherAssetsForm(request.POST)
+        oar_form = OtherAssetsReceiptForm(request.POST)
+        pynw_form = PreviousYearNetWealthForm(request.POST)
 
-    context = {
-        'assets_dto': assets_dto,
-        'title': 'Assets',
-        'ap_form': ap_form,
-        'f_form': f_form,
-        'j_form': j_form,
-        'ee_form': ee_form,
-        'oa_form': oa_form,
-        'oar_form': oar_form,
-        'pynw_form': pynw_form
-    }
+        context = {
+            'assets_dto': assets_dto,
+            'title': 'Assets',
+            'ap_form': ap_form,
+            'f_form': f_form,
+            'j_form': j_form,
+            'ee_form': ee_form,
+            'oa_form': oa_form,
+            'oar_form': oar_form,
+            'pynw_form': pynw_form
+        }
 
-    return render(request, 'taxlover/assets.html', context)
+        return render(request, 'taxlover/assets.html', context)
+
+
+@login_required
+def confirm_assets_copy(request):
+    return render(request, 'taxlover/confirm-assets-copy.html')
 
 
 @login_required
