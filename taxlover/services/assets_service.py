@@ -38,7 +38,7 @@ def save_assets(latest_assets, source, answer, request):
         elif answer == 'no':
             show_success_message = True
             latest_assets.investments = False
-            investments = get_current_financial_year_investments_by_payer(request.user.id)
+            investments = get_investments_by_payer(request.user.id)
             if investments:
                 investments.delete()
     elif source == 'motor_vehicle':
@@ -47,7 +47,7 @@ def save_assets(latest_assets, source, answer, request):
         elif answer == 'no':
             show_success_message = True
             latest_assets.motor_vehicle = False
-            investments = get_current_financial_year_motor_vehicle_by_payer(request.user.id)
+            investments = get_motor_vehicle_by_payer(request.user.id)
             if investments:
                 investments.delete()
     elif source == 'furniture':
@@ -56,7 +56,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.furniture = True
         elif answer == 'no':
             latest_assets.furniture = False
-            furnitures = get_current_financial_year_furniture_by_payer(request.user.id)
+            furnitures = get_furniture_by_payer(request.user.id)
             if furnitures:
                 furnitures.delete()
     elif source == 'jewellery':
@@ -65,7 +65,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.jewellery = True
         elif answer == 'no':
             latest_assets.jewellery = False
-            jewelleries = get_current_financial_year_jewellery_by_payer(request.user.id)
+            jewelleries = get_jewellery_by_payer(request.user.id)
             if jewelleries:
                 jewelleries.delete()
     elif source == 'electronic_equipment':
@@ -74,7 +74,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.electronic_equipment = True
         elif answer == 'no':
             latest_assets.electronic_equipment = False
-            equipments = get_current_financial_year_electronic_equipment_by_payer(request.user.id)
+            equipments = get_electronic_equipment_by_payer(request.user.id)
             if equipments:
                 equipments.delete()
     elif source == 'cash_assets':
@@ -83,7 +83,7 @@ def save_assets(latest_assets, source, answer, request):
         elif answer == 'no':
             show_success_message = True
             latest_assets.cash_assets = False
-            cash_assets = get_current_financial_year_cash_assets_by_payer(request.user.id)
+            cash_assets = get_cash_assets_by_payer(request.user.id)
             if cash_assets:
                 cash_assets.delete()
     elif source == 'other_assets':
@@ -92,7 +92,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.other_assets = True
         elif answer == 'no':
             latest_assets.other_assets = False
-            other_assets = get_current_financial_year_other_assets_by_payer(request.user.id)
+            other_assets = get_other_assets_by_payer(request.user.id)
             if other_assets:
                 other_assets.delete()
     elif source == 'other_assets_receipt':
@@ -101,7 +101,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.other_assets_receipt = True
         elif answer == 'no':
             latest_assets.other_assets_receipt = False
-            other_assets_receipt = get_current_financial_year_other_assets_receipt_by_payer(request.user.id)
+            other_assets_receipt = get_other_assets_receipt_by_payer(request.user.id)
             if other_assets_receipt:
                 other_assets_receipt.delete()
     elif source == 'previous_year_net_wealth':
@@ -110,7 +110,7 @@ def save_assets(latest_assets, source, answer, request):
             latest_assets.previous_year_net_wealth = True
         elif answer == 'no':
             latest_assets.previous_year_net_wealth = False
-            previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(request.user.id)
+            previous_year_net_wealth = get_net_wealth_by_payer(request.user.id)
             if previous_year_net_wealth:
                 previous_year_net_wealth.delete()
 
@@ -119,8 +119,11 @@ def save_assets(latest_assets, source, answer, request):
     return show_success_message
 
 
-def get_current_financial_year_agricultural_property_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_agricultural_property_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return AgriculturalProperty.objects.filter(tax_payer_id=payer_id,
                                                financial_year_beg=financial_year_beg,
@@ -133,8 +136,11 @@ def get_total_agricultural_property_value(agricultural_properties):
     return total['property_value__sum'] if total['property_value__sum'] is not None else 0
 
 
-def get_current_financial_year_investments_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_investments_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return Investment.objects.filter(tax_payer_id=payer_id,
                                      financial_year_beg=financial_year_beg,
@@ -153,24 +159,33 @@ def get_total_investment_value_by_type(investments, investment_type):
     return total['value__sum'] if total['value__sum'] is not None else 0
 
 
-def get_current_financial_year_motor_vehicle_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_motor_vehicle_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return MotorVehicle.objects.filter(tax_payer_id=payer_id,
                                        financial_year_beg=financial_year_beg,
                                        financial_year_end=financial_year_end)
 
 
-def get_current_financial_year_furniture_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_furniture_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return Furniture.objects.filter(tax_payer_id=payer_id,
                                     financial_year_beg=financial_year_beg,
                                     financial_year_end=financial_year_end)
 
 
-def get_current_financial_year_jewellery_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_jewellery_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return Jewellery.objects.filter(tax_payer_id=payer_id,
                                     financial_year_beg=financial_year_beg,
@@ -183,8 +198,11 @@ def get_total_jewellery_value(jewelleries):
     return total['jewellery_value__sum'] if total['jewellery_value__sum'] is not None else 0
 
 
-def get_current_financial_year_electronic_equipment_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_electronic_equipment_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return ElectronicEquipment.objects.filter(tax_payer_id=payer_id,
                                               financial_year_beg=financial_year_beg,
@@ -201,24 +219,33 @@ def get_total_furniture_and_electronic_items_value(furnitures, electronic_equipm
     return total_value
 
 
-def get_current_financial_year_cash_assets_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_cash_assets_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return CashAssets.objects.filter(tax_payer_id=payer_id,
                                      financial_year_beg=financial_year_beg,
                                      financial_year_end=financial_year_end).first()
 
 
-def get_current_financial_year_other_assets_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_other_assets_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return OtherAssets.objects.filter(tax_payer_id=payer_id,
                                       financial_year_beg=financial_year_beg,
                                       financial_year_end=financial_year_end)
 
 
-def get_current_financial_year_other_assets_receipt_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_other_assets_receipt_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return OtherAssetsReceipt.objects.filter(tax_payer_id=payer_id,
                                              financial_year_beg=financial_year_beg,
@@ -235,8 +262,11 @@ def get_total_other_asset_value(other_assets, other_assets_receipt):
     return total_value
 
 
-def get_current_financial_year_previous_year_net_wealth_by_payer(payer_id):
-    financial_year_beg, financial_year_end = get_income_years()
+def get_net_wealth_by_payer(payer_id, previous_year=None):
+    if previous_year:
+        financial_year_beg, financial_year_end = get_previous_income_years()
+    else:
+        financial_year_beg, financial_year_end = get_income_years()
 
     return PreviousYearNetWealth.objects.filter(tax_payer_id=payer_id,
                                                 financial_year_beg=financial_year_beg,
@@ -249,10 +279,80 @@ def copy_assets_data_from_previous_year(payer_id):
     prev_year_asset = Assets.objects.get(tax_payer_id=payer_id, income_year_beg=previous_income_year_beg,
                                          income_year_end=previous_income_year_end)
 
-    copy_asset = prev_year_asset
     income_year_beg, income_year_end = get_income_years()
-    copy_asset.income_year_beg = income_year_beg
-    copy_asset.income_year_end = income_year_end
-    copy_asset.id = None
+    prev_year_asset.id = None
+    prev_year_asset.income_year_beg = income_year_beg
+    prev_year_asset.income_year_end = income_year_end
 
-    copy_asset.save()
+    prev_year_asset.save()
+
+    agricultural_properties = get_agricultural_property_by_payer(payer_id, True)
+    investments = get_investments_by_payer(payer_id, True)
+    motor_vehicles = get_motor_vehicle_by_payer(payer_id, True)
+    furnitures = get_furniture_by_payer(payer_id, True)
+    jewelleries = get_jewellery_by_payer(payer_id, True)
+    electronic_equipments = get_electronic_equipment_by_payer(payer_id, True)
+    other_assets = get_other_assets_by_payer(payer_id, True)
+    other_assets_receipts = get_other_assets_receipt_by_payer(payer_id, True)
+    cash_assets = get_cash_assets_by_payer(payer_id, True)
+    previous_year_net_wealth = get_net_wealth_by_payer(payer_id, True)
+
+    for asset in agricultural_properties:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in investments:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in motor_vehicles:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in furnitures:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in jewelleries:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in electronic_equipments:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in other_assets:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    for asset in other_assets_receipts:
+        asset.id = None
+        asset.financial_year_beg = income_year_beg
+        asset.financial_year_end = income_year_end
+        asset.save()
+
+    if cash_assets:
+        cash_assets.id = None
+        cash_assets.financial_year_beg = income_year_beg
+        cash_assets.financial_year_end = income_year_end
+        cash_assets.save()
+
+    if previous_year_net_wealth:
+        previous_year_net_wealth.id = None
+        previous_year_net_wealth.financial_year_beg = income_year_beg
+        previous_year_net_wealth.financial_year_end = income_year_end
+        previous_year_net_wealth.save()

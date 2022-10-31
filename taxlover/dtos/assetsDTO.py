@@ -1,10 +1,10 @@
 from taxlover.models import Assets
-from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer, \
-    get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer, \
-    get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
-    get_current_financial_year_electronic_equipment_by_payer, get_current_financial_year_other_assets_by_payer, \
-    get_current_financial_year_other_assets_receipt_by_payer, get_current_financial_year_cash_assets_by_payer, \
-    get_current_financial_year_previous_year_net_wealth_by_payer, get_total_agricultural_property_value, \
+from taxlover.services.assets_service import get_agricultural_property_by_payer, \
+    get_investments_by_payer, get_motor_vehicle_by_payer, \
+    get_furniture_by_payer, get_jewellery_by_payer, \
+    get_electronic_equipment_by_payer, get_other_assets_by_payer, \
+    get_other_assets_receipt_by_payer, get_cash_assets_by_payer, \
+    get_net_wealth_by_payer, get_total_agricultural_property_value, \
     get_total_investment_value, get_total_investment_value_by_type, get_total_jewellery_value, \
     get_total_furniture_and_electronic_items_value, get_total_other_asset_value
 from taxlover.utils import get_income_years, create_or_get_current_assets_obj
@@ -14,8 +14,8 @@ class AssetsDTO:
 
     def __init__(self, tax_payer_id, has_form_error):
         assets = create_or_get_current_assets_obj(tax_payer_id, True)
-        self.cash_assets = get_current_financial_year_cash_assets_by_payer(tax_payer_id)
-        self.previous_year_net_wealth = get_current_financial_year_previous_year_net_wealth_by_payer(tax_payer_id)
+        self.cash_assets = get_cash_assets_by_payer(tax_payer_id)
+        self.previous_year_net_wealth = get_net_wealth_by_payer(tax_payer_id)
 
         self.has_business_capital = assets.has_business_capital
         self.has_no_business_capital = assets.has_no_business_capital
@@ -46,9 +46,9 @@ class AssetsDTO:
 
         self.income_year_beg, self.income_year_end = get_income_years()
 
-        self.agricultural_properties = get_current_financial_year_agricultural_property_by_payer(tax_payer_id)
+        self.agricultural_properties = get_agricultural_property_by_payer(tax_payer_id)
         self.total_agricultural_properties_value = get_total_agricultural_property_value(self.agricultural_properties)
-        self.investments = get_current_financial_year_investments_by_payer(tax_payer_id)
+        self.investments = get_investments_by_payer(tax_payer_id)
         self.total_investment_value = get_total_investment_value(self.investments)
         self.total_shares_debentures_investment_value = get_total_investment_value_by_type(self.investments,
                                                                                            'Shares/Debentures')
@@ -60,7 +60,7 @@ class AssetsDTO:
                                                                                            'Loans Given')
         self.total_other_investment_investment_value = get_total_investment_value_by_type(self.investments,
                                                                                            'Other Investment')
-        self.motor_vehicles = get_current_financial_year_motor_vehicle_by_payer(tax_payer_id)
+        self.motor_vehicles = get_motor_vehicle_by_payer(tax_payer_id)
 
         total_motor_vehicle_value = 0
 
@@ -71,14 +71,14 @@ class AssetsDTO:
             self.motor_vehicles_02 = self.motor_vehicles[1]
             total_motor_vehicle_value += self.motor_vehicles_02.get_value
 
-        self.furnitures = get_current_financial_year_furniture_by_payer(tax_payer_id)
-        self.jewelleries = get_current_financial_year_jewellery_by_payer(tax_payer_id)
+        self.furnitures = get_furniture_by_payer(tax_payer_id)
+        self.jewelleries = get_jewellery_by_payer(tax_payer_id)
         self.total_jewellery_value = get_total_jewellery_value(self.jewelleries)
-        self.electronic_equipments = get_current_financial_year_electronic_equipment_by_payer(tax_payer_id)
+        self.electronic_equipments = get_electronic_equipment_by_payer(tax_payer_id)
         self.total_furniture_and_electronic_items_value = get_total_furniture_and_electronic_items_value(
             self.furnitures, self.electronic_equipments)
-        self.other_assets = get_current_financial_year_other_assets_by_payer(tax_payer_id)
-        self.other_assets_receipts = get_current_financial_year_other_assets_receipt_by_payer(tax_payer_id)
+        self.other_assets = get_other_assets_by_payer(tax_payer_id)
+        self.other_assets_receipts = get_other_assets_receipt_by_payer(tax_payer_id)
         self.total_other_asset_value = get_total_other_asset_value(self.other_assets, self.other_assets_receipts)
 
         if self.cash_assets:

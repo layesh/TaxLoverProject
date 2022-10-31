@@ -1,9 +1,9 @@
-from taxlover.services.assets_service import get_current_financial_year_agricultural_property_by_payer, \
-    get_current_financial_year_investments_by_payer, get_current_financial_year_motor_vehicle_by_payer, \
-    get_current_financial_year_furniture_by_payer, get_current_financial_year_jewellery_by_payer, \
-    get_current_financial_year_electronic_equipment_by_payer, get_current_financial_year_other_assets_by_payer, \
-    get_current_financial_year_other_assets_receipt_by_payer, get_current_financial_year_cash_assets_by_payer, \
-    get_current_financial_year_previous_year_net_wealth_by_payer
+from taxlover.services.assets_service import get_agricultural_property_by_payer, \
+    get_investments_by_payer, get_motor_vehicle_by_payer, \
+    get_furniture_by_payer, get_jewellery_by_payer, \
+    get_electronic_equipment_by_payer, get_other_assets_by_payer, \
+    get_other_assets_receipt_by_payer, get_cash_assets_by_payer, \
+    get_net_wealth_by_payer
 from taxlover.services.liabilities_service import get_current_financial_year_unsecured_loans_by_payer, \
     get_current_financial_year_other_liabilities_by_payer, get_current_financial_year_bank_loans_by_payer, \
     get_current_financial_year_mortgages_by_payer, get_total_unsecured_loans_value, get_total_other_liabilities_value, \
