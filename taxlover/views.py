@@ -28,13 +28,13 @@ from taxlover.services.expense_service import get_current_financial_year_expense
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
-from taxlover.services.liabilities_service import save_liabilities
+from taxlover.services.liabilities_service import save_liabilities, copy_liabilities_data_from_previous_year
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
-    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_current_liabilities_obj, \
-    has_tax_payer_data, show_copy_view_from_previous_year
+    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_liabilities_obj, \
+    has_tax_payer_data, show_assets_copy_view_from_previous_year, show_liabilities_copy_view_from_previous_year
 
 import os
 from django.conf import settings
@@ -554,7 +554,7 @@ def mortgage_delete(request):
                                             financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities = create_or_get_liabilities_obj(request.user.id)
                 latest_liabilities.mortgages = None
                 latest_liabilities.save()
 
@@ -576,7 +576,7 @@ def unsecured_loan_delete(request):
                                                  financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities = create_or_get_liabilities_obj(request.user.id)
                 latest_liabilities.unsecured_loans = None
                 latest_liabilities.save()
 
@@ -598,7 +598,7 @@ def bank_loan_delete(request):
                                             financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities = create_or_get_liabilities_obj(request.user.id)
                 latest_liabilities.bank_loans = None
                 latest_liabilities.save()
 
@@ -620,7 +620,7 @@ def other_liability_delete(request):
                                                   financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+                latest_liabilities = create_or_get_liabilities_obj(request.user.id)
                 latest_liabilities.other_liabilities = None
                 latest_liabilities.save()
 
@@ -1448,7 +1448,7 @@ def save_other_liability(request):
 
 @login_required
 def assets(request):
-    show_copy_view = show_copy_view_from_previous_year(request.user.id)
+    show_copy_view = show_assets_copy_view_from_previous_year(request.user.id)
 
     assets_dto = AssetsDTO(request.user.id, False)
 
@@ -1640,23 +1640,33 @@ def motor_vehicle_delete(request):
 
 @login_required
 def liabilities(request):
+    show_copy_view = show_liabilities_copy_view_from_previous_year(request.user.id)
+
     liabilities_dto = LiabilitiesDTO(request.user.id, False)
 
-    m_form = MortgageForm(request.POST)
-    ul_form = UnsecuredLoanForm(request.POST)
-    bl_form = BankLoanForm(request.POST)
-    ol_form = OtherLiabilityForm(request.POST)
+    if show_copy_view:
+        return redirect('confirm-liabilities-copy')
+    else:
+        m_form = MortgageForm(request.POST)
+        ul_form = UnsecuredLoanForm(request.POST)
+        bl_form = BankLoanForm(request.POST)
+        ol_form = OtherLiabilityForm(request.POST)
 
-    context = {
-        'liabilities_dto': liabilities_dto,
-        'title': 'Liabilities',
-        'm_form': m_form,
-        'ul_form': ul_form,
-        'bl_form': bl_form,
-        'ol_form': ol_form
-    }
+        context = {
+            'liabilities_dto': liabilities_dto,
+            'title': 'Liabilities',
+            'm_form': m_form,
+            'ul_form': ul_form,
+            'bl_form': bl_form,
+            'ol_form': ol_form
+        }
 
-    return render(request, 'taxlover/liabilities.html', context)
+        return render(request, 'taxlover/liabilities.html', context)
+
+
+@login_required
+def confirm_liabilities_copy(request):
+    return render(request, 'taxlover/confirm-liabilities-copy.html')
 
 
 @login_required
@@ -1695,7 +1705,7 @@ def expenses(request):
 
 @login_required
 def save_liabilities_data(request, source, answer):
-    latest_liabilities = create_or_get_current_liabilities_obj(request.user.id)
+    latest_liabilities = create_or_get_liabilities_obj(request.user.id)
     show_success_message = save_liabilities(latest_liabilities, source, answer, request)
 
     if show_success_message:
@@ -2069,8 +2079,21 @@ def generate_assets_data(request):
 
 
 @login_required
+def generate_liabilities_data(request):
+    create_or_get_liabilities_obj(request.user.id, False)
+
+    return redirect('liabilities')
+
+
+@login_required
 def copy_assets_data(request):
     copy_assets_data_from_previous_year(request.user.id)
 
     return redirect('assets')
 
+
+@login_required
+def copy_liabilities_data(request):
+    copy_liabilities_data_from_previous_year(request.user.id)
+
+    return redirect('liabilities')

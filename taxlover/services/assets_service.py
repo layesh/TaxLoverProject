@@ -1,7 +1,7 @@
 from django.db.models import Sum
 
 from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
-    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Assets
+    CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Assets, Liabilities
 from taxlover.utils import get_income_years, get_previous_income_years
 
 

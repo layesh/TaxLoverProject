@@ -80,6 +80,7 @@ urlpatterns = [
     path('previous-year-net-wealth-delete/<int:pk>/', views.previous_year_net_wealth_delete,
          name='previous-year-net-wealth-delete'),
     path('liabilities/', views.liabilities, name='liabilities'),
+    path('confirm-liabilities-copy/', views.confirm_liabilities_copy, name='confirm-liabilities-copy'),
     path('save-liabilities-data/<str:source>/<str:answer>/', views.save_liabilities_data, name='save-liabilities-data'),
     path('mortgage-delete/', views.mortgage_delete, name='mortgage-delete'),
     path('save-mortgage/', views.save_mortgage, name='save-mortgage'),
@@ -94,6 +95,10 @@ urlpatterns = [
          name='adjust-cash-in-hand'),
     path('generate-assets-data', views.generate_assets_data,
          name='generate-assets-data'),
+    path('generate-liabilities-data', views.generate_liabilities_data,
+         name='generate-liabilities-data'),
     path('copy-assets-data', views.copy_assets_data,
          name='copy-assets-data'),
+    path('copy-liabilities-data', views.copy_liabilities_data,
+         name='copy-liabilities-data'),
 ]

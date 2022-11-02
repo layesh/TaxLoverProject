@@ -174,15 +174,18 @@ def create_or_get_current_assets_obj(user_id, do_not_save_object=None):
     return latest_assets
 
 
-def create_or_get_current_liabilities_obj(user_id):
+def create_or_get_liabilities_obj(user_id, do_not_save_object=None):
     income_year_beg, income_year_end = get_income_years()
 
     try:
         latest_liabilities = Liabilities.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
                                                      income_year_end=income_year_end)
     except Liabilities.DoesNotExist:
-        latest_liabilities = Liabilities.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
-                                                        income_year_end=income_year_end)
+        if do_not_save_object:
+            latest_liabilities = Liabilities()
+        else:
+            latest_liabilities = Liabilities.objects.create(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                                            income_year_end=income_year_end)
     return latest_liabilities
 
 
@@ -241,7 +244,7 @@ def get_eligible_amount_of_investment_for_rebate(total_invested_amount, total_ta
                INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT)
 
 
-def show_copy_view_from_previous_year(user_id):
+def show_assets_copy_view_from_previous_year(user_id):
     income_year_beg, income_year_end = get_income_years()
     previous_income_year_beg, previous_income_year_end = get_previous_income_years()
 
@@ -254,6 +257,24 @@ def show_copy_view_from_previous_year(user_id):
                                income_year_end=previous_income_year_end)
             return True
         except Assets.DoesNotExist:
+            return False
+
+    return False
+
+
+def show_liabilities_copy_view_from_previous_year(user_id):
+    income_year_beg, income_year_end = get_income_years()
+    previous_income_year_beg, previous_income_year_end = get_previous_income_years()
+
+    try:
+        Liabilities.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
+                                income_year_end=income_year_end)
+    except Liabilities.DoesNotExist:
+        try:
+            Liabilities.objects.get(tax_payer_id=user_id, income_year_beg=previous_income_year_beg,
+                                    income_year_end=previous_income_year_end)
+            return True
+        except Liabilities.DoesNotExist:
             return False
 
     return False

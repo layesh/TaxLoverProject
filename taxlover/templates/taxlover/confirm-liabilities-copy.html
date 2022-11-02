@@ -1,0 +1,56 @@
+{% extends "taxlover/base.html" %}
+{% load tax_extras %}
+{% block content %}
+    <div class="container px-0">
+        {#        <br/>#}
+        <div class="card border-info mb-3 shadow-sm" style="max-width: 50rem; margin: auto;">
+            <div class="card-header dashboard-tax-year-header">Copy Liabilities From the Previous Year</div>
+            <div class="card-body copy-previous-year-body">
+                <p class="card-text" style="text-align: center">You can copy the liabilities from the previous year. Later
+                    you can add/edit them to meet your needs. You can fill fresh for this year too.
+                    Please select the appropriate one for you from the below.</p>
+                <br/>
+                <div class="col-md-12 text-center">
+                    <a href="{% url 'generate-liabilities-data' %}" type="button" class="btn btn-info">I Will Fill Up
+                        Again</a>
+                    <a href="#" data-bs-toggle="modal" type="button" class="btn btn-warning"
+                       data-bs-target="#test">Copy From Previous Year</a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="test"
+                         data-bs-backdrop="static"
+                         data-bs-keyboard="false" tabindex="-1"
+                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        id="staticBackdropLabel">Copy From Previous
+                                        Year</h5>
+                                    <button type="button" class="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body"
+                                     style="text-align: left">
+                                    Are you sure you want to copy the previous year liabilities data?
+                                </div>
+                                <div class="modal-footer">
+                                    <a type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancel
+                                    </a>
+                                    <a href="{% url 'copy-liabilities-data' %}" type="submit"
+                                            class="btn btn-primary">
+                                        Copy
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+{% endblock content %}
