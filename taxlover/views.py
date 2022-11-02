@@ -24,7 +24,7 @@ from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, 
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
 from taxlover.services.assets_service import save_assets, get_cash_assets_by_payer, \
     get_net_wealth_by_payer, copy_assets_data_from_previous_year
-from taxlover.services.expense_service import get_current_financial_year_expense_by_payer
+from taxlover.services.expense_service import create_or_get_expense_by_payer, copy_expenses_data_from_previous_year
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
     get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, get_current_financial_year_tax_refund_by_payer
@@ -34,7 +34,8 @@ from taxlover.services.salary_service import process_and_save_salary, get_house_
 from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
     set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_liabilities_obj, \
-    has_tax_payer_data, show_assets_copy_view_from_previous_year, show_liabilities_copy_view_from_previous_year
+    has_tax_payer_data, show_assets_copy_view_from_previous_year, show_liabilities_copy_view_from_previous_year, \
+    show_expenses_copy_view_from_previous_year
 
 import os
 from django.conf import settings
@@ -1671,36 +1672,47 @@ def confirm_liabilities_copy(request):
 
 @login_required
 def expenses(request):
-    expense = get_current_financial_year_expense_by_payer(request.user.id)
-    if not expense:
-        financial_year_beg, financial_year_end = get_income_years()
-        expense = Expense(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
-                          financial_year_end=financial_year_end)
+    show_copy_view = show_expenses_copy_view_from_previous_year(request.user.id)
 
-    if request.method == 'POST':
-        form = ExpenseForm(copy_request(request), instance=expense)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your expense has been updated!')
-            return redirect('expenses')
-        else:
-            error_dictionary = form.errors
-            form = ExpenseForm(request.POST)
-            set_form_validation_errors(error_dictionary, form.fields)
-            messages.error(request, f'Please correct the errors below, and try again.')
-
+    if show_copy_view:
+        return redirect('confirm-expenses-copy')
     else:
-        form = ExpenseForm(instance=expense)
+        expense = create_or_get_expense_by_payer(request.user.id)
 
-    set_form_initial_value(form.initial)
+        if not expense:
+            financial_year_beg, financial_year_end = get_income_years()
+            expense = Expense(tax_payer_id=request.user.id, financial_year_beg=financial_year_beg,
+                              financial_year_end=financial_year_end)
 
-    context = {
-        'title': 'Expenses',
-        'form': form
-    }
+        if request.method == 'POST':
+            form = ExpenseForm(copy_request(request), instance=expense)
 
-    return render(request, 'taxlover/expense-info.html', context)
+            if form.is_valid():
+                form.save()
+                messages.success(request, f'Your expense has been updated!')
+                return redirect('expenses')
+            else:
+                error_dictionary = form.errors
+                form = ExpenseForm(request.POST)
+                set_form_validation_errors(error_dictionary, form.fields)
+                messages.error(request, f'Please correct the errors below, and try again.')
+
+        else:
+            form = ExpenseForm(instance=expense)
+
+        set_form_initial_value(form.initial)
+
+        context = {
+            'title': 'Expenses',
+            'form': form
+        }
+
+        return render(request, 'taxlover/expense-info.html', context)
+
+
+@login_required
+def confirm_expenses_copy(request):
+    return render(request, 'taxlover/confirm-expenses-copy.html')
 
 
 @login_required
@@ -2086,6 +2098,13 @@ def generate_liabilities_data(request):
 
 
 @login_required
+def generate_expenses_data(request):
+    create_or_get_expense_by_payer(request.user.id, False)
+
+    return redirect('expenses')
+
+
+@login_required
 def copy_assets_data(request):
     copy_assets_data_from_previous_year(request.user.id)
 
@@ -2097,3 +2116,11 @@ def copy_liabilities_data(request):
     copy_liabilities_data_from_previous_year(request.user.id)
 
     return redirect('liabilities')
+
+
+@login_required
+def copy_expenses_data(request):
+    copy_expenses_data_from_previous_year(request.user.id)
+
+    return redirect('expenses')
+

@@ -10,7 +10,7 @@ from taxlover.constants import INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT, INDIVIDUAL
     INDIVIDUAL_TAX_PAYER_TAX_REBATE_TAXABLE_AMOUNT_SLAB, INDIVIDUAL_TAX_PAYER_TAX_REBATE_RATE_02, \
     INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT, INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT, \
     INDIVIDUAL_TAX_PAYER_FIRST_SLAB_LIMIT_FOR_WOMEN_THIRD_SEX_AND_65_OR_UP_AGED
-from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities
+from taxlover.models import TaxPayer, Income, Salary, OtherIncome, Assets, Liabilities, Expense
 import datetime
 
 from taxlover.services.html_parser import strip_tags
@@ -278,3 +278,22 @@ def show_liabilities_copy_view_from_previous_year(user_id):
             return False
 
     return False
+
+
+def show_expenses_copy_view_from_previous_year(user_id):
+    income_year_beg, income_year_end = get_income_years()
+    previous_income_year_beg, previous_income_year_end = get_previous_income_years()
+
+    try:
+        Expense.objects.get(tax_payer_id=user_id, financial_year_beg=income_year_beg,
+                            financial_year_end=income_year_end)
+    except Expense.DoesNotExist:
+        try:
+            Expense.objects.get(tax_payer_id=user_id, financial_year_beg=previous_income_year_beg,
+                                financial_year_end=previous_income_year_end)
+            return True
+        except Expense.DoesNotExist:
+            return False
+
+    return False
+

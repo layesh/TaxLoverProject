@@ -1,11 +1,11 @@
-from taxlover.services.expense_service import get_current_financial_year_expense_by_payer
+from taxlover.services.expense_service import create_or_get_expense_by_payer
 from taxlover.utils import get_income_years
 
 
 class ExpenseDTO:
 
     def __init__(self, tax_payer_id):
-        self.expense = get_current_financial_year_expense_by_payer(tax_payer_id)
+        self.expense = create_or_get_expense_by_payer(tax_payer_id)
 
         self.income_year_beg, self.income_year_end = get_income_years()
 
