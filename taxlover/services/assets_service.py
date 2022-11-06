@@ -1,5 +1,7 @@
 from django.db.models import Sum
 
+# from taxlover.dtos.assetsDTO import AssetsDTO
+# from taxlover.dtos.liabilitiesDTO import LiabilitiesDTO
 from taxlover.models import AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, \
     CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Assets, Liabilities
 from taxlover.utils import get_income_years, get_previous_income_years
@@ -271,88 +273,3 @@ def get_net_wealth_by_payer(payer_id, previous_year=None):
     return PreviousYearNetWealth.objects.filter(tax_payer_id=payer_id,
                                                 financial_year_beg=financial_year_beg,
                                                 financial_year_end=financial_year_end).first()
-
-
-def copy_assets_data_from_previous_year(payer_id):
-    previous_income_year_beg, previous_income_year_end = get_previous_income_years()
-
-    prev_year_asset = Assets.objects.get(tax_payer_id=payer_id, income_year_beg=previous_income_year_beg,
-                                         income_year_end=previous_income_year_end)
-
-    income_year_beg, income_year_end = get_income_years()
-    prev_year_asset.id = None
-    prev_year_asset.income_year_beg = income_year_beg
-    prev_year_asset.income_year_end = income_year_end
-
-    prev_year_asset.save()
-
-    agricultural_properties = get_agricultural_property_by_payer(payer_id, True)
-    investments = get_investments_by_payer(payer_id, True)
-    motor_vehicles = get_motor_vehicle_by_payer(payer_id, True)
-    furnitures = get_furniture_by_payer(payer_id, True)
-    jewelleries = get_jewellery_by_payer(payer_id, True)
-    electronic_equipments = get_electronic_equipment_by_payer(payer_id, True)
-    other_assets = get_other_assets_by_payer(payer_id, True)
-    other_assets_receipts = get_other_assets_receipt_by_payer(payer_id, True)
-    cash_assets = get_cash_assets_by_payer(payer_id, True)
-    previous_year_net_wealth = get_net_wealth_by_payer(payer_id, True)
-
-    for asset in agricultural_properties:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in investments:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in motor_vehicles:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in furnitures:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in jewelleries:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in electronic_equipments:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in other_assets:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    for asset in other_assets_receipts:
-        asset.id = None
-        asset.financial_year_beg = income_year_beg
-        asset.financial_year_end = income_year_end
-        asset.save()
-
-    if cash_assets:
-        cash_assets.id = None
-        cash_assets.financial_year_beg = income_year_beg
-        cash_assets.financial_year_end = income_year_end
-        cash_assets.save()
-
-    if previous_year_net_wealth:
-        previous_year_net_wealth.id = None
-        previous_year_net_wealth.financial_year_beg = income_year_beg
-        previous_year_net_wealth.financial_year_end = income_year_end
-        previous_year_net_wealth.save()

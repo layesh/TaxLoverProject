@@ -1,6 +1,4 @@
-import requests_html
 from django.contrib import messages
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 
 import json
@@ -23,7 +21,8 @@ from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, 
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
     PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
 from taxlover.services.assets_service import save_assets, get_cash_assets_by_payer, \
-    get_net_wealth_by_payer, copy_assets_data_from_previous_year
+    get_net_wealth_by_payer
+from taxlover.services.assets_service_enhanced import copy_assets_data_from_previous_year
 from taxlover.services.expense_service import create_or_get_expense_by_payer, copy_expenses_data_from_previous_year
 from taxlover.services.income_service import save_income, get_current_financial_year_other_income_by_payer, \
     get_interest_from_mutual_fund_exempted, get_cash_dividend_exempted, get_current_financial_year_tax_rebate_by_payer, \
@@ -31,9 +30,9 @@ from taxlover.services.income_service import save_income, get_current_financial_
 from taxlover.services.liabilities_service import save_liabilities, copy_liabilities_data_from_previous_year
 from taxlover.services.salary_service import process_and_save_salary, get_house_rent_exempted, \
     get_current_financial_year_salary_by_payer, get_medical_exempted, get_conveyance_exempted
-from taxlover.utils import parse_data, create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
+from taxlover.utils import create_or_get_tax_payer_obj, create_or_get_current_income_obj, \
     get_assessment_years, get_income_years, has_salary_data, add_comma, set_form_validation_errors, \
-    set_form_initial_value, copy_request, create_or_get_current_assets_obj, create_or_get_liabilities_obj, \
+    set_form_initial_value, copy_request, create_or_get_assets_obj, create_or_get_liabilities_obj, \
     has_tax_payer_data, show_assets_copy_view_from_previous_year, show_liabilities_copy_view_from_previous_year, \
     show_expenses_copy_view_from_previous_year
 
@@ -98,7 +97,6 @@ class SalaryCreateView(LoginRequiredMixin, CreateView):
     fields = ['financial_year_beg', 'financial_year_end']
 
     def form_valid(self, form):
-        # form.instance.tax_payer = self.request.user
         return super().form_valid(form)
 
 
@@ -107,7 +105,6 @@ class SalaryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['financial_year_beg', 'financial_year_end']
 
     def form_valid(self, form):
-        # form.instance.author = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
@@ -401,7 +398,7 @@ def agricultural_property_delete(request):
                                                         financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.agricultural_property = None
                 latest_assets.save()
 
@@ -423,7 +420,7 @@ def furniture_delete(request):
                                              financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.furniture = None
                 latest_assets.save()
 
@@ -445,7 +442,7 @@ def jewellery_delete(request):
                                              financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.jewellery = None
                 latest_assets.save()
 
@@ -467,7 +464,7 @@ def electronic_equipment_delete(request):
                                                        financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.electronic_equipment = None
                 latest_assets.save()
 
@@ -478,7 +475,7 @@ def electronic_equipment_delete(request):
 def cash_assets_delete(request, pk):
     if request.method == 'POST':
         CashAssets.objects.filter(id=pk).delete()
-        latest_assets = create_or_get_current_assets_obj(request.user.id)
+        latest_assets = create_or_get_assets_obj(request.user.id)
         latest_assets.cash_assets = None
         latest_assets.save()
 
@@ -500,7 +497,7 @@ def other_assets_delete(request):
                                                financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.other_assets = None
                 latest_assets.save()
 
@@ -522,7 +519,7 @@ def other_assets_receipt_delete(request):
                                                       financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.other_assets_receipt = None
                 latest_assets.save()
 
@@ -533,7 +530,7 @@ def other_assets_receipt_delete(request):
 def previous_year_net_wealth_delete(request, pk):
     if request.method == 'POST':
         PreviousYearNetWealth.objects.filter(id=pk).delete()
-        latest_assets = create_or_get_current_assets_obj(request.user.id)
+        latest_assets = create_or_get_assets_obj(request.user.id)
         latest_assets.previous_year_net_wealth = None
         latest_assets.save()
 
@@ -1486,7 +1483,7 @@ def confirm_assets_copy(request):
 
 @login_required
 def save_assets_data(request, source, answer):
-    latest_assets = create_or_get_current_assets_obj(request.user.id)
+    latest_assets = create_or_get_assets_obj(request.user.id)
     show_success_message = save_assets(latest_assets, source, answer, request)
 
     if show_success_message:
@@ -1610,7 +1607,7 @@ def investment_delete(request):
                                               financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.investments = None
                 latest_assets.save()
 
@@ -1632,7 +1629,7 @@ def motor_vehicle_delete(request):
                                                 financial_year_end=financial_year_end).count()
 
             if count == 0:
-                latest_assets = create_or_get_current_assets_obj(request.user.id)
+                latest_assets = create_or_get_assets_obj(request.user.id)
                 latest_assets.motor_vehicle = None
                 latest_assets.save()
 
@@ -2085,7 +2082,7 @@ def get_data_for_edit(request):
 
 @login_required
 def generate_assets_data(request):
-    create_or_get_current_assets_obj(request.user.id, False)
+    create_or_get_assets_obj(request.user.id, False)
 
     return redirect('assets')
 

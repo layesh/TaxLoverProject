@@ -158,8 +158,11 @@ def copy_request(request):
     return request_copy
 
 
-def create_or_get_current_assets_obj(user_id, do_not_save_object=None):
-    income_year_beg, income_year_end = get_income_years()
+def create_or_get_assets_obj(user_id, do_not_save_object=None, previous_year=None):
+    if previous_year:
+        income_year_beg, income_year_end = get_previous_income_years()
+    else:
+        income_year_beg, income_year_end = get_income_years()
 
     try:
         latest_assets = Assets.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
@@ -174,8 +177,11 @@ def create_or_get_current_assets_obj(user_id, do_not_save_object=None):
     return latest_assets
 
 
-def create_or_get_liabilities_obj(user_id, do_not_save_object=None):
-    income_year_beg, income_year_end = get_income_years()
+def create_or_get_liabilities_obj(user_id, do_not_save_object=None, previous_year=None):
+    if previous_year:
+        income_year_beg, income_year_end = get_previous_income_years()
+    else:
+        income_year_beg, income_year_end = get_income_years()
 
     try:
         latest_liabilities = Liabilities.objects.get(tax_payer_id=user_id, income_year_beg=income_year_beg,
@@ -296,4 +302,3 @@ def show_expenses_copy_view_from_previous_year(user_id):
             return False
 
     return False
-

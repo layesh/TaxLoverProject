@@ -5,7 +5,7 @@ from taxlover.utils import get_income_years
 class ExpenseDTO:
 
     def __init__(self, tax_payer_id):
-        self.expense = create_or_get_expense_by_payer(tax_payer_id)
+        self.expense = create_or_get_expense_by_payer(tax_payer_id, True)
 
         self.income_year_beg, self.income_year_end = get_income_years()
 
