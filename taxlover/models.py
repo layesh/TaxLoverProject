@@ -408,7 +408,7 @@ class Salary(models.Model):
     @property
     def get_total(self):
         return self.get_basic + self.get_house_rent + self.get_medical + self.get_conveyance + self.get_lfa + \
-               + self.other_allowances + self.get_total_bonus + self.get_employers_contribution_to_pf
+               + self.get_other_allowances + self.get_total_bonus + self.get_employers_contribution_to_pf
 
 
 class Income(models.Model):
