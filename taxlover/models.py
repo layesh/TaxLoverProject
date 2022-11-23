@@ -1480,7 +1480,7 @@ class MotorVehicle(models.Model):
     financial_year_end = models.IntegerField(default=0)
     brand_or_type = models.CharField(max_length=100, null=True)
     reg_no = models.CharField(max_length=50, null=True)
-    engine_capacity = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    engine_capacity = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     value = models.DecimalField(max_digits=20, decimal_places=2, null=True)
 
     def __str__(self):
