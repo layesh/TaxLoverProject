@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('financial_year_end', models.IntegerField(default=0)),
                 ('brand_or_type', models.CharField(max_length=100, null=True)),
                 ('reg_no', models.CharField(max_length=50, null=True)),
-                ('engine_capacity', models.DecimalField(decimal_places=2, max_digits=3, null=True)),
+                ('engine_capacity', models.DecimalField(decimal_places=2, max_digits=4, null=True)),
                 ('value', models.DecimalField(decimal_places=2, max_digits=20, null=True)),
                 ('tax_payer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='taxlover.taxpayer')),
             ],
