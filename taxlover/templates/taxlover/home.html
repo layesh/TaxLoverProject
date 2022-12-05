@@ -36,6 +36,12 @@
                 </div>
             </div>
             <div class="card border-info mb-3 shadow-sm" style="max-width: 18rem;">
+                <div class="card-header dashboard-tax-year-header">Total taxable Income</div>
+                <div class="card-body dashboard-tax-year-body">
+                    <p class="card-text">{{ income_dto.total_taxable|format_decimal_to_whole }} BDT</p>
+                </div>
+            </div>
+            <div class="card border-info mb-3 shadow-sm" style="max-width: 18rem;">
                 <div class="card-header dashboard-tax-year-header">Total Expense</div>
                 <div class="card-body dashboard-tax-year-body">
                     <p class="card-text">{{ expense_dto.total_expenses|format_decimal_to_whole }} BDT</p>
@@ -68,6 +74,12 @@
                 <div class="card-header dashboard-tax-year-header">Total Invested Amount</div>
                 <div class="card-body dashboard-tax-year-body">
                     <p class="card-text">{{ income_dto.total_invested_amount|format_decimal_to_whole }} BDT</p>
+                </div>
+            </div>
+            <div class="card border-info mb-3 shadow-sm" style="max-width: 18rem;">
+                <div class="card-header dashboard-tax-year-header">Total Allowable Investment</div>
+                <div class="card-body dashboard-tax-year-body">
+                    <p class="card-text">{{ income_dto.total_allowed_amount|format_decimal_to_whole }} BDT</p>
                 </div>
             </div>
             <div class="card border-info mb-3 shadow-sm" style="max-width: 18rem;">
