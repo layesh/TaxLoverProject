@@ -136,7 +136,7 @@ class IncomeDTO:
             self.total_invested_amount if tax_rebate else 0, self.total_taxable)
 
         self.tax_rebate = get_tax_rebate(self.total_taxable, min(self.eligible_amount_of_investment_for_rebate,
-                                                                 self.total_allowed_amount))
+                                                                 self.total_allowed_amount if tax_rebate else 0))
 
         self.net_tax_after_rebate = get_net_tax_after_rebate(self.gross_tax_before_tax_rebate,
                                                              self.tax_rebate)
