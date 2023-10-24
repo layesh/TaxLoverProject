@@ -67,7 +67,9 @@ def process_and_save_salary(salary_statement_document, payer_id):
     table_column_length = len(salary_table_data[1].columns)
 
     for row_index, row in salary_table_data[1].iterrows():
-        salary_category = str(row[0]).lower()
+        # salary_category = str(row[0]).lower()
+        # For Nilavo Tech 2023
+        salary_category = str(row[1]).lower()
 
         if 'company contribution' in salary_category:
             salary.employers_contribution_to_pf = parse_data(row, table_column_length)
