@@ -76,7 +76,7 @@ def process_and_save_salary(salary_statement_document, payer_id):
         elif 'own contribution' in salary_category:
             salary.employees_contribution_to_pf = parse_data(row, table_column_length)
 
-    if salary.total_bonus == 0:
+    if salary.total_bonus is None:
         salary.total_bonus = salary.festival_bonus + salary.other_bonus
 
     total_annual_payment = salary.get_basic + salary.get_house_rent + salary.get_medical + salary.get_conveyance + \
