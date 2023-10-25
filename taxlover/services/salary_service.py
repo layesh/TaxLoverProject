@@ -62,6 +62,11 @@ def process_and_save_salary(salary_statement_document, payer_id):
             salary.employees_contribution_to_pf = parse_data(row, table_column_length)
         elif 'advance income tax' in salary_category:
             salary.ait = parse_data(row, table_column_length)
+        # Added for 2023 salary certificate
+        elif 'performance bonus' in salary_category:
+            salary.other_bonus += parse_data(row, table_column_length)
+        elif 'entertainment allowance' in salary_category:
+            salary.other_allowances += parse_data(row, table_column_length)
 
     # For Nilavo Tech 2022
     table_column_length = len(salary_table_data[1].columns)
