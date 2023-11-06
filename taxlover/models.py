@@ -406,9 +406,17 @@ class Salary(models.Model):
             return 0
 
     @property
+    def get_leave_encashment(self):
+        if self.leave_encashment:
+            return self.leave_encashment
+        else:
+            return 0
+
+    @property
     def get_total(self):
         return self.get_basic + self.get_house_rent + self.get_medical + self.get_conveyance + self.get_lfa + \
-               + self.get_other_allowances + self.get_total_bonus + self.get_employers_contribution_to_pf
+               + self.get_other_allowances + self.get_total_bonus + self.get_employers_contribution_to_pf + \
+               self.get_leave_encashment
 
 
 class Income(models.Model):

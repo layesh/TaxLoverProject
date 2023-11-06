@@ -64,9 +64,13 @@ def process_and_save_salary(salary_statement_document, payer_id):
             salary.ait = parse_data(row, table_column_length)
         # Added for 2023 salary certificate
         elif 'performance bonus' in salary_category:
-            salary.other_bonus += parse_data(row, table_column_length)
+            salary.other_bonus = salary.other_bonus if salary.other_bonus is not None else 0 + \
+                parse_data(row, table_column_length)
         elif 'entertainment allowance' in salary_category:
-            salary.other_allowances += parse_data(row, table_column_length)
+            salary.other_allowances = salary.other_allowances if salary.other_allowances is not None else 0 + \
+                parse_data(row, table_column_length)
+        elif 'leave encashment' in salary_category:
+            salary.leave_encashment = parse_data(row, table_column_length)
 
     # For Nilavo Tech 2022
     table_column_length = len(salary_table_data[1].columns)
@@ -85,7 +89,8 @@ def process_and_save_salary(salary_statement_document, payer_id):
         salary.total_bonus = salary.festival_bonus + salary.other_bonus
 
     total_annual_payment = salary.get_basic + salary.get_house_rent + salary.get_medical + salary.get_conveyance + \
-        salary.get_lfa + salary.other_allowances + salary.get_total_bonus + salary.get_employers_contribution_to_pf
+        salary.get_lfa + salary.other_allowances + salary.get_total_bonus + salary.get_employers_contribution_to_pf + \
+        salary.get_leave_encashment
 
     if total_annual_payment > 0:
         salary.save()
