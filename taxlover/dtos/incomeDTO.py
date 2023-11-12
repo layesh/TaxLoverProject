@@ -3,7 +3,8 @@ from taxlover.constants import INDIVIDUAL_TAX_PAYER_ONE_PAGE_TAXABLE_LIMIT, INDI
 from taxlover.services.income_service import get_total_other_income_taxable, get_total_allowed_amount, \
     get_current_financial_year_deduction_at_source_by_payer, get_current_financial_year_advance_tax_paid_by_payer, \
     get_current_financial_year_other_income_by_payer, get_current_financial_year_tax_rebate_by_payer, \
-    get_current_financial_year_tax_refund_by_payer, get_life_insurance_premium_allowed, get_contribution_to_dps_allowed
+    get_current_financial_year_tax_refund_by_payer, get_life_insurance_premium_allowed, get_contribution_to_dps_allowed, \
+    get_interest_on_securities_by_payer, get_total_interest_on_securities_value
 from taxlover.services.salary_service import get_total_taxable, get_current_financial_year_salary_by_payer, \
     get_current_financial_year_total_tax_deducted_at_source_by_payer, \
     get_current_financial_year_total_advance_tax_paid_by_payer, get_house_rent_exempted, get_medical_exempted, \
@@ -18,6 +19,7 @@ class IncomeDTO:
     def __init__(self, tax_payer_id, has_form_error):
         income = create_or_get_current_income_obj(tax_payer_id)
         salary = get_current_financial_year_salary_by_payer(tax_payer_id)
+        self.interest_on_securities = get_interest_on_securities_by_payer(tax_payer_id)
         other_income = get_current_financial_year_other_income_by_payer(tax_payer_id)
         tax_rebate = get_current_financial_year_tax_rebate_by_payer(tax_payer_id)
         tax_refund = get_current_financial_year_tax_refund_by_payer(tax_payer_id)
@@ -83,6 +85,9 @@ class IncomeDTO:
             self.employers_contribution_to_pf_exempted = 0
             self.employers_contribution_to_pf_taxable = salary.get_employers_contribution_to_pf
 
+        if self.interest_on_securities:
+            self.total_interest_on_securities = get_total_interest_on_securities_value(self.interest_on_securities)
+
         if other_income:
             self.otherIncomeId = other_income.id
             self.total_other_income_taxable = get_total_other_income_taxable(other_income)
@@ -123,10 +128,12 @@ class IncomeDTO:
         self.has_form_error = has_form_error
 
         self.total_income = (self.total_salary_income if salary else 0) + \
+                            (self.total_interest_on_securities if self.interest_on_securities else 0) + \
                             (self.total_other_income if other_income else 0)
 
         self.total_taxable = (self.total_salary_taxable if salary else 0) + \
-                            (self.total_other_income_taxable if other_income else 0)
+                             (self.total_interest_on_securities if self.interest_on_securities else 0) + \
+                             (self.total_other_income_taxable if other_income else 0)
 
         self.gross_tax_before_tax_rebate = get_gross_tax_before_tax_rebate(tax_payer_id, self.total_taxable)
 

@@ -789,8 +789,10 @@
             <td width="60px" class="table-td-vertical-align-top">
                 S.22
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {% if income_dto.has_interest_on_securities %}
+                    {{ income_dto.total_interest_on_securities|format_decimal }}
+                {% endif %}
             </td>
         </tr>
         <tr style="padding-bottom: 6px">

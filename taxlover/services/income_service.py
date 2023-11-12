@@ -1,8 +1,10 @@
 from decimal import Decimal
 
+from django.db.models import Sum
+
 from taxlover.constants import INTEREST_FROM_MUTUAL_FUND_YEARLY_EXEMPTED_RATE, CASH_DIVIDEND_YEARLY_EXEMPTED_RATE, \
     DPS_MAX_ALLOWED_RATE
-from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund
+from taxlover.models import OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, TaxRefund, InterestOnSecurities
 from taxlover.services.salary_service import get_current_financial_year_salary_by_payer
 from taxlover.utils import get_income_years
 
@@ -204,3 +206,17 @@ def get_current_financial_year_tax_refund_by_payer(payer_id):
     return TaxRefund.objects.filter(tax_payer_id=payer_id,
                                     financial_year_beg=financial_year_beg,
                                     financial_year_end=financial_year_end).first()
+
+
+def get_interest_on_securities_by_payer(payer_id):
+    financial_year_beg, financial_year_end = get_income_years()
+
+    return InterestOnSecurities.objects.filter(tax_payer_id=payer_id,
+                                               financial_year_beg=financial_year_beg,
+                                               financial_year_end=financial_year_end)
+
+
+def get_total_interest_on_securities_value(interest_on_securities):
+    total = interest_on_securities.aggregate(Sum('amount'))
+
+    return total['amount__sum'] if total['amount__sum'] is not None else 0

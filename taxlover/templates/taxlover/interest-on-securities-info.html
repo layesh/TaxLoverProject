@@ -1,0 +1,53 @@
+{% extends "taxlover/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="input-form-main">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row mb-2">
+                <label for="{{ form.type.id_for_label }}"
+                                   class="col-form-label col-sm-2">Type</label>
+                <div class="col-sm-10">
+                    {{ form.type }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.description.id_for_label }}"
+                                   class="col-form-label col-sm-2 bold-text">Description</label>
+                <div class="col-sm-10">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.amount.id_for_label }}"
+                                   class="col-form-label col-sm-2 required">Amount</label>
+                <div class="col-sm-10">
+                    {{ form.amount }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label for="{{ form.commission_or_interest.id_for_label }}"
+                                   class="col-form-label col-sm-2">Commission/Interest</label>
+                <div class="col-sm-10">
+                    {{ form.commission_or_interest }}
+                </div>
+            </div>
+            <div style="text-align: center;padding-top: 20px">
+                <button type="submit" class="btn btn-primary" style="width: 100px">Save</button>&nbsp;
+                <button type="button" class="btn btn-secondary" style="width: 100px" onclick="goToIncomeHome()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script type="application/javascript">
+        function goToIncomeHome() {
+            location.href='{% url "income" %}';
+        }
+
+        function onInputBlurred(textBoxObject) {
+            if (!isNaN(removeCommas(textBoxObject.value))) {
+                textBoxObject.value = removeCommas(textBoxObject.value);
+                textBoxObject.value = addCommas(formatToTwoDecimalPlaces(textBoxObject.value));
+            }
+        }
+    </script>
+{% endblock content %}

@@ -4,7 +4,7 @@ from django.forms import TextInput
 from .models import TaxPayer, Document, Salary, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     ADVANCE_TAX_PAID_TYPE, TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, \
     ElectronicEquipment, CashAssets, OtherAssets, OtherAssetsReceipt, PreviousYearNetWealth, Mortgage, UnsecuredLoan, \
-    BankLoan, OtherLiability, Expense
+    BankLoan, OtherLiability, Expense, InterestOnSecurities
 
 
 class TaxPayerForm(forms.ModelForm):
@@ -35,6 +35,18 @@ class SalaryForm(forms.ModelForm):
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
             'employers_contribution_to_pf': TextInput(
                 attrs={'class': 'form-control text-align-right', 'onblur': 'onInputBlurred(this)'}),
+        }
+
+
+class InterestOnSecuritiesForm(forms.ModelForm):
+    class Meta:
+        model = InterestOnSecurities
+        fields = ['type', 'description', 'amount', 'commission_or_interest']
+        widgets = {
+            'type': forms.Select(attrs={'class': 'form-select'}),
+            'description': TextInput(attrs={'class': 'form-control'}),
+            'amount': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'}),
+            'commission_or_interest': TextInput(attrs={'class': 'form-control', 'onblur': 'onInputBlurred(this)'})
         }
 
 

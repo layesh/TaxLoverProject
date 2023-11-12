@@ -16,10 +16,12 @@ from taxlover.dtos.taxPayerDTO import TaxPayerDTO
 from taxlover.forms import UploadSalaryStatementForm, SalaryForm, OtherIncomeForm, TaxRebateForm, DeductionAtSourceForm, \
     AdvanceTaxPaidForm, TaxRefundForm, AgriculturalPropertyForm, InvestmentForm, MotorVehicleForm, FurnitureForm, \
     JewelleryForm, ElectronicEquipmentForm, OtherAssetsForm, OtherAssetsReceiptForm, PreviousYearNetWealthForm, \
-    CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm, ExpenseForm
+    CashAssetsForm, MortgageForm, UnsecuredLoanForm, BankLoanForm, OtherLiabilityForm, ExpenseForm, \
+    InterestOnSecuritiesForm
 from taxlover.models import TaxPayer, Salary, Document, OtherIncome, TaxRebate, DeductionAtSource, AdvanceTax, \
     TaxRefund, AgriculturalProperty, Investment, MotorVehicle, Furniture, Jewellery, ElectronicEquipment, CashAssets, \
-    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense
+    PreviousYearNetWealth, OtherAssets, OtherAssetsReceipt, Mortgage, UnsecuredLoan, BankLoan, OtherLiability, Expense, \
+    InterestOnSecurities
 from taxlover.services.assets_service import save_assets, get_cash_assets_by_payer, \
     get_net_wealth_by_payer
 from taxlover.services.assets_service_enhanced import copy_assets_data_from_previous_year
@@ -1552,6 +1554,68 @@ def investment_info(request, pk):
     }
 
     return render(request, 'taxlover/investment-info.html', context)
+
+
+@login_required
+def interest_on_securities_info(request, pk):
+    has_form_error = False
+    financial_year_beg, financial_year_end = get_income_years()
+    if pk > 0:
+        interest_on_securities = InterestOnSecurities.objects.get(pk=pk)
+    else:
+        interest_on_securities = InterestOnSecurities(tax_payer_id=request.user.id,
+                                                      financial_year_beg=financial_year_beg,
+                                                      financial_year_end=financial_year_end)
+
+    if request.method == 'POST':
+        form = InterestOnSecuritiesForm(copy_request(request), instance=interest_on_securities)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your interest on securities has been updated!')
+            return redirect('income')
+        else:
+            error_dictionary = form.errors
+            form = InterestOnSecuritiesForm(request.POST)
+            set_form_validation_errors(error_dictionary, form.fields)
+            messages.error(request, f'Please correct the errors below, and try again.')
+            has_form_error = True
+
+    else:
+        form = InterestOnSecuritiesForm(instance=interest_on_securities)
+
+    if pk > 0 and not has_form_error:
+        form.initial['amount'] = add_comma(form.initial['amount'])
+        form.initial['commission_or_interest'] = add_comma(form.initial['commission_or_interest'])
+
+    context = {
+        'title': 'Interest On Securities',
+        'form': form
+    }
+
+    return render(request, 'taxlover/interest-on-securities-info.html', context)
+
+
+@login_required
+def interest_on_securities_delete(request):
+    if request.method == 'POST':
+        interest_on_securities_id = 0
+        if request.POST['interest_on_securities_id_for_delete'] != '':
+            interest_on_securities_id = int(request.POST['interest_on_securities_id_for_delete'])
+        if interest_on_securities_id > 0:
+            InterestOnSecurities.objects.filter(id=interest_on_securities_id).delete()
+
+            financial_year_beg, financial_year_end = get_income_years()
+            count = InterestOnSecurities.objects.filter(tax_payer_id=request.user.id,
+                                                        financial_year_beg=financial_year_beg,
+                                                        financial_year_end=financial_year_end).count()
+
+            if count == 0:
+                latest_income = create_or_get_current_income_obj(request.user.id)
+                latest_income.interest_on_security = None
+                latest_income.save()
+
+    return redirect('income')
 
 
 @login_required

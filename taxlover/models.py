@@ -419,6 +419,58 @@ class Salary(models.Model):
                self.get_leave_encashment
 
 
+INTEREST_ON_SECURITIES_TYPE = [
+    ('Bond', 'Bond'),
+    ('Zero Coupon Bond', 'Zero Coupon Bond'),
+    ('Debenture', 'Debenture'),
+    ('Other Securities', 'Other Securities'),
+    ('Interest from mutual Fund/Unit Fund', 'Interest from mutual Fund/Unit Fund'),
+    ('Cash Dividend from Company Listed in Stock Exchange', 'Cash Dividend from Company Listed in Stock Exchange'),
+    ('Interest on FDR DPS Bank Account', 'Interest on FDR DPS Bank Account')
+]
+
+
+class InterestOnSecurities(models.Model):
+    tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
+    financial_year_beg = models.IntegerField(default=0)
+    financial_year_end = models.IntegerField(default=0)
+    type = models.CharField(max_length=100, choices=INTEREST_ON_SECURITIES_TYPE, default='Bond')
+    description = models.CharField(max_length=250, null=True, blank=True)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    commission_or_interest = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.tax_payer.name} InterestOnSecurities'
+
+    @property
+    def get_type(self):
+        if self.type:
+            return self.type
+        else:
+            return ""
+
+    @property
+    def get_description(self):
+        if self.description:
+            return self.description
+        else:
+            return ""
+
+    @property
+    def get_amount(self):
+        if self.amount:
+            return self.amount
+        else:
+            return 0
+
+    @property
+    def get_commission_or_interest(self):
+        if self.commission_or_interest:
+            return self.commission_or_interest
+        else:
+            return 0
+
+
 class Income(models.Model):
     tax_payer = models.ForeignKey(TaxPayer, on_delete=models.CASCADE)
     salary = models.BooleanField(null=True)
