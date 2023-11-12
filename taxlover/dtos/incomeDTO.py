@@ -98,8 +98,9 @@ class IncomeDTO:
             self.taxRebateId = tax_rebate.id
             self.total_invested_amount = tax_rebate.get_total
             self.total_allowed_amount = get_total_allowed_amount(tax_rebate)
-            self.life_insurance_premium_allowed = get_life_insurance_premium_allowed(tax_rebate.get_life_insurance_premium,
-                                                                                     tax_rebate.get_life_insurance_premium_policy_value)
+            self.life_insurance_premium_allowed = get_life_insurance_premium_allowed(
+                tax_rebate.get_life_insurance_premium,
+                tax_rebate.get_life_insurance_premium_policy_value)
             self.contribution_to_dps_allowed = get_contribution_to_dps_allowed(tax_rebate.get_contribution_to_dps)
             self.investment_in_savings_certificates_sanchaypatra = tax_rebate.get_investment_in_savings_certificates_sanchaypatra
             self.investment_in_approved_debenture_or_stock_or_shares = tax_rebate.get_investment_in_approved_debenture_or_stock_or_shares
@@ -156,8 +157,10 @@ class IncomeDTO:
 
         self.tax_refund = tax_refund.get_refund if tax_refund else 0
 
-        self.paid_with_return = self.net_tax_after_rebate - self.total_tax_deducted_at_source - \
-                                self.total_advance_tax - self.tax_refund
+        tax_due_with_return = self.net_tax_after_rebate - self.total_tax_deducted_at_source - self.total_advance_tax - \
+                              self.tax_refund
+
+        self.paid_with_return = tax_due_with_return if tax_due_with_return > 0 else 0
 
         self.total_tax_paid = self.total_tax_deducted_at_source + self.total_advance_tax + self.tax_refund
 
@@ -174,5 +177,3 @@ class IncomeDTO:
         self.investment_max_limit = INDIVIDUAL_TAX_PAYER_INVESTMENT_MAX_LIMIT
 
         self.investment_rate_on_taxable_amount = INDIVIDUAL_TAX_PAYER_INVESTMENT_RATE_ON_TAXABLE_AMOUNT * 100
-
-
