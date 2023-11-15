@@ -2044,14 +2044,14 @@
             <td class="table-td-vertical-align-top">
                 Other, if any (give detail)
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.leave_encashment|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.leave_encashment_exempted|format_decimal }}
             </td>
-            <td class="table-td-vertical-align-top">
-
+            <td class="table-td-vertical-align-top text-align-right">
+                {{ income_dto.leave_encashment_taxable|format_decimal }}
             </td>
         </tr>
         <tr style="padding-bottom: 4px">

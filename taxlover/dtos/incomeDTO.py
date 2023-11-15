@@ -84,6 +84,9 @@ class IncomeDTO:
             self.employers_contribution_to_pf = salary.get_employers_contribution_to_pf
             self.employers_contribution_to_pf_exempted = 0
             self.employers_contribution_to_pf_taxable = salary.get_employers_contribution_to_pf
+            self.leave_encashment = salary.get_leave_encashment
+            self.leave_encashment_exempted = 0
+            self.leave_encashment_taxable = salary.get_leave_encashment
 
         if self.interest_on_securities:
             self.total_interest_on_securities = get_total_interest_on_securities_value(self.interest_on_securities)
