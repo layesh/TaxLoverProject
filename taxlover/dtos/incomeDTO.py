@@ -57,9 +57,9 @@ class IncomeDTO:
 
         if salary:
             self.salaryId = salary.id
-            self.total_salary_taxable = get_total_taxable(salary)
+            self.total_salary_exempted = min(450000, salary.get_total / 3)
+            self.total_salary_taxable = salary.get_total - self.total_salary_exempted
             self.total_salary_income = salary.get_total
-            self.total_salary_exempted = self.total_salary_income - self.total_salary_taxable
             self.basic = salary.get_basic
             self.basic_exempted = 0
             self.basic_taxable = self.basic - self.basic_exempted
